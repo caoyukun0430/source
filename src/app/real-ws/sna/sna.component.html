@@ -1,0 +1,14 @@
+<div style="height: 100px">
+  Arcs threshold:
+  <mat-slider min="-1.00" max="1.00" step="0.005" [value]="arcsThreshold" (change)="changeSelectedArcValue($event)"></mat-slider>
+  Metric selection:
+  <mat-select placeholder="Metric" [(value)]="metric" (selectionChange)="metricChanged($event)">
+    <mat-option value="handover">Handover of Work</mat-option>
+    <mat-option value="working_together">Working Together</mat-option>
+    <mat-option value="subcontracting">Subcontracting</mat-option>
+    <mat-option value="jointactivities">Joint Activities</mat-option>
+  </mat-select>
+</div>
+<div>
+<iframe [src]="snaContent" style="width: 730px; height: 5000px;" frameBorder="0"></iframe>
+</div>

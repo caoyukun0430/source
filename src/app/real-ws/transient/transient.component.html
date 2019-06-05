@@ -1,0 +1,10 @@
+<div style="height: 100px">
+  Use slider to select delay:
+  <mat-slider min="6.00" max="17.00" step="0.01" [value]="delay" (change)="sliderIsChanged($event)"></mat-slider>
+  Or, digit number of days:
+  <input id="numberDays" matInput style="width: 80px; font-size: 13px" value="1">
+  <button mat-button (click)="manualInputManagement($event)"><span style="font-size: 9px">Simulate</span></button>
+</div>
+<div>
+<img id="imageProcessModelImage" [src]="processModelBase64Sanitized" style="width: 730px">
+</div>

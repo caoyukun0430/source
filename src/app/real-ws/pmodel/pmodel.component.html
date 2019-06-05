@@ -1,0 +1,34 @@
+<div class="p-2">
+  Variants: <b>{{thisVariantsNumber}}</b>
+  <mat-progress-bar mode="determinate" value="{{ratioVariantsNumber}}"></mat-progress-bar>
+  Cases: <b>{{thisCasesNumber}}</b>
+  <mat-progress-bar mode="determinate" value="{{ratioCasesNumber}}"></mat-progress-bar>
+  Events: <b>{{thisEventsNumber}}</b>
+  <mat-progress-bar mode="determinate" value="{{ratioEventsNumber}}"></mat-progress-bar>
+</div>
+<div class="p-2">
+  Simplicity:&nbsp;
+  <mat-slider min="0.01" max="1.00" step="0.005" [(value)]="simplicity" (change)="sliderIsChanged($event)"></mat-slider>
+  Decoration:&nbsp;
+  <mat-radio-group (change)="decorationIsChanged($event)" [value]="decoration">
+    <mat-radio-button value="freq">Frequency</mat-radio-button>
+    <mat-radio-button value="perf">Performance</mat-radio-button>
+  </mat-radio-group>
+  <br />
+  <mat-select placeholder="Type of model" [(value)]="typeOfModel" (selectionChange)="typeOfModelIsChanged($event)">
+    <mat-option value="dfg">DFG</mat-option>
+    <mat-option value="tree">Process Tree (Inductive)</mat-option>
+    <mat-option value="inductive">Petri (Inductive)</mat-option>
+    <mat-option value="heuristics">Heuristics Net</mat-option>
+  </mat-select>
+  <span *ngIf="enableConformanceChecking">
+    <button mat-button (click)="downloadModel($event)"><span style="font-size: 10px">Download Petri Net Model</span></button>
+    <button mat-button routerLink="/real-ws/alignments"><span style="font-size: 10px">Conformance against Visualized Model</span></button>
+    <button mat-button (click)="uploader.click()"><span style="font-size: 10px">Upload model for Conformance</span></button>
+  </span>
+</div>
+<div id="imageContainer">
+  <img id="imageProcessModelImage" [src]="processModelBase64Sanitized">
+</div>
+<input hidden type="file" #uploader
+       (change)="uploadFile($event)"/>

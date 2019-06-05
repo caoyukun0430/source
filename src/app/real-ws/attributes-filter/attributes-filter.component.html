@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Attributes Filter</h2>
+<mat-dialog-content class="mat-typography">
+  Select the attribute:<br />
+  <mat-select placeholder="Selected attribute" [(value)]="selectedAttribute" (selectionChange)="selectedAttributeChanged($event)">
+    <mat-option
+            *ngFor="let option of attributesList"
+            value="{{ option }}">
+      {{ option }}
+    </mat-option>
+  </mat-select>
+  <br /><br />Select the filtering method:<br />
+  <mat-select placeholder="Selected method" [(value)]="filteringMethod">
+    <mat-option value="attributes_pos_trace">Traces (positive)</mat-option>
+    <mat-option value="attributes_neg_trace">Traces (negative)</mat-option>
+    <mat-option value="attributes_pos_events">Events (positive)</mat-option>
+    <mat-option value="attributes_neg_events">Events (negative)</mat-option>
+  </mat-select>
+  <br /><br />Select the admitted values:<br />
+  <table>
+    <tr *ngFor="let ea of attributeValues">
+      <td>
+        <input type="checkbox" (click)="addRemoveValue(ea[0])">
+      </td>
+      <td>
+        {{ea[0]}}
+      </td>
+      <td>
+        {{ea[1]}}
+      </td>
+    </tr>
+  </table>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="applyFilter()">Apply</button>
+</mat-dialog-actions>

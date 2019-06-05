@@ -1,0 +1,27 @@
+.table-container {
+  margin-top: 5px;
+  max-height: 170px;
+  max-width: 1310px;
+  overflow: auto;
+}
+
+.selected {
+  background-color: #ADD8E6;
+}
+
+.variantsHeaderColor {
+  background-color: #B0BFC6;
+}
+
+.casesHeaderColor {
+  background-color: #B0BFC6;
+}
+
+.eventsHeaderColor {
+  background-color: #B0BFC6;
+}
+
+.isLeftPanel {
+  background-color: #999999;
+  border-radius: 5px;
+}

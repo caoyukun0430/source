@@ -1,0 +1,77 @@
+<div id="casesContainer" [hidden]="isLoading == true">
+  <span>Events: <b>{{thisEventsNumber}}</b></span>
+  <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+  <span>Cases: <b>{{thisCasesNumber}}</b></span>
+  <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+  <span>Variants: <b>{{thisVariantsNumber}}</b></span>
+  <div class="table-container" id="tableVariants" style="overflow: scroll" [style.width.px]="width"  [style.height.px]="height">
+    <table mat-table [dataSource]="dataSourceVariants" class="mat-elevation-z8" style="width: 100%">
+      <ng-container matColumnDef="variant">
+        <th mat-header-cell *matHeaderCellDef>Variant</th>
+        <td mat-cell *matCellDef="let element"> {{element["variant"]}} </td>
+      </ng-container>
+      <ng-container matColumnDef="count">
+        <th mat-header-cell *matHeaderCellDef>Count</th>
+        <td mat-cell *matCellDef="let element"> {{element["count"]}} </td>
+      </ng-container>
+      <ng-container matColumnDef="caseDuration">
+        <th mat-header-cell *matHeaderCellDef>&nbsp;Avg Dur</th>
+        <td mat-cell *matCellDef="let element"> {{secondsToString(element["caseDuration"])}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsVariants" class="variantsHeaderColor"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsVariants;"  (click)="variantClicked(row)" [ngClass]="{ 'selected': row['variant'] === variantSelected }"></tr>
+    </table>
+  </div>
+  <div class="table-container" id="tableCases" style="overflow: scroll" [style.width.px]="width"  [style.height.px]="height">
+    <table mat-table [dataSource]="dataSourceCases" matSort class="mat-elevation-z8" style="width: 100%">
+      <ng-container matColumnDef="caseId">
+        <th mat-header-cell *matHeaderCellDef>Case ID</th>
+        <td mat-cell *matCellDef="let element"> {{element["caseId"]}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="caseDuration">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Case Duration</th>
+        <td mat-cell *matCellDef="let element"> {{secondsToString(element["caseDuration"])}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="startTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Time</th>
+        <td mat-cell *matCellDef="let element"> {{get_repr_time(element["startTime"])}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="endTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>End Time</th>
+        <td mat-cell *matCellDef="let element"> {{get_repr_time(element["endTime"])}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsCases" class="casesHeaderColor"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsCases;" (click)="caseClicked(row)"  [ngClass]="{ 'selected': row['caseId'] === caseSelected }"></tr>
+    </table>
+  </div>
+  <div class="table-container" id="tableEvents" style="overflow: scroll; display: none" [style.width.px]="width"  [style.height.px]="height">
+    <table mat-table matSort [dataSource]="dataSourceEvents" class="mat-elevation-z8"  style="width: 100%">
+      <ng-container matColumnDef="concept:name">
+        <th mat-header-cell *matHeaderCellDef>Activity</th>
+        <td mat-cell *matCellDef="let element"> {{element["concept:name"]}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="org:resource">
+        <th mat-header-cell *matHeaderCellDef>Resource</th>
+        <td mat-cell *matCellDef="let element"> {{element["org:resource"]}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="time:timestamp">
+        <th mat-header-cell *matHeaderCellDef>Timestamp</th>
+        <td mat-cell *matCellDef="let element"> {{element["time:timestamp"]}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="lifecycle:transition">
+        <th mat-header-cell *matHeaderCellDef>Transition</th>
+        <td mat-cell *matCellDef="let element"> {{element["lifecycle:transition"]}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsEvents"  class="eventsHeaderColor"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsEvents;"></tr>
+    </table>
+  </div>
+</div>

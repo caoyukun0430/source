@@ -1,0 +1,11 @@
+<div style="height: 20px">
+  &nbsp;
+</div>
+
+<p style="color: #000000">Select the process you wish to analyze:</p>
+&nbsp;
+<mat-action-list>
+  <mat-list-item *ngFor="let log of logsList" (click)="logClicked(log)" style="max-height: 40px">
+    <span style="font-size: 10px; color: #000000;"> {{log}} </span>
+  </mat-list-item>
+</mat-action-list>
