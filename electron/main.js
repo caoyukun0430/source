@@ -18,7 +18,7 @@ function createWindow () {
   mainWindow.setTitle("PMTK")
 
   // and load the index.html of the app.
-  mainWindow.loadURL('http://194.32.77.109:5001/index.html')
+  mainWindow.loadURL('http://localhost:5000/index.html')
   
   
   mainWindow.maximize()
