@@ -26,7 +26,7 @@ export class AuthenticationServiceService {
     doLogout() {
         this.resetAuthentication();
         localStorage.removeItem("process");
-        this.router.navigateByUrl("/real-ws/login");
+        this.router.navigateByUrl("/pages/login");
     }
 
     resetAuthentication() {
@@ -98,7 +98,7 @@ export class AuthenticationServiceService {
 
             if (this.authenticated == false && environment.enableLogin) {
                 console.log("not authenticated");
-                this.router.navigateByUrl("/real-ws/login");
+                this.router.navigateByUrl("/pages/login");
             }
             else {
                 let processInLocalStorage = localStorage.getItem("process");
