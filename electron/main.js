@@ -16,10 +16,13 @@ function createWindow () {
   })
   
   mainWindow.setTitle("PMTK")
-  mainWindow.setMenu(null);
+  mainWindow.setMenu(null)
+  
+  const ses = mainWindow.webContents.session
+  //ses.clearCache()
 
   // and load the index.html of the app.
-  mainWindow.loadURL('http://localhost:5000/index.html')
+  mainWindow.loadURL('http://localhost:5000/index.html', {"extraHeaders" : "pragma: no-cache\n"})
   
   
   mainWindow.maximize()
