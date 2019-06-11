@@ -3,6 +3,8 @@ import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
 import { environment } from '../../../../environments/environment';
 import {Pm4pyService} from "../../../pm4py-service.service";
+import {AuthenticationServiceService} from '../../../authentication-service.service';
+
 
 @Component({
     selector: 'app-login-page',
@@ -20,7 +22,11 @@ export class LoginPageComponent {
     @ViewChild('f') loginForm: NgForm;
 
     constructor(private router: Router,
-        private route: ActivatedRoute, private pm4pyServ: Pm4pyService) {
+        private route: ActivatedRoute, private pm4pyServ: Pm4pyService, private authService: AuthenticationServiceService) {
+
+        this.authService.checkAuthentication().subscribe(data => {
+            //console.log(data);
+        });
 
         this.username = "";
         this.password = "";
