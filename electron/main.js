@@ -16,6 +16,7 @@ function createWindow () {
   })
   
   mainWindow.setTitle("PMTK")
+  mainWindow.setMenu(null);
 
   // and load the index.html of the app.
   mainWindow.loadURL('http://localhost:5000/index.html')
