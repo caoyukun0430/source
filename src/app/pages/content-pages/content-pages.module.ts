@@ -11,13 +11,16 @@ import { LockScreenPageComponent } from "./lock-screen/lock-screen-page.componen
 import { LoginPageComponent } from "./login/login-page.component";
 import { MaintenancePageComponent } from "./maintenance/maintenance-page.component";
 import { RegisterPageComponent } from "./register/register-page.component";
+import {MatInputModule} from '@angular/material';
+
 
 
 @NgModule({
     imports: [
         CommonModule,
         ContentPagesRoutingModule,
-        FormsModule        
+        FormsModule,
+        MatInputModule
     ],
     declarations: [
         ComingSoonPageComponent,

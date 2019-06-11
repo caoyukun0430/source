@@ -79,7 +79,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this._route.events.subscribe((next) => {
       if (next instanceof RoutesRecognized) {
-        if (next.url.startsWith("/real-ws/pmodel") || next.url.startsWith("/real-ws/plist") || next.url.startsWith("/real-ws/login")) {
+        if (next.url.startsWith("/real-ws/pmodel") || next.url.startsWith("/real-ws/plist") || next.url.startsWith("/pages/login")) {
           this.authService.checkAuthentication().subscribe(data => {
 
             console.log("AAAAAA");
