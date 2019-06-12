@@ -39,8 +39,6 @@ export class PerformanceFilterComponent implements OnInit {
     this.pm4pyServ.getCaseDurationGraph(params).subscribe(data => {
       let caseDurationJson = data as JSON;
       this.points = caseDurationJson["points"];
-      console.log("POINTS=");
-      console.log(this.points);
 
       if (this.points.length > 0) {
         this.min_performance = Math.floor(this.points[0][0]);
@@ -52,11 +50,7 @@ export class PerformanceFilterComponent implements OnInit {
         (<HTMLInputElement>document.getElementById("maximumPerformance")).value = this.selected_max_performance;
       }
 
-      console.log("min_performance = ");
-      console.log(this.min_performance);
-
-      console.log("max_performance = ");
-      console.log(this.max_performance);
+      this.loaded = true;
     });
   }
 
@@ -70,9 +64,7 @@ export class PerformanceFilterComponent implements OnInit {
     this.min_performance = parseInt(this.selected_min_performance);
     this.max_performance = parseInt(this.selected_max_performance);
 
-    console.log("AAAA");
     this.filterService.addFilter("case_performance_filter", String(this.min_performance)+"@@@"+String(this.max_performance));
 
-    console.log("BBBB");
   }
 }

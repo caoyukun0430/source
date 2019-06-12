@@ -81,20 +81,18 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this._route.events.subscribe((next) => {
       if (next instanceof RoutesRecognized) {
-        if (next.url.startsWith("/real-ws/pmodel") || next.url.startsWith("/real-ws/plist") || next.url.startsWith("/pages/login")) {
-          this.authService.checkAuthentication().subscribe(data => {
+        this.authService.checkAuthentication().subscribe(data => {
 
-            console.log("AAAAAA");
-            console.log(data);
+          console.log("AAAAAA");
+          console.log(data);
 
-            this.sessionId = data.sessionId;
-            this.userId = data.userId;
-            this.isNotLogin = data.isNotLogin;
-            this.enableDownload = data.enableDownload;
-            this.enableUpload = data.enableUpload;
-            this.thisProcess = localStorage.getItem("process");
-          });
-        }
+          this.sessionId = data.sessionId;
+          this.userId = data.userId;
+          this.isNotLogin = data.isNotLogin;
+          this.enableDownload = data.enableDownload;
+          this.enableUpload = data.enableUpload;
+          this.thisProcess = localStorage.getItem("process");
+        });
 
         if (next.url.startsWith("/real-ws/pmodel")) {
           this.isProcessModelPage = true;

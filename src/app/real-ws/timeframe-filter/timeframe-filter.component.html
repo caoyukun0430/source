@@ -1,3 +1,5 @@
+<h2 mat-dialog-title>Timeframe Filter</h2>
+<mat-dialog-content class="mat-typography">
 Select the filtering method:<br />
 <mat-select placeholder="Selected method" [(value)]="filteringMethod">
   <mat-option value="timestamp_trace_intersecting">Traces (intersecting)</mat-option>
@@ -6,3 +8,12 @@ Select the filtering method:<br />
 </mat-select>
 
 <br /><br />
+
+  Interval start point: <input id="minimumTimestamp" matInput style="width: 130px; font-size: 12px" value="0"><br />
+  Interval end point: <input id="maximumTimestamp" matInput style="width: 130px; font-size: 12px" value="0"><br />
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="applyFilter()">Apply</button>
+</mat-dialog-actions>
