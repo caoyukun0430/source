@@ -1,3 +1,8 @@
-<p>
-  timeframe-filter works!
-</p>
+Select the filtering method:<br />
+<mat-select placeholder="Selected method" [(value)]="filteringMethod">
+  <mat-option value="timestamp_trace_intersecting">Traces (intersecting)</mat-option>
+  <mat-option value="timestamp_trace_containing">Traces (contained)</mat-option>
+  <mat-option value="timestamp_events">Events</mat-option>
+</mat-select>
+
+<br /><br />

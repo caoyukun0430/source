@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpParams} from '@angular/common/http';
+import {Pm4pyService} from "../../pm4py-service.service";
+import {AuthenticationServiceService} from '../../authentication-service.service';
+import { FilterServiceService } from '../../filter-service.service';
+
 
 @Component({
   selector: 'app-performance-filter',
@@ -7,9 +12,67 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PerformanceFilterComponent implements OnInit {
 
-  constructor() { }
+  points: any;
+  min_performance : number;
+  max_performance : number;
+  loaded : boolean;
+  public selected_min_performance : string;
+  public selected_max_performance : string;
+
+  constructor(private pm4pyServ: Pm4pyService, private authService: AuthenticationServiceService, public filterService : FilterServiceService) {
+    this.min_performance = 0.0;
+    this.max_performance = 0.0;
+    this.loaded = false;
+
+    this.selected_min_performance = String(this.min_performance);
+    this.selected_max_performance = String(this.max_performance);
+
+    this.authService.checkAuthentication().subscribe(data => {
+    });
+
+    this.getPerformanceGraph();
+  }
+
+  getPerformanceGraph() {
+    let params: HttpParams = new HttpParams();
+
+    this.pm4pyServ.getCaseDurationGraph(params).subscribe(data => {
+      let caseDurationJson = data as JSON;
+      this.points = caseDurationJson["points"];
+      console.log("POINTS=");
+      console.log(this.points);
+
+      if (this.points.length > 0) {
+        this.min_performance = Math.floor(this.points[0][0]);
+        this.max_performance = Math.ceil(this.points[this.points.length - 1][0]);
+        this.selected_min_performance = String(this.min_performance);
+        this.selected_max_performance = String(this.max_performance);
+
+        (<HTMLInputElement>document.getElementById("minimumPerformance")).value = this.selected_min_performance;
+        (<HTMLInputElement>document.getElementById("maximumPerformance")).value = this.selected_max_performance;
+      }
+
+      console.log("min_performance = ");
+      console.log(this.min_performance);
+
+      console.log("max_performance = ");
+      console.log(this.max_performance);
+    });
+  }
 
   ngOnInit() {
   }
 
+  applyFilter() {
+    this.selected_min_performance = (<HTMLInputElement>document.getElementById("minimumPerformance")).value;
+    this.selected_max_performance = (<HTMLInputElement>document.getElementById("maximumPerformance")).value;
+
+    this.min_performance = parseInt(this.selected_min_performance);
+    this.max_performance = parseInt(this.selected_max_performance);
+
+    console.log("AAAA");
+    this.filterService.addFilter("case_performance_filter", String(this.min_performance)+"@@@"+String(this.max_performance));
+
+    console.log("BBBB");
+  }
 }
