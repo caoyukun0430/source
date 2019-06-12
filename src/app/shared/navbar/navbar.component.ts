@@ -15,6 +15,8 @@ import {StartActivitiesFilterComponent} from "../../real-ws/start-activities-fil
 import {EndActivitiesFilterComponent} from "../../real-ws/end-activities-filter/end-activities-filter.component";
 import {VariantsFilterComponent} from "../../real-ws/variants-filter/variants-filter.component";
 import {AttributesFilterComponent} from "../../real-ws/attributes-filter/attributes-filter.component";
+import {TimeframeFilterComponent} from '../../real-ws/timeframe-filter/timeframe-filter.component';
+import {PerformanceFilterComponent} from '../../real-ws/performance-filter/performance-filter.component';
 
 @Component({
   selector: "app-navbar",
@@ -241,5 +243,13 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   attributesFilter() {
     this.dialog.open(AttributesFilterComponent);
+  }
+
+  performanceFilter() {
+    this.dialog.open(PerformanceFilterComponent);
+  }
+
+  timeframeFilter() {
+    this.dialog.open(TimeframeFilterComponent);
   }
 }

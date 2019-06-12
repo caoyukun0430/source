@@ -20,6 +20,8 @@ import { PlistComponent } from './plist/plist.component';
 import { SnaComponent } from './sna/sna.component';
 import { TransientComponent } from './transient/transient.component';
 import { AlignmentsComponent } from './alignments/alignments.component';
+import { TimeframeFilterComponent } from './timeframe-filter/timeframe-filter.component';
+import { PerformanceFilterComponent } from './performance-filter/performance-filter.component';
 
 @NgModule({
   declarations: [PmodelComponent, CasesComponent, StatisticsComponent, LoginComponentComponent, PlistComponent, SnaComponent, TransientComponent, AlignmentsComponent],

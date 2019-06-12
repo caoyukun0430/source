@@ -50,6 +50,9 @@ import {StartActivitiesFilterComponent} from './real-ws/start-activities-filter/
 import {EndActivitiesFilterComponent} from './real-ws/end-activities-filter/end-activities-filter.component';
 import {VariantsFilterComponent} from './real-ws/variants-filter/variants-filter.component';
 import {AttributesFilterComponent} from './real-ws/attributes-filter/attributes-filter.component';
+import {PerformanceFilterComponent} from './real-ws/performance-filter/performance-filter.component';
+import {TimeframeFilterComponent} from './real-ws/timeframe-filter/timeframe-filter.component';
+
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true,
@@ -61,7 +64,7 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 @NgModule({
-    declarations: [AppComponent, FullLayoutComponent, ContentLayoutComponent, StartActivitiesFilterComponent, EndActivitiesFilterComponent, VariantsFilterComponent, AttributesFilterComponent],
+    declarations: [AppComponent, FullLayoutComponent, ContentLayoutComponent, StartActivitiesFilterComponent, EndActivitiesFilterComponent, VariantsFilterComponent, AttributesFilterComponent, PerformanceFilterComponent, TimeframeFilterComponent],
     imports: [
         BrowserAnimationsModule,
         StoreModule.forRoot({}),
@@ -103,7 +106,7 @@ export function createTranslateLoader(http: HttpClient) {
         PerfectScrollbarModule
     ],
     entryComponents: [
-        StartActivitiesFilterComponent, EndActivitiesFilterComponent, VariantsFilterComponent, AttributesFilterComponent
+        StartActivitiesFilterComponent, EndActivitiesFilterComponent, VariantsFilterComponent, AttributesFilterComponent, PerformanceFilterComponent, TimeframeFilterComponent
     ],
     providers: [
         AuthService,
