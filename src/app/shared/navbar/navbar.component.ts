@@ -73,11 +73,11 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.userId = null;
     this.isNotLogin = false;
     this.enableDownload = false;
-    this.enableUpload = false;
+    this.enableUpload = true;
     this.thisProcess = null;
 
     this.isProcessModelPage = false;
-    this.isPlistPage = false;
+    this.isPlistPage = true;
 
     this._route.events.subscribe((next) => {
       if (next instanceof RoutesRecognized) {
@@ -102,7 +102,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
           this.isProcessModelPage = false;
           this.isPlistPage = true;
         }
-        else {
+        else if (next.url.startsWith("/real-ws") || next.url.startsWith("/pages/login")) {
           this.isProcessModelPage = false;
           this.isPlistPage = false;
         }
