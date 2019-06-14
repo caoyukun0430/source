@@ -83,7 +83,7 @@ export class PmodelComponent implements OnInit {
             this.processModelBase64Original = this.pm4pyJson['base64'];
             this.thisProcessModel = this.pm4pyJson['model'];
             this.thisHandler = this.pm4pyJson['handler'];
-            this.enableConformanceChecking = this.typeOfModel === 'inductive' && this.thisHandler === 'xes';
+            this.enableConformanceChecking = this.thisHandler === 'xes' && (this.typeOfModel === 'inductive' || this.typeOfModel === 'dfg');
             if (this.enableConformanceChecking) {
                 localStorage.setItem('process_model', this.thisProcessModel);
             }
