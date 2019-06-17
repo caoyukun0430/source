@@ -3,6 +3,8 @@ import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {Pm4pyService} from "../../pm4py-service.service";
 import {HttpParams} from "@angular/common/http";
 import {AuthenticationServiceService} from '../../authentication-service.service';
+import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiting-circle-component.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-transient',
@@ -21,7 +23,7 @@ export class TransientComponent implements OnInit {
   sanitizer: DomSanitizer;
   pm4pyService: Pm4pyService;
 
-  constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, private authService: AuthenticationServiceService) {
+  constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, private authService: AuthenticationServiceService, public dialog: MatDialog) {
     this.sanitizer = _sanitizer;
     this.pm4pyService = pm4pyServ;
 
@@ -61,11 +63,16 @@ export class TransientComponent implements OnInit {
     let params: HttpParams = new HttpParams();
     params = params.set("delay", this.expSelectedDelay.toString());
 
+    this.dialog.open(WaitingCircleComponentComponent);
+
+
     this.pm4pyService.transientAnalysis(params).subscribe(data => {
       this.pm4pyJson = data as JSON;
       this.processModelBase64Original = this.pm4pyJson["base64"];
       this.processModelBase64Sanitized = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.processModelBase64Original);
       this.isLoading = false;
+
+      this.dialog.closeAll();
     });
   }
 

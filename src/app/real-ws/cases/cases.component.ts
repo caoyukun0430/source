@@ -4,8 +4,9 @@ import {Pm4pyService} from "../../pm4py-service.service";
 import {HttpParams} from "@angular/common/http";
 import { MatTableDataSource } from '@angular/material/table';
 import { ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material';
+import {MatDialog, MatSort} from '@angular/material';
 import {AuthenticationServiceService} from '../../authentication-service.service';
+import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiting-circle-component.component';
 
 interface Variant {
   variant: string;
@@ -60,7 +61,7 @@ export class CasesComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) casesSort: MatSort;
 
-  constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, private authService: AuthenticationServiceService) {
+  constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, private authService: AuthenticationServiceService, public dialog: MatDialog) {
     /**
      * Constructor
      */
@@ -157,10 +158,16 @@ export class CasesComponent implements OnInit, AfterViewInit {
       this.isLoading = this.variantsLoading || this.casesLoading;
       this.dataSourceVariants.data = this.variants;
       console.log(this.variants);
+
+      if (this.isLoading === false) {
+        this.dialog.closeAll();
+      }
     })
   }
 
   getAllCases() {
+    this.dialog.open(WaitingCircleComponentComponent);
+
     this.casesLoading = true;
     this.isLoading = this.variantsLoading || this.casesLoading;
     let params : HttpParams = new HttpParams();
@@ -177,6 +184,10 @@ export class CasesComponent implements OnInit, AfterViewInit {
       this.dataSourceCases.data = this.cases;
       this.dataSourceCases.sort = this.casesSort;
       console.log(this.cases);
+
+      if (this.isLoading === false) {
+        this.dialog.closeAll();
+      }
     })
   }
 
@@ -206,12 +217,18 @@ export class CasesComponent implements OnInit, AfterViewInit {
 
     let params : HttpParams = new HttpParams();
     params = params.set("caseid", this.caseSelected);
+
+    this.dialog.open(WaitingCircleComponentComponent);
+
     this.pm4pyService.getEvents(params).subscribe(data => {
       this.pm4pyJsonEvents = data as JSON;
       this.events = this.pm4pyJsonEvents["events"];
       this.dataSourceEvents.data = this.events;
       this.caseIsSelected = true;
       console.log(this.events);
+
+      this.dialog.closeAll();
+
     })
   }
 

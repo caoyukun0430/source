@@ -3,6 +3,8 @@ import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {Pm4pyService} from "../../pm4py-service.service";
 import {HttpParams} from "@angular/common/http";
 import {AuthenticationServiceService} from '../../authentication-service.service';
+import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiting-circle-component.component';
+import {MatDialog} from '@angular/material';
 
 
 @Component({
@@ -24,7 +26,7 @@ export class StatisticsComponent implements OnInit {
   public eventsPerTimeLoading: boolean = true;
   public caseDurationLoading: boolean = true;
 
-  constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, private authService: AuthenticationServiceService) {
+  constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, private authService: AuthenticationServiceService, public dialog: MatDialog) {
     /**
      * Constructor
      */
@@ -47,16 +49,26 @@ export class StatisticsComponent implements OnInit {
      */
     let params: HttpParams = new HttpParams();
 
+    this.dialog.open(WaitingCircleComponentComponent);
+
     this.pm4pyService.getEventsPerTime(params).subscribe(data => {
       this.eventsPerTimeJson = data as JSON;
       this.eventsPerTimeSvgOriginal = this.eventsPerTimeJson["base64"];
       this.eventsPerTimeSvgSanitized = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.eventsPerTimeSvgOriginal);
       this.eventsPerTimeLoading = false;
       this.isLoading = this.eventsPerTimeLoading || this.caseDurationLoading;
+
+      if (this.isLoading === false) {
+        this.dialog.closeAll();
+      }
     }, err => {
       alert("Error loading events per time statistic");
       this.eventsPerTimeLoading = false;
       this.isLoading = this.eventsPerTimeLoading || this.caseDurationLoading;
+
+      if (this.isLoading === false) {
+        this.dialog.closeAll();
+      }
     });
   }
 
@@ -73,10 +85,18 @@ export class StatisticsComponent implements OnInit {
       this.caseDurationSvgSanitized = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.caseDurationSvgOriginal);
       this.caseDurationLoading = false;
       this.isLoading = this.eventsPerTimeLoading || this.caseDurationLoading;
+
+      if (this.isLoading === false) {
+        this.dialog.closeAll();
+      }
     }, err => {
       alert("Error loading case duration statistic");
       this.caseDurationLoading = false;
       this.isLoading = this.eventsPerTimeLoading || this.caseDurationLoading;
+
+      if (this.isLoading === false) {
+        this.dialog.closeAll();
+      }
     });
   }
 
