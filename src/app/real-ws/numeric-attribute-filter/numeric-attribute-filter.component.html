@@ -8,8 +8,14 @@
       {{ option }}
     </mat-option>
   </mat-select>
-  <br />
-  <img [src]="numericAttributeSvgSanitized" style='height: 250px'><br />
+  <div [hidden]="!is_numeric">
+    <br />
+    <img [src]="numericAttributeSvgSanitized" style='height: 250px'><br />
+    <mat-select placeholder="Selected method" [(value)]="filteringMethod">
+      <mat-option value="numeric_attr_traces">Traces</mat-option>
+      <mat-option value="numeric_attr_events">Events</mat-option>
+    </mat-select>
+  </div>
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">

@@ -19,12 +19,23 @@ export class NumericAttributeFilterComponent implements OnInit {
   points : any;
   numericAttributeSvgOriginal : string;
   numericAttributeSvgSanitized : SafeResourceUrl;
+  public filteringMethod : string;
+  min_value : number;
+  max_value : number;
+  public selected_min_value : string;
+  public selected_max_value : string;
+  public is_numeric : boolean;
 
   constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, public filterService : FilterServiceService, public dialog: MatDialog) {
     this.sanitizer = _sanitizer;
     this.pm4pyService = pm4pyServ;
 
     this.filterService = filterService;
+
+    this.filteringMethod = "numeric_attr_traces";
+    this.min_value = -1.0;
+    this.max_value = -1.0;
+    this.is_numeric = false;
 
     this.getAttributesList();
   }
@@ -58,9 +69,25 @@ export class NumericAttributeFilterComponent implements OnInit {
     this.pm4pyService.getNumericAttributeGraph(httpParams).subscribe(data => {
       let numericAttributeJson = data as JSON;
 
+      this.points = numericAttributeJson["points"];
+
       this.numericAttributeSvgOriginal = numericAttributeJson["base64"];
       this.numericAttributeSvgSanitized = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.numericAttributeSvgOriginal);
 
+      if (this.points.length > 0) {
+        this.min_value = Math.floor(this.points[0][0]);
+        this.max_value = Math.ceil(this.points[this.points.length - 1][0]);
+        this.selected_min_value = String(this.min_value);
+        this.selected_max_value = String(this.max_value);
+        this.is_numeric = true;
+      }
+      else {
+        this.is_numeric = false;
+      }
+
+      thisDialog.close();
+    }, err => {
+      this.is_numeric = false;
       thisDialog.close();
     });
   }

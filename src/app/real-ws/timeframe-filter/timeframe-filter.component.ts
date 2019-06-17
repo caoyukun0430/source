@@ -24,8 +24,8 @@ export class TimeframeFilterComponent implements OnInit {
   constructor(private pm4pyServ: Pm4pyService, private authService: AuthenticationServiceService, public filterService : FilterServiceService, private _sanitizer: DomSanitizer) {
     this.filteringMethod = "timestamp_trace_intersecting";
 
-    this.min_timestamp = 0.0;
-    this.max_timestamp = 0.0;
+    this.min_timestamp = -1.0;
+    this.max_timestamp = -1.0;
     this.loaded = false;
 
     this.selected_min_timestamp = String(this.min_timestamp);

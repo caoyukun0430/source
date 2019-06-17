@@ -23,8 +23,8 @@ export class PerformanceFilterComponent implements OnInit {
   public selected_max_performance : string;
 
   constructor(private pm4pyServ: Pm4pyService, private authService: AuthenticationServiceService, public filterService : FilterServiceService, private _sanitizer: DomSanitizer) {
-    this.min_performance = 0.0;
-    this.max_performance = 0.0;
+    this.min_performance = -1.0;
+    this.max_performance = -1.0;
     this.loaded = false;
 
     this.selected_min_performance = String(this.min_performance);
