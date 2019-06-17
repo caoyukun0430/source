@@ -3,6 +3,7 @@ import {HttpParams} from '@angular/common/http';
 import {Pm4pyService} from "../../pm4py-service.service";
 import {AuthenticationServiceService} from '../../authentication-service.service';
 import { FilterServiceService } from '../../filter-service.service';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
 
 @Component({
@@ -16,10 +17,12 @@ export class PerformanceFilterComponent implements OnInit {
   min_performance : number;
   max_performance : number;
   loaded : boolean;
+  caseDurationSvgOriginal: string;
+  caseDurationSvgSanitized: SafeResourceUrl;
   public selected_min_performance : string;
   public selected_max_performance : string;
 
-  constructor(private pm4pyServ: Pm4pyService, private authService: AuthenticationServiceService, public filterService : FilterServiceService) {
+  constructor(private pm4pyServ: Pm4pyService, private authService: AuthenticationServiceService, public filterService : FilterServiceService, private _sanitizer: DomSanitizer) {
     this.min_performance = 0.0;
     this.max_performance = 0.0;
     this.loaded = false;
@@ -39,6 +42,9 @@ export class PerformanceFilterComponent implements OnInit {
     this.pm4pyServ.getCaseDurationGraph(params).subscribe(data => {
       let caseDurationJson = data as JSON;
       this.points = caseDurationJson["points"];
+
+      this.caseDurationSvgOriginal = caseDurationJson["base64"];
+      this.caseDurationSvgSanitized = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.caseDurationSvgOriginal);
 
       if (this.points.length > 0) {
         this.min_performance = Math.floor(this.points[0][0]);
