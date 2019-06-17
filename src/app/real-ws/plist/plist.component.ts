@@ -3,6 +3,8 @@ import {Pm4pyService} from "../../pm4py-service.service";
 import {HttpParams} from "@angular/common/http";
 import {Router, RoutesRecognized} from "@angular/router";
 import {AuthenticationServiceService} from '../../authentication-service.service';
+import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiting-circle-component.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-plist',
@@ -16,7 +18,7 @@ export class PlistComponent implements OnInit {
   router : Router;
   public logsList: string[];
 
-  constructor(private pm4pyServ: Pm4pyService, private _route : Router, private authService: AuthenticationServiceService) {
+  constructor(private pm4pyServ: Pm4pyService, private _route : Router, private authService: AuthenticationServiceService, public dialog: MatDialog) {
     /**
      * Constructor
      */
@@ -43,9 +45,13 @@ export class PlistComponent implements OnInit {
      */
     let params: HttpParams = new HttpParams();
 
+    this.dialog.open(WaitingCircleComponentComponent);
+
     this.pm4pyService.getLogsList(params).subscribe(data => {
       this.logsListJson = data as JSON;
       this.logsList = this.logsListJson["logs"];
+
+      this.dialog.closeAll();
     });
   }
 

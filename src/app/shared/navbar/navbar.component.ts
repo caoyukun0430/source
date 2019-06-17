@@ -18,6 +18,7 @@ import {AttributesFilterComponent} from "../../real-ws/attributes-filter/attribu
 import {TimeframeFilterComponent} from '../../real-ws/timeframe-filter/timeframe-filter.component';
 import {PerformanceFilterComponent} from '../../real-ws/performance-filter/performance-filter.component';
 import {NumericAttributeFilterComponent} from '../../real-ws/numeric-attribute-filter/numeric-attribute-filter.component';
+import {WaitingCircleComponentComponent} from '../../real-ws/waiting-circle-component/waiting-circle-component.component';
 
 @Component({
   selector: "app-navbar",
@@ -175,8 +176,13 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   downloadCSV() {
     let httpParams : HttpParams = new HttpParams();
 
+    this.dialog.open(WaitingCircleComponentComponent);
+
     this.pm4pyServ.downloadCsvLog(httpParams).subscribe(data => {
       let csvJson : JSON = data as JSON;
+
+      this.dialog.closeAll();
+
       this.downloadFile(csvJson['content'], 'text/csv');
     });
   }
@@ -184,8 +190,13 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   downloadXES() {
     let httpParams : HttpParams = new HttpParams();
 
+    this.dialog.open(WaitingCircleComponentComponent);
+
     this.pm4pyServ.downloadXesLog(httpParams).subscribe(data => {
       let xesJson : JSON = data as JSON;
+
+      this.dialog.closeAll();
+
       this.downloadFile(xesJson['content'], 'text/csv');
     });
   }
@@ -202,12 +213,17 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     let filetype : string = $event.target.files[0].type;
     let extension : string = filename.split(".")[1];
     if (extension === "xes" || extension === "csv") {
+      this.dialog.open(WaitingCircleComponentComponent);
+
       reader.readAsDataURL($event.target.files[0]);
       reader.onload = () => {
         let base64: string = reader.result.toString();
         let data : any = {"filename": filename, "base64": base64};
         this.pm4pyServ.uploadLog(data, new HttpParams()).subscribe(data => {
           let responseJson : JSON = data as JSON;
+
+          this.dialog.closeAll();
+
           if (responseJson["status"] === "OK") {
             if (this._route.url === "/real-ws/plist") {
               this._route.navigateByUrl("/real-ws/plist2");
