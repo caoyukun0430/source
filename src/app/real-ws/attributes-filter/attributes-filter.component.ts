@@ -43,7 +43,6 @@ export class AttributesFilterComponent implements OnInit {
       let attributesList = data as JSON;
       this.attributesList = attributesList["attributes_list"];
       console.log(this.attributesList);
-      console.log(this.attributesList);
     })
   }
 

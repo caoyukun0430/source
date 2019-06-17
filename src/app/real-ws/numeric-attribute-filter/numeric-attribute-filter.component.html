@@ -1,3 +1,18 @@
-<p>
-  numeric-attribute-filter works!
-</p>
+<h2 mat-dialog-title>Numeric Attributes Filter</h2>
+<mat-dialog-content class="mat-typography">
+  Select the attribute:<br />
+  <mat-select placeholder="Selected attribute" [(value)]="selectedAttribute" (selectionChange)="selectedAttributeChanged($event)">
+    <mat-option
+            *ngFor="let option of attributesList"
+            value="{{ option }}">
+      {{ option }}
+    </mat-option>
+  </mat-select>
+  <br />
+  <img [src]="numericAttributeSvgSanitized" style='height: 250px'><br />
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="applyFilter()">Apply</button>
+</mat-dialog-actions>

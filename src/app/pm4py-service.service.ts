@@ -117,6 +117,27 @@ export class Pm4pyService {
     return this.http.get(completeUrl, {params: parameters});
   }
 
+  getNumericAttributeGraph(parameters : HttpParams) {
+    /**
+     * Get the numreic attribute graph
+     *
+     * parameters:
+     * parameters: HttpParams -> Parameters to pass in GET to the service
+     *
+     * Returns:
+     * observers object
+     */
+    let process = localStorage.getItem("process");
+    let sessionId = localStorage.getItem("sessionId");
+
+    parameters = parameters.set("process", process);
+    parameters = parameters.set("session", sessionId);
+
+    var completeUrl : string = this.webservicePath + "getNumericAttributeGraph";
+
+    return this.http.get(completeUrl, {params: parameters});
+  }
+
   getAllVariants(parameters : HttpParams) {
     /**
      * Gets all the variants from the given log
