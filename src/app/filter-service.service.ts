@@ -3,6 +3,8 @@ import {HttpParams} from "@angular/common/http";
 import {environment} from "../environments/environment";
 import {HttpClient} from '@angular/common/http';
 import {Router} from "@angular/router";
+import {MatDialog} from '@angular/material';
+import {WaitingCircleComponentComponent} from './real-ws/waiting-circle-component/waiting-circle-component.component';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,7 @@ export class FilterServiceService {
   thisProcess : string;
   webservicePath: string;
 
-  constructor(private http: HttpClient, private router : Router) {
+  constructor(private http: HttpClient, private router : Router, public dialog: MatDialog) {
     this.webservicePath = environment.webServicePath;
     this.retrieveFiltersFromLocalStorage();
   }
@@ -45,9 +47,14 @@ export class FilterServiceService {
     this.filtersPerProcess[this.thisProcess].push([filter_type, filter_value]);
     localStorage.setItem("filtersPerProcess", JSON.stringify(this.filtersPerProcess));
 
+    this.dialog.open(WaitingCircleComponentComponent);
+
     this.addFilterPOST([filter_type, filter_value], this.filtersPerProcess[this.thisProcess], httpParams).subscribe(data => {
       console.log("SUCCESS!");
       console.log(this.filtersPerProcess);
+
+      this.dialog.closeAll();
+
       if (this.router.url === "/real-ws/pmodel") {
         this.router.navigateByUrl("/real-ws/pmodel2");
       }
@@ -62,9 +69,14 @@ export class FilterServiceService {
     this.filtersPerProcess[this.thisProcess].splice(thisIndex, 1);
     localStorage.setItem("filtersPerProcess", JSON.stringify(this.filtersPerProcess));
     let httpParams : HttpParams = new HttpParams();
+    this.dialog.open(WaitingCircleComponentComponent);
+
     this.removeFilterPOST(filter, this.filtersPerProcess[this.thisProcess], httpParams).subscribe(data => {
       console.log("REMOVED!");
       console.log(filter);
+
+      this.dialog.closeAll();
+
       if (this.router.url === "/real-ws/pmodel") {
         this.router.navigateByUrl("/real-ws/pmodel2");
       }

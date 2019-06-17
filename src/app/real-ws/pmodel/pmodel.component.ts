@@ -4,6 +4,8 @@ import {Pm4pyService} from '../../pm4py-service.service';
 import {AuthenticationServiceService} from '../../authentication-service.service';
 import {HttpParams} from '@angular/common/http';
 import {Router, RoutesRecognized} from '@angular/router';
+import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiting-circle-component.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
     selector: 'app-pmodel',
@@ -39,7 +41,7 @@ export class PmodelComponent implements OnInit {
     public isLoading: boolean;
     public enableConformanceChecking: boolean = false;
 
-    constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, private router: Router, private authService: AuthenticationServiceService) {
+    constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, private router: Router, private authService: AuthenticationServiceService, public dialog: MatDialog) {
         /**
          * Constructor
          */
@@ -78,6 +80,8 @@ export class PmodelComponent implements OnInit {
         params = params.set('decoration', this.decoration);
         params = params.set('typeOfModel', this.typeOfModel);
 
+        this.dialog.open(WaitingCircleComponentComponent);
+
         this.pm4pyService.getProcessSchema(params).subscribe(data => {
             this.pm4pyJson = data as JSON;
             this.processModelBase64Original = this.pm4pyJson['base64'];
@@ -90,6 +94,8 @@ export class PmodelComponent implements OnInit {
             this.processModelBase64Sanitized = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.processModelBase64Original);
             this.setImageCorrectSize();
             this.isLoading = false;
+
+            this.dialog.closeAll();
         });
     }
 
