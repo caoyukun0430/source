@@ -106,7 +106,7 @@ export class NumericAttributeFilterComponent implements OnInit {
     this.min_value = parseInt(this.selected_min_value);
     this.max_value = parseInt(this.selected_max_value);
 
-    this.filterService.addFilter(this.filteringMethod, String(this.min_value)+"@@@"+String(this.max_value));
+    this.filterService.addFilter(this.filteringMethod, [this.selectedAttribute, String(this.min_value)+"@@@"+String(this.max_value)]);
   }
 
 }
