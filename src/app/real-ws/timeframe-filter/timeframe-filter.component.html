@@ -1,6 +1,7 @@
 <h2 mat-dialog-title>Timeframe Filter</h2>
 <mat-dialog-content class="mat-typography">
-Select the filtering method:<br />
+  <img [src]="eventsPerTimeSvgSanitized" style='height: 230px'><br />
+  Select the filtering method:<br />
 <mat-select placeholder="Selected method" [(value)]="filteringMethod">
   <mat-option value="timestamp_trace_intersecting">Traces (intersecting)</mat-option>
   <mat-option value="timestamp_trace_containing">Traces (contained)</mat-option>
@@ -9,7 +10,7 @@ Select the filtering method:<br />
 
 <br /><br />
 
-  Interval start point: <input id="minimumTimestamp" matInput style="width: 130px; font-size: 12px" value="0"><br />
+  Interval start point: <input id="minimumTimestamp" matInput style="width: 130px; font-size: 12px" value="0">
   Interval end point: <input id="maximumTimestamp" matInput style="width: 130px; font-size: 12px" value="0"><br />
 
 </mat-dialog-content>
