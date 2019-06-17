@@ -11,10 +11,13 @@
   <div [hidden]="!is_numeric">
     <br />
     <img [src]="numericAttributeSvgSanitized" style='height: 250px'><br />
+    Select the filtering method:<br />
     <mat-select placeholder="Selected method" [(value)]="filteringMethod">
       <mat-option value="numeric_attr_traces">Traces</mat-option>
       <mat-option value="numeric_attr_events">Events</mat-option>
     </mat-select>
+    Minimum value: <input id="minimumValue" matInput style="width: 130px; font-size: 12px" value="-1">
+    Maximum value: <input id="maximumValue" matInput style="width: 130px; font-size: 12px" value="-1"><br />
   </div>
 
 </mat-dialog-content>

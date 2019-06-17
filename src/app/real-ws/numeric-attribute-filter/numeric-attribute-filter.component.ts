@@ -79,6 +79,10 @@ export class NumericAttributeFilterComponent implements OnInit {
         this.max_value = Math.ceil(this.points[this.points.length - 1][0]);
         this.selected_min_value = String(this.min_value);
         this.selected_max_value = String(this.max_value);
+
+        (<HTMLInputElement>document.getElementById("minimumValue")).value = this.selected_min_value;
+        (<HTMLInputElement>document.getElementById("maximumValue")).value = this.selected_max_value;
+
         this.is_numeric = true;
       }
       else {
@@ -96,7 +100,13 @@ export class NumericAttributeFilterComponent implements OnInit {
   }
 
   applyFilter() {
+    this.selected_min_value = (<HTMLInputElement>document.getElementById("minimumValue")).value;
+    this.selected_max_value = (<HTMLInputElement>document.getElementById("maximumValue")).value;
 
+    this.min_value = parseInt(this.selected_min_value);
+    this.max_value = parseInt(this.selected_max_value);
+
+    this.filterService.addFilter(this.filteringMethod, String(this.min_value)+"@@@"+String(this.max_value));
   }
 
 }
