@@ -3,6 +3,8 @@ import {HttpParams} from "@angular/common/http";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {Pm4pyService} from "../../pm4py-service.service";
 import {AuthenticationServiceService} from '../../authentication-service.service';
+import {MatDialog} from '@angular/material';
+import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiting-circle-component.component';
 
 @Component({
   selector: 'app-alignments',
@@ -19,7 +21,7 @@ export class AlignmentsComponent implements OnInit {
   projectionString : string;
   tableString : string;
 
-  constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, private authService: AuthenticationServiceService) {
+  constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, private authService: AuthenticationServiceService, public dialog: MatDialog) {
     this.pm4pyService = pm4pyServ;
     this.sanitizer = _sanitizer;
 
@@ -37,6 +39,8 @@ export class AlignmentsComponent implements OnInit {
 
     let params : HttpParams = new HttpParams();
 
+    let window = this.dialog.open(WaitingCircleComponentComponent);
+
     this.pm4pyService.getAlignmentsVisualizations(model, params).subscribe(data => {
       this.pm4pyJson = data as JSON;
       console.log(this.pm4pyJson);
@@ -46,6 +50,8 @@ export class AlignmentsComponent implements OnInit {
       this.tableImage = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.tableString);
       this.isLoading = false;
       this.setImageCorrectSize();
+
+      window.close();
     });
   }
 
