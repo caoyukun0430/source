@@ -47,7 +47,7 @@ export class PlistComponent implements OnInit {
 
     this.dialog.open(WaitingCircleComponentComponent);
 
-    this.pm4pyService.getLogsList(params).subscribe(data => {
+    this.pm4pyService.getLogsListAdvanced(params).subscribe(data => {
       this.logsListJson = data as JSON;
       this.logsList = this.logsListJson["logs"];
 

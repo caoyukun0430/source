@@ -96,6 +96,24 @@ export class Pm4pyService {
     return this.http.get(completeUrl, {params: parameters});
   }
 
+  getLogsListAdvanced(parameters : HttpParams) {
+    /**
+     * Gets the list of logs loaded in the service
+     *
+     * Parameters:
+     * parameters: HttpParams -> Parameters to pass in GET to the service
+     *
+     * Returns:
+     * observer object
+     */
+    var completeUrl : string = this.webservicePath + "getLogsListAdvanced";
+
+    let sessionId = localStorage.getItem("sessionId");
+    parameters = parameters.set("session", sessionId);
+
+    return this.http.get(completeUrl, {params: parameters});
+  }
+
   transientAnalysis(parameters : HttpParams) {
     /**
      * Perform transient analysis of the given process
