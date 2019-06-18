@@ -3,6 +3,8 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {Pm4pyService} from "../../pm4py-service.service";
 import {HttpParams} from "@angular/common/http";
 import { FilterServiceService } from '../../filter-service.service';
+import {MatDialog} from '@angular/material';
+import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiting-circle-component.component';
 
 @Component({
   selector: 'app-start-activities-filter',
@@ -16,7 +18,7 @@ export class StartActivitiesFilterComponent implements OnInit {
   public startActivities : string[];
   public selectedStartActivities : string[];
 
-  constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, public filterService : FilterServiceService) {
+  constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, public filterService : FilterServiceService, public dialog: MatDialog) {
     this.sanitizer = _sanitizer;
     this.pm4pyService = pm4pyServ;
     this.selectedStartActivities = [];
@@ -29,10 +31,15 @@ export class StartActivitiesFilterComponent implements OnInit {
 
   getStartActivities() {
     let httpParams : HttpParams = new HttpParams();
+
+    let thisDialog = this.dialog.open(WaitingCircleComponentComponent);
+
     this.pm4pyService.getStartActivities(httpParams).subscribe(data => {
       let startActivitiesJson = data as JSON;
       this.startActivities = startActivitiesJson["startActivities"];
       console.log(this.startActivities);
+
+      thisDialog.close();
     });
   }
 

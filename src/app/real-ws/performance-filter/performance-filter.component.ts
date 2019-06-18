@@ -4,6 +4,8 @@ import {Pm4pyService} from "../../pm4py-service.service";
 import {AuthenticationServiceService} from '../../authentication-service.service';
 import { FilterServiceService } from '../../filter-service.service';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {MatDialog} from '@angular/material';
+import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiting-circle-component.component';
 
 
 @Component({
@@ -22,7 +24,7 @@ export class PerformanceFilterComponent implements OnInit {
   public selected_min_performance : string;
   public selected_max_performance : string;
 
-  constructor(private pm4pyServ: Pm4pyService, private authService: AuthenticationServiceService, public filterService : FilterServiceService, private _sanitizer: DomSanitizer) {
+  constructor(private pm4pyServ: Pm4pyService, private authService: AuthenticationServiceService, public filterService : FilterServiceService, private _sanitizer: DomSanitizer, public dialog: MatDialog) {
     this.min_performance = -1.0;
     this.max_performance = -1.0;
     this.loaded = false;
@@ -38,6 +40,8 @@ export class PerformanceFilterComponent implements OnInit {
 
   getPerformanceGraph() {
     let params: HttpParams = new HttpParams();
+
+    let thisDialog = this.dialog.open(WaitingCircleComponentComponent);
 
     this.pm4pyServ.getCaseDurationGraph(params).subscribe(data => {
       let caseDurationJson = data as JSON;
@@ -57,6 +61,7 @@ export class PerformanceFilterComponent implements OnInit {
       }
 
       this.loaded = true;
+      thisDialog.close();
     });
   }
 

@@ -4,6 +4,8 @@ import {AuthenticationServiceService} from '../../authentication-service.service
 import { FilterServiceService } from '../../filter-service.service';
 import {HttpParams} from '@angular/common/http';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {MatDialog} from '@angular/material';
+import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiting-circle-component.component';
 
 @Component({
   selector: 'app-timeframe-filter',
@@ -21,7 +23,7 @@ export class TimeframeFilterComponent implements OnInit {
   public selected_min_timestamp : string;
   public selected_max_timestamp : string;
 
-  constructor(private pm4pyServ: Pm4pyService, private authService: AuthenticationServiceService, public filterService : FilterServiceService, private _sanitizer: DomSanitizer) {
+  constructor(private pm4pyServ: Pm4pyService, private authService: AuthenticationServiceService, public filterService : FilterServiceService, private _sanitizer: DomSanitizer, public dialog: MatDialog) {
     this.filteringMethod = "timestamp_trace_intersecting";
 
     this.min_timestamp = -1.0;
@@ -53,13 +55,14 @@ export class TimeframeFilterComponent implements OnInit {
   getTimeframeGraph() {
     let params: HttpParams = new HttpParams();
 
+    let thisDialog = this.dialog.open(WaitingCircleComponentComponent);
+
     this.pm4pyServ.getEventsPerTime(params).subscribe(data => {
       let eventsPerTimeJson = data as JSON;
       this.points = eventsPerTimeJson["points"];
 
       this.eventsPerTimeSvgOriginal = eventsPerTimeJson["base64"];
       this.eventsPerTimeSvgSanitized = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.eventsPerTimeSvgOriginal);
-
 
       if (this.points.length > 0) {
         this.min_timestamp = Math.floor(this.points[0][0]);
@@ -70,6 +73,8 @@ export class TimeframeFilterComponent implements OnInit {
         (<HTMLInputElement>document.getElementById("minimumTimestamp")).value = this.selected_min_timestamp;
         (<HTMLInputElement>document.getElementById("maximumTimestamp")).value = this.selected_max_timestamp;
       }
+
+      thisDialog.close();
     });
   }
 }

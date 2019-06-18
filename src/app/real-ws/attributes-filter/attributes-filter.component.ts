@@ -3,6 +3,8 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {Pm4pyService} from "../../pm4py-service.service";
 import {HttpParams} from "@angular/common/http";
 import { FilterServiceService } from '../../filter-service.service';
+import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiting-circle-component.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-attributes-filter',
@@ -18,7 +20,7 @@ export class AttributesFilterComponent implements OnInit {
   public selectedAttributeValues : string[];
   public filteringMethod : string;
 
-  constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, public filterService : FilterServiceService) {
+  constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, public filterService : FilterServiceService, public dialog: MatDialog) {
     this.sanitizer = _sanitizer;
     this.pm4pyService = pm4pyServ;
     this.selectedAttributeValues = [];
@@ -39,19 +41,29 @@ export class AttributesFilterComponent implements OnInit {
 
   getAttributesList() {
     let httpParams : HttpParams = new HttpParams();
+
+    let thisDialog = this.dialog.open(WaitingCircleComponentComponent);
+
     this.pm4pyService.getAttributesList(httpParams).subscribe(data => {
       let attributesList = data as JSON;
       this.attributesList = attributesList["attributes_list"];
       console.log(this.attributesList);
+
+      thisDialog.close();
     })
   }
 
   getAttributeValues() {
     let httpParams : HttpParams = new HttpParams();
+
+    let thisDialog = this.dialog.open(WaitingCircleComponentComponent);
+
     this.pm4pyService.getAttributeValues(this.selectedAttribute, httpParams).subscribe(data => {
       let endActivitiesJSON = data as JSON;
       this.attributeValues = endActivitiesJSON["attributeValues"];
       console.log(this.attributeValues);
+
+      thisDialog.close();
     });
   }
 
