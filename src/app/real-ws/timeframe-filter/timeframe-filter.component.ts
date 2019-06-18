@@ -46,10 +46,15 @@ export class TimeframeFilterComponent implements OnInit {
     this.selected_min_timestamp = (<HTMLInputElement>document.getElementById("minimumTimestamp")).value;
     this.selected_max_timestamp = (<HTMLInputElement>document.getElementById("maximumTimestamp")).value;
 
-    this.min_timestamp = parseInt(this.selected_min_timestamp);
-    this.max_timestamp = parseInt(this.selected_max_timestamp);
+    this.min_timestamp = this.dateConverter(this.selected_min_timestamp);
+    this.max_timestamp = this.dateConverter(this.selected_max_timestamp);
 
-    this.filterService.addFilter(this.filteringMethod, String(this.min_timestamp)+"@@@"+String(this.max_timestamp));
+    let filterStri = String(this.min_timestamp)+"@@@"+String(this.max_timestamp);
+
+    console.log("FILTERSTRI");
+    console.log(filterStri);
+
+    this.filterService.addFilter(this.filteringMethod, filterStri);
   }
 
   getTimeframeGraph() {
@@ -67,8 +72,8 @@ export class TimeframeFilterComponent implements OnInit {
       if (this.points.length > 0) {
         this.min_timestamp = Math.floor(this.points[0][0]);
         this.max_timestamp = Math.ceil(this.points[this.points.length - 1][0]);
-        this.selected_min_timestamp = String(this.min_timestamp);
-        this.selected_max_timestamp = String(this.max_timestamp);
+        this.selected_min_timestamp = this.timeConverter(this.min_timestamp);
+        this.selected_max_timestamp = this.timeConverter(this.max_timestamp);
 
         (<HTMLInputElement>document.getElementById("minimumTimestamp")).value = this.selected_min_timestamp;
         (<HTMLInputElement>document.getElementById("maximumTimestamp")).value = this.selected_max_timestamp;
@@ -76,5 +81,37 @@ export class TimeframeFilterComponent implements OnInit {
 
       thisDialog.close();
     });
+  }
+
+  timeConverter(UNIX_timestamp){
+    var a = new Date(UNIX_timestamp * 1000);
+    var months = ['01','02','03','04','05','06','07','08','09','10','11','12'];
+    var year = a.getFullYear();
+    var month = months[a.getMonth()];
+    var date = String(a.getDate());
+    var hour = String(a.getHours());
+    var min = String(a.getMinutes());
+    var sec = String(a.getSeconds());
+
+    if (date.length < 2) {
+      date = "0" + date;
+    }
+    if (hour.length < 2) {
+      hour = "0" + hour;
+    }
+    if (min.length < 2) {
+      min = "0" + min;
+    }
+    if (sec.length < 2) {
+      sec = "0" + sec;
+    }
+    var time = year + '-' + month + '-' + date + ' ' + hour + ':' + min + ':' + sec ;
+    return time;
+  }
+
+  dateConverter(date_string) {
+    var unixTimeZero = Date.parse(date_string) / 1000;
+
+    return unixTimeZero;
   }
 }
