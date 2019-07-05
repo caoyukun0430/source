@@ -364,4 +364,64 @@ export class Pm4pyService {
 
     return this.http.get(completeUrl, {params: parameters});
   }
+
+  addUserLogVisibility(parameters : HttpParams) {
+    let sessionId = localStorage.getItem("sessionId");
+
+    parameters = parameters.set("session", sessionId);
+
+    var completeUrl: string = this.webservicePath + "addUserLogVisibility";
+
+    return this.http.get(completeUrl, {params: parameters});
+  }
+
+  removeUserLogVisibility(parameters : HttpParams) {
+    let sessionId = localStorage.getItem("sessionId");
+
+    parameters = parameters.set("session", sessionId);
+
+    var completeUrl: string = this.webservicePath + "removeUserLogVisibility";
+
+    return this.http.get(completeUrl, {params: parameters});
+  }
+
+  addUserLogDownloadable(parameters : HttpParams) {
+    let sessionId = localStorage.getItem("sessionId");
+
+    parameters = parameters.set("session", sessionId);
+
+    var completeUrl: string = this.webservicePath + "addUserLogDownloadable";
+
+    return this.http.get(completeUrl, {params: parameters});
+  }
+
+  removeUserLogDownloadable(parameters : HttpParams) {
+    let sessionId = localStorage.getItem("sessionId");
+
+    parameters = parameters.set("session", sessionId);
+
+    var completeUrl: string = this.webservicePath + "removeUserLogDownloadable";
+
+    return this.http.get(completeUrl, {params: parameters});
+  }
+
+  addUserLogRemovable(parameters : HttpParams) {
+    let sessionId = localStorage.getItem("sessionId");
+
+    parameters = parameters.set("session", sessionId);
+
+    var completeUrl: string = this.webservicePath + "addUserLogRemovable";
+
+    return this.http.get(completeUrl, {params: parameters});
+  }
+
+  removeUserLogRemovable(parameters : HttpParams) {
+    let sessionId = localStorage.getItem("sessionId");
+
+    parameters = parameters.set("session", sessionId);
+
+    var completeUrl: string = this.webservicePath + "removeUserLogRemovable";
+
+    return this.http.get(completeUrl, {params: parameters});
+  }
 }
