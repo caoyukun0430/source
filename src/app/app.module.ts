@@ -55,6 +55,8 @@ import {TimeframeFilterComponent} from './real-ws/timeframe-filter/timeframe-fil
 
 import {NumericAttributeFilterComponent} from './real-ws/numeric-attribute-filter/numeric-attribute-filter.component';
 import {WaitingCircleComponentComponent} from './real-ws/waiting-circle-component/waiting-circle-component.component';
+import {AlignmentsComponent} from './real-ws/alignments/alignments.component';
+import {PmtkBpmnVisualizerComponent} from './real-ws/pmtk-bpmn-visualizer/pmtk-bpmn-visualizer.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true,
@@ -66,7 +68,7 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 @NgModule({
-    declarations: [AppComponent, FullLayoutComponent, ContentLayoutComponent, StartActivitiesFilterComponent, EndActivitiesFilterComponent, VariantsFilterComponent, AttributesFilterComponent, PerformanceFilterComponent, TimeframeFilterComponent, NumericAttributeFilterComponent, WaitingCircleComponentComponent],
+    declarations: [AppComponent, FullLayoutComponent, ContentLayoutComponent, StartActivitiesFilterComponent, EndActivitiesFilterComponent, VariantsFilterComponent, AttributesFilterComponent, PerformanceFilterComponent, TimeframeFilterComponent, NumericAttributeFilterComponent, WaitingCircleComponentComponent, PmtkBpmnVisualizerComponent],
     imports: [
         BrowserAnimationsModule,
         StoreModule.forRoot({}),
@@ -108,7 +110,7 @@ export function createTranslateLoader(http: HttpClient) {
         PerfectScrollbarModule
     ],
     entryComponents: [
-        StartActivitiesFilterComponent, EndActivitiesFilterComponent, VariantsFilterComponent, AttributesFilterComponent, PerformanceFilterComponent, TimeframeFilterComponent, NumericAttributeFilterComponent, WaitingCircleComponentComponent
+        StartActivitiesFilterComponent, EndActivitiesFilterComponent, VariantsFilterComponent, AttributesFilterComponent, PerformanceFilterComponent, TimeframeFilterComponent, NumericAttributeFilterComponent, WaitingCircleComponentComponent, PmtkBpmnVisualizerComponent
     ],
     providers: [
         AuthService,

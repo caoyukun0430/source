@@ -7,6 +7,7 @@ import {Router, RoutesRecognized} from '@angular/router';
 import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiting-circle-component.component';
 import {MatDialog} from '@angular/material';
 import {environment} from '../../../environments/environment';
+import {PmtkBpmnVisualizerComponent} from '../pmtk-bpmn-visualizer/pmtk-bpmn-visualizer.component';
 
 @Component({
     selector: 'app-pmodel',
@@ -224,5 +225,9 @@ export class PmodelComponent implements OnInit {
         const blob = new Blob([data], { type: type });
         const url= window.URL.createObjectURL(blob);
         window.open(url);
+    }
+
+    visualizeBpmnModel($event) {
+        this.dialog.open(PmtkBpmnVisualizerComponent);
     }
 }

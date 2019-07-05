@@ -26,6 +26,7 @@
     <button mat-button (click)="downloadModel($event)"><span style="font-size: 10px">Download Petri Net Model</span></button>
     <span *ngIf="enableBpmnDownload">
       <button mat-button (click)="downloadBpmnModel($event)"><span style="font-size: 10px">Download BPMN Model</span></button>
+      <button mat-button (click)="visualizeBpmnModel($event)"><span style="font-size: 10px">Visualize BPMN Model</span></button>
     </span>
     <span *ngIf="enableConformanceChecking">
       <button mat-button routerLink="/real-ws/alignments"><span style="font-size: 10px">Conformance against Visualized Model</span></button>
