@@ -1,8 +1,12 @@
 <div class="sharing-container">
+  Please update the sharing privileges by clicking on the corresponding checkboxs<br />
+  <b>V=</b> means that the user can view, <b>D=</b> download, <b>R=</b> remove.<br />
+  Changes are authomatically closed and the window can be closed through the ESC keyboard button<br /><br />
+
   <table class="sharing-table" border="1">
     <thead>
       <td></td>
-      <td *ngFor="let process of sortedLogs">{{process}}</td>
+      <td *ngFor="let process of sortedLogs"><b>{{process}}</b></td>
     </thead>
     <tr *ngFor="let user of sortedUsers">
       <td><b>{{user}}</b></td>
@@ -20,5 +24,6 @@
     height: 370px;
     width: 780px;
     overflow: visible;
+    font-size: 6pt;
   }
 </style>

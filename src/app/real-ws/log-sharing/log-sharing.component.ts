@@ -22,11 +22,9 @@ export class LogSharingComponent implements OnInit {
     this.sanitizer = _sanitizer;
     this.pm4pyService = pm4pyServ;
 
-    let dia = this.dialog.open(WaitingCircleComponentComponent);
 
     this.authService.checkAuthentication().subscribe(data => {
       this.getUserLogVisibility();
-      dia.close();
     });
 
 
@@ -38,6 +36,8 @@ export class LogSharingComponent implements OnInit {
   getUserLogVisibility() {
     let httpParams : HttpParams = new HttpParams();
 
+    let dia = this.dialog.open(WaitingCircleComponentComponent);
+
     this.pm4pyService.getUserLogVisibilities(httpParams).subscribe(data => {
       let pm4pyJson = data as JSON;
 
@@ -45,12 +45,7 @@ export class LogSharingComponent implements OnInit {
       this.sortedLogs = pm4pyJson["sorted_logs"];
       this.userLogVisibilities = pm4pyJson["user_log_visibility"];
 
-      console.log("SORTEDUSERS");
-      console.log(this.sortedUsers);
-      console.log("SORTEDLOGS");
-      console.log(this.sortedLogs);
-      console.log("USERLOGVISIBILITIES");
-      console.log(this.userLogVisibilities);
+      dia.close();
     })
   }
 
