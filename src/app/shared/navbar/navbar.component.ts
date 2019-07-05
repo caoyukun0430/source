@@ -7,6 +7,7 @@ import {AuthenticationServiceService} from '../../authentication-service.service
 import {Router, RoutesRecognized} from '@angular/router';
 import {HttpParams} from '@angular/common/http';
 import {Pm4pyService} from '../../pm4py-service.service';
+import {LogSharingComponent} from '../../real-ws/log-sharing/log-sharing.component';
 import {FilterServiceService} from '../../filter-service.service';
 
 import {MatDialog} from '@angular/material';
@@ -287,5 +288,9 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   numericAttributeFilter() {
     this.dialog.open(NumericAttributeFilterComponent);
+  }
+
+  shareLog() {
+      this.dialog.open(LogSharingComponent);
   }
 }

@@ -1,3 +1,24 @@
-<p>
-  log-sharing works!
-</p>
+<div class="sharing-container">
+  <table class="sharing-table" border="1">
+    <thead>
+      <td></td>
+      <td *ngFor="let process of sortedLogs">{{process}}</td>
+    </thead>
+    <tr *ngFor="let user of sortedUsers">
+      <td><b>{{user}}</b></td>
+      <td *ngFor="let process of sortedLogs">
+        V=<input type="checkbox" [checked]="userLogVisibilities[user][process]['visibility']">
+        D=<input type="checkbox" [checked]="userLogVisibilities[user][process]['downloadable']">
+        R=<input type="checkbox" [checked]="userLogVisibilities[user][process]['removable']">
+      </td>
+    </tr>
+  </table>
+</div>
+
+<style>
+  .sharing-container {
+    height: 370px;
+    width: 780px;
+    overflow: visible;
+  }
+</style>
