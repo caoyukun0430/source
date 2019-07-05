@@ -14,6 +14,7 @@ export class AuthenticationServiceService {
     isNotLogin: boolean;
     enableUpload: boolean;
     enableDownload: boolean;
+    isAdmin: boolean;
 
     webservicePath: string;
 
@@ -37,6 +38,7 @@ export class AuthenticationServiceService {
         this.isNotLogin = false;
         this.enableUpload = false;
         this.enableDownload = false;
+        this.isAdmin = false;
     }
 
     getAllAuthenticationParameters() {
@@ -46,7 +48,8 @@ export class AuthenticationServiceService {
             'userId': this.userId,
             'isNotLogin': this.isNotLogin,
             'enableUpload': this.enableUpload,
-            'enableDownload': this.enableDownload
+            'enableDownload': this.enableDownload,
+            'isAdmin': this.isAdmin
         }
     }
 
@@ -68,10 +71,15 @@ export class AuthenticationServiceService {
         return this.checkAuthentication0().map(data => {
             let sessionJson : JSON = data as JSON;
 
+            console.log("CHECKAUTENTICATION SESSIONJSON=");
+            console.log(sessionJson);
+
             if ("status" in sessionJson && sessionJson["status"] == "OK") {
                 if ("user" in sessionJson) {
                     this.userId = sessionJson["user"];
                 }
+                this.isAdmin = sessionJson["is_admin"];
+
                 this.isNotLogin = true;
                 this.authenticated = true;
             }

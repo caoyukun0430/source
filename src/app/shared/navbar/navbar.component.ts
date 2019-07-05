@@ -44,6 +44,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   public enableDownload : boolean;
   public enableUpload : boolean;
   public thisProcess : string;
+  public isAdmin : boolean;
 
   public isProcessModelPage : boolean;
   public isPlistPage : boolean;
@@ -77,9 +78,24 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.enableDownload = false;
     this.enableUpload = true;
     this.thisProcess = null;
+    this.isAdmin = false;
 
     this.isProcessModelPage = false;
     this.isPlistPage = true;
+
+  this.authService.checkAuthentication().subscribe(data => {
+
+      console.log("AAAAAA2");
+      console.log(data);
+
+      this.sessionId = data.sessionId;
+      this.userId = data.userId;
+      this.isNotLogin = data.isNotLogin;
+      this.enableDownload = data.enableDownload;
+      this.enableUpload = data.enableUpload;
+      this.isAdmin = data.isAdmin;
+      this.thisProcess = localStorage.getItem("process");
+  });
 
     this._route.events.subscribe((next) => {
       if (next instanceof RoutesRecognized) {
@@ -93,6 +109,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
           this.isNotLogin = data.isNotLogin;
           this.enableDownload = data.enableDownload;
           this.enableUpload = data.enableUpload;
+          this.isAdmin = data.isAdmin;
           this.thisProcess = localStorage.getItem("process");
         });
 
