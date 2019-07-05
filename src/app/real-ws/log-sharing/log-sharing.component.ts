@@ -49,4 +49,55 @@ export class LogSharingComponent implements OnInit {
     })
   }
 
+  changeVisibility(user, process) {
+    let dia = this.dialog.open(WaitingCircleComponentComponent);
+
+    if (this.userLogVisibilities[user][process]['visibility']) {
+      this.userLogVisibilities[user][process]['visibility'] = false;
+      console.log("changeVisibility 1");
+
+      dia.close();
+    }
+    else {
+      this.userLogVisibilities[user][process]['visibility'] = true;
+      console.log("changeVisibility 2");
+
+      dia.close();
+    }
+  }
+
+  changeDownloadable(user, process) {
+    let dia = this.dialog.open(WaitingCircleComponentComponent);
+
+    if (this.userLogVisibilities[user][process]['downloadable']) {
+      this.userLogVisibilities[user][process]['downloadable'] = false;
+      console.log("changeDownloadable 1");
+
+      dia.close();
+    }
+    else {
+      this.userLogVisibilities[user][process]['downloadable'] = true;
+      console.log("changeDownloadable 2");
+
+      dia.close();
+    }
+  }
+
+  changeRemovable(user, process) {
+    let dia = this.dialog.open(WaitingCircleComponentComponent);
+
+    if (this.userLogVisibilities[user][process]['removable']) {
+      this.userLogVisibilities[user][process]['removable'] = false;
+      console.log("changeRemovable 1");
+
+      dia.close();
+    }
+    else {
+      this.userLogVisibilities[user][process]['removable'] = true;
+      console.log("changeRemovable 2");
+
+      dia.close();
+    }
+  }
+
 }

@@ -11,9 +11,9 @@
     <tr *ngFor="let user of sortedUsers">
       <td><b>{{user}}</b></td>
       <td *ngFor="let process of sortedLogs">
-        V=<input type="checkbox" [checked]="userLogVisibilities[user][process]['visibility']">
-        D=<input type="checkbox" [checked]="userLogVisibilities[user][process]['downloadable']">
-        R=<input type="checkbox" [checked]="userLogVisibilities[user][process]['removable']">
+        V=<input type="checkbox" [checked]="userLogVisibilities[user][process]['visibility']" (change)="changeVisibility(user, process)">
+        D=<input type="checkbox" [checked]="userLogVisibilities[user][process]['downloadable']" (change)="changeDownloadable(user, process)">
+        R=<input type="checkbox" [checked]="userLogVisibilities[user][process]['removable']" (change)="changeRemovable(user, process)">
       </td>
     </tr>
   </table>
