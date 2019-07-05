@@ -6,6 +6,7 @@ import {HttpParams} from '@angular/common/http';
 import {Router, RoutesRecognized} from '@angular/router';
 import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiting-circle-component.component';
 import {MatDialog} from '@angular/material';
+import {environment} from '../../../environments/environment';
 
 @Component({
     selector: 'app-pmodel',
@@ -20,6 +21,7 @@ export class PmodelComponent implements OnInit {
     processModelBase64Sanitized: SafeResourceUrl;
     pm4pyJson: JSON;
     thisProcessModel: string;
+    thisSecondProcessModel : string;
     thisHandler: string;
     simplicity = 0.45;
     selectedSimplicity = 0.45;
@@ -39,7 +41,9 @@ export class PmodelComponent implements OnInit {
     pm4pyService: Pm4pyService;
     authenticationService: AuthenticationServiceService;
     public isLoading: boolean;
+    public enableDownloadModel: boolean = false;
     public enableConformanceChecking: boolean = false;
+    public enableBpmnDownload : boolean = false;
 
     constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, private router: Router, private authService: AuthenticationServiceService, public dialog: MatDialog) {
         /**
@@ -86,12 +90,20 @@ export class PmodelComponent implements OnInit {
             this.pm4pyJson = data as JSON;
             this.processModelBase64Original = this.pm4pyJson['base64'];
             this.thisProcessModel = this.pm4pyJson['model'];
+            this.thisSecondProcessModel = this.pm4pyJson['second_model'];
+
             this.thisHandler = this.pm4pyJson['handler'];
             //this.enableConformanceChecking = this.thisHandler === 'xes' && (this.typeOfModel === 'inductive' || this.typeOfModel === 'dfg');
-            this.enableConformanceChecking = this.typeOfModel === 'inductive' || this.typeOfModel === 'dfg';
+            //this.enableConformanceChecking = this.typeOfModel === 'inductive' || this.typeOfModel === 'dfg';
+            this.enableDownloadModel = this.typeOfModel === 'inductive' || this.typeOfModel === 'indbpmn';
+            this.enableBpmnDownload = this.typeOfModel === 'indbpmn';
+            this.enableConformanceChecking = this.typeOfModel === 'inductive' && this.thisVariantsNumber <= environment.maxNoVariantsForAlignments;
 
-            if (this.enableConformanceChecking) {
+            if (this.enableDownloadModel) {
                 localStorage.setItem('process_model', this.thisProcessModel);
+            }
+            if (this.enableBpmnDownload) {
+                localStorage.setItem('bpmn_model', this.thisSecondProcessModel);
             }
             this.processModelBase64Sanitized = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.processModelBase64Original);
             this.setImageCorrectSize();
@@ -202,6 +214,10 @@ export class PmodelComponent implements OnInit {
 
     downloadModel($event) {
         this.downloadFile(this.thisProcessModel, "text/csv");
+    }
+
+    downloadBpmnModel($event) {
+        this.downloadFile(this.thisSecondProcessModel, "text/csv");
     }
 
     downloadFile(data: string, type: string) {
