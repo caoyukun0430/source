@@ -355,6 +355,19 @@ export class Pm4pyService {
     return this.http.get(completeUrl, {params: parameters});
   }
 
+  getPaths(attributeKey : string, parameters : HttpParams) {
+    let process = localStorage.getItem("process");
+    let sessionId = localStorage.getItem("sessionId");
+
+    parameters = parameters.set("process", process);
+    parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("attribute_key", attributeKey);
+
+    var completeUrl: string = this.webservicePath + "getAllPaths";
+
+    return this.http.get(completeUrl, {params: parameters});
+  }
+
   getUserLogVisibilities(parameters : HttpParams) {
     let sessionId = localStorage.getItem("sessionId");
 

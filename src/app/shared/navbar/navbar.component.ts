@@ -21,6 +21,8 @@ import {PerformanceFilterComponent} from '../../real-ws/performance-filter/perfo
 import {NumericAttributeFilterComponent} from '../../real-ws/numeric-attribute-filter/numeric-attribute-filter.component';
 import {WaitingCircleComponentComponent} from '../../real-ws/waiting-circle-component/waiting-circle-component.component';
 
+import {PathsFilterComponent} from '../../real-ws/paths-filter/paths-filter.component';
+
 @Component({
   selector: "app-navbar",
   templateUrl: "./navbar.component.html",
@@ -276,6 +278,10 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   attributesFilter() {
     this.dialog.open(AttributesFilterComponent);
+  }
+
+  pathsFilter() {
+    this.dialog.open(PathsFilterComponent);
   }
 
   performanceFilter() {

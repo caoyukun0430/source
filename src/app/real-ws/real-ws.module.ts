@@ -20,6 +20,7 @@ import { PlistComponent } from './plist/plist.component';
 import { SnaComponent } from './sna/sna.component';
 import { TransientComponent } from './transient/transient.component';
 import { AlignmentsComponent } from './alignments/alignments.component';
+import { PathsFilterComponent } from './paths-filter/paths-filter.component';
 
 @NgModule({
   declarations: [PmodelComponent, CasesComponent, StatisticsComponent, LoginComponentComponent, PlistComponent, SnaComponent, TransientComponent, AlignmentsComponent],
