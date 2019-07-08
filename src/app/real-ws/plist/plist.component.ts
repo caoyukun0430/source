@@ -71,4 +71,16 @@ export class PlistComponent implements OnInit {
     this.router.navigate(["/real-ws/pmodel"]);
   }
 
+  deleteLog(log) {
+    if (confirm("Are you really willing to delete the log: "+log)) {
+      alert("deleted log " + log);
+
+      if (this._route.url === "/real-ws/plist") {
+        this.router.navigateByUrl("/real-ws/plist2");
+      } else {
+        this.router.navigateByUrl("/real-ws/plist");
+      }
+    }
+  }
+
 }
