@@ -50,24 +50,9 @@
   </div>
   <div class="table-container" id="tableEvents" style="overflow: scroll; display: none" [style.width.px]="width"  [style.height.px]="height">
     <table mat-table matSort [dataSource]="dataSourceEvents" class="mat-elevation-z8"  style="width: 100%">
-      <ng-container matColumnDef="concept:name">
-        <th mat-header-cell *matHeaderCellDef>Activity</th>
-        <td mat-cell *matCellDef="let element"> {{element["concept:name"]}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="org:resource">
-        <th mat-header-cell *matHeaderCellDef>Resource</th>
-        <td mat-cell *matCellDef="let element"> {{element["org:resource"]}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="time:timestamp">
-        <th mat-header-cell *matHeaderCellDef>Timestamp</th>
-        <td mat-cell *matCellDef="let element"> {{element["time:timestamp"]}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="lifecycle:transition">
-        <th mat-header-cell *matHeaderCellDef>Transition</th>
-        <td mat-cell *matCellDef="let element"> {{element["lifecycle:transition"]}} </td>
+      <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
+        <th mat-header-cell *matHeaderCellDef>{{ column.header }}</th>
+        <td mat-cell *matCellDef="let element">{{ element[column.cell] }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumnsEvents"  class="eventsHeaderColor"></tr>
