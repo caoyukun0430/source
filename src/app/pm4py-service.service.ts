@@ -424,4 +424,14 @@ export class Pm4pyService {
 
     return this.http.get(completeUrl, {params: parameters});
   }
+
+  deleteEventLog(parameters : HttpParams) {
+    let sessionId = localStorage.getItem("sessionId");
+
+    parameters = parameters.set("session", sessionId);
+
+    var completeUrl: string = this.webservicePath + "deleteEventLog";
+
+    return this.http.get(completeUrl, {params: parameters});
+  }
 }

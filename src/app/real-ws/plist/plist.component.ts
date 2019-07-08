@@ -73,7 +73,18 @@ export class PlistComponent implements OnInit {
 
   deleteLog(log) {
     if (confirm("Are you really willing to delete the log: "+log)) {
-      alert("deleted log " + log);
+      let httpParams : HttpParams = new HttpParams();
+      httpParams = httpParams.set("process", log);
+
+      this.pm4pyService.deleteEventLog(httpParams).subscribe(data => {
+        alert("deleted log " + log);
+
+        if (this._route.url === "/real-ws/plist") {
+          this.router.navigateByUrl("/real-ws/plist2");
+        } else {
+          this.router.navigateByUrl("/real-ws/plist");
+        }
+      });
 
       if (this._route.url === "/real-ws/plist") {
         this.router.navigateByUrl("/real-ws/plist2");
