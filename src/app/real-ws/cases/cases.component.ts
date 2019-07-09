@@ -227,6 +227,9 @@ export class CasesComponent implements OnInit, AfterViewInit {
             this.pm4pyJsonEvents = data as JSON;
             this.events = this.pm4pyJsonEvents['events'];
 
+            console.log("EVENTS=");
+            console.log(this.events);
+
             let allAttributesTypes = {};
 
             let i = 0;
@@ -243,10 +246,18 @@ export class CasesComponent implements OnInit, AfterViewInit {
             'lifecycle:transition': 'Transition'};
 
             this.columns = [];
+            this.displayedColumnsEvents = [];
+
+            let displayedColumnsHeaders = [];
 
             for (const key of Object.keys(allAttributesTypes)) {
                 if (key in columnMapping) {
-                    this.columns.push({columnDef: key, header: columnMapping[key], cell: key});
+                    if (!(key in this.displayedColumnsEvents) && !(columnMapping[key] in displayedColumnsHeaders)) {
+                        this.columns.push({columnDef: key, header: columnMapping[key], cell: key});
+                        this.displayedColumnsEvents.push(key);
+                        displayedColumnsHeaders.push(columnMapping[key]);
+                    }
+
                 }
             }
 
@@ -254,13 +265,19 @@ export class CasesComponent implements OnInit, AfterViewInit {
                 if (key in columnMapping) {
                 }
                 else {
-                    this.columns.push({columnDef: key, header: key, cell: key});
+                    if (!(key in this.displayedColumnsEvents) && !(key in displayedColumnsHeaders)) {
+                        if (!(key.startsWith("@@")) && !(key.startsWith("case:"))) {
+                            this.columns.push({columnDef: key, header: key, cell: key});
+                            this.displayedColumnsEvents.push(key);
+                            displayedColumnsHeaders.push(key);
+                        }
+                    }
                 }
             }
 
             console.log(this.columns);
 
-            this.displayedColumnsEvents = this.columns.map(x => x.columnDef);
+            //this.displayedColumnsEvents = this.columns.map(x => x.columnDef);
 
             this.dataSourceEvents.data = this.events;
             this.caseIsSelected = true;
