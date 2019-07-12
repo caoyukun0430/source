@@ -1,13 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
 import {Pm4pyService} from '../../pm4py-service.service';
 import {AuthenticationServiceService} from '../../authentication-service.service';
 import {HttpParams} from '@angular/common/http';
 import {Router, RoutesRecognized} from '@angular/router';
 import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiting-circle-component.component';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatMenuTrigger} from '@angular/material';
 import {environment} from '../../../environments/environment';
 import {PmtkBpmnVisualizerComponent} from '../pmtk-bpmn-visualizer/pmtk-bpmn-visualizer.component';
+import {FilterServiceService} from '../../filter-service.service';
 
 import { graphviz } from 'd3-graphviz';
 
@@ -20,6 +21,8 @@ import { graphviz } from 'd3-graphviz';
     }
 })
 export class PmodelComponent implements OnInit {
+    @ViewChild(MatMenuTrigger) appMenu: MatMenuTrigger;
+
     processModelBase64Original: string;
     processModelBase64Sanitized: SafeResourceUrl;
     pm4pyJson: JSON;
@@ -49,8 +52,14 @@ export class PmodelComponent implements OnInit {
     public enableBpmnDownload : boolean = false;
     public dotProvided : boolean = false;
     public dotString : string;
+    public activityKey : string;
+    public targetClass : string;
+    public startActivities : any;
+    public endActivities : any;
+    public isStartActivity : boolean;
+    public isEndActivity : boolean;
 
-    constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, private router: Router, private authService: AuthenticationServiceService, public dialog: MatDialog) {
+    constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, private router: Router, private authService: AuthenticationServiceService, public dialog: MatDialog, private filterService: FilterServiceService) {
         /**
          * Constructor
          */
@@ -58,6 +67,9 @@ export class PmodelComponent implements OnInit {
         this.sanitizer = _sanitizer;
         this.pm4pyService = pm4pyServ;
         this.authenticationService = authService;
+
+        this.isStartActivity = false;
+        this.isEndActivity = false;
 
         this.authenticationService.checkAuthentication().subscribe(data => {
             //console.log(data);
@@ -96,6 +108,13 @@ export class PmodelComponent implements OnInit {
             this.processModelBase64Original = this.pm4pyJson['base64'];
             this.thisProcessModel = this.pm4pyJson['model'];
             this.thisSecondProcessModel = this.pm4pyJson['second_model'];
+            this.activityKey = this.pm4pyJson['activity_key'];
+            this.startActivities = this.pm4pyJson['start_activities'];
+            this.endActivities = this.pm4pyJson['end_activities'];
+
+
+
+            localStorage.setItem("activityKey", this.activityKey);
 
             this.dotString = atob(this.pm4pyJson['gviz_base64']);
 
@@ -118,8 +137,17 @@ export class PmodelComponent implements OnInit {
             if (this.dotString.length > 0) {
                 this.dotProvided = true;
 
+                let targetWidth: number = (window.innerWidth * 0.5);
+
                 graphviz('#dotProvidedDiv').renderDot(this.dotString);
                 this.setImageCorrectSizeRendered();
+
+                let dotProvidedDiv = document.getElementById("dotProvidedDiv");
+                let svgDoc = dotProvidedDiv.childNodes;
+
+                svgDoc[0].addEventListener("click", (e: Event) => this.manageClickOnSvg(e));
+                console.log((<SVGSVGElement>svgDoc[0]).width.baseVal.valueInSpecifiedUnits);
+                (<SVGSVGElement>svgDoc[0]).currentScale = targetWidth / (<SVGSVGElement>svgDoc[0]).width.baseVal.valueInSpecifiedUnits;
             }
             else {
                 this.dotProvided = false;
@@ -171,7 +199,65 @@ export class PmodelComponent implements OnInit {
     setImageCorrectSizeRendered() {
         let targetWidth: number = (window.innerWidth * 0.65);
 
-        document.getElementById('dotProvidedDiv').style.width = targetWidth + 'px';
+        let currentWidth = document.getElementById('dotProvidedDiv').style.width;
+        let currentHeight = document.getElementById('dotProvidedDiv').style.height;
+
+        console.log("targetWidth=");
+        console.log(targetWidth);
+        console.log("currentWidth=");
+        console.log(currentWidth);
+        console.log("currentHeight=");
+        console.log(currentHeight);
+
+        //document.getElementById('dotProvidedDiv').style.width = '500px';
+        //document.getElementById('dotProvidedDiv').style.height = '500px';
+
+    }
+
+    manageClickOnSvg(event) {
+        this.targetClass = this.removeAfterLastSpace(event.target.innerHTML);
+
+        console.log(event.target);
+
+        localStorage.setItem("targetClass", this.targetClass);
+
+        this.isStartActivity = this.startActivities.includes(this.targetClass);
+        this.isEndActivity = this.endActivities.includes(this.targetClass);
+
+        console.log("CLICK HAPPENED");
+        console.log("targetClass=");
+        console.log(localStorage.getItem("targetClass"));
+        console.log("activityKey=");
+        console.log(localStorage.getItem("activityKey"));
+
+        console.log(event.pageX);
+        console.log(event.pageY);
+
+        var menu = document.getElementById('openMenuButton');
+        menu.style.display = '';
+        menu.style.position = 'fixed';
+        menu.style.left = event.pageX + 5 + 'px';
+        menu.style.top = event.pageY + 5 + 'px';
+
+        this.appMenu.openMenu();
+    }
+
+    removeAfterLastSpace(oldString : string) {
+        let newString = "";
+
+        let oldStringSplit = oldString.split(" ");
+
+        let i = 0;
+        while (i < oldStringSplit.length - 1) {
+            newString = newString + oldStringSplit[i];
+
+            if (i < (oldStringSplit.length - 2)) {
+                newString = newString + " ";
+            }
+            i++;
+        }
+
+        return newString;
     }
 
     ngOnInit() {
@@ -254,5 +340,30 @@ export class PmodelComponent implements OnInit {
 
     visualizeBpmnModel($event) {
         this.dialog.open(PmtkBpmnVisualizerComponent);
+    }
+
+    applyTracesContaining() {
+        console.log("applyTracesContaining "+this.targetClass);
+
+        this.filterService.addFilter("attributes_pos_trace", [this.activityKey, [this.targetClass]]);
+    }
+
+    applyTracesNotContaining() {
+        console.log("applyTracesNotContaining "+this.targetClass);
+
+        this.filterService.addFilter("attributes_neg_trace", [this.activityKey, [this.targetClass]]);
+
+    }
+
+    applyTracesStartingWith() {
+        console.log("applyTracesStartingWith "+this.targetClass);
+
+        this.filterService.addFilter("start_activities", [this.targetClass]);
+    }
+
+    applyTracesEndingWith() {
+        console.log("applyTracesEndingWith "+this.targetClass);
+
+        this.filterService.addFilter("end_activities", [this.targetClass]);
     }
 }

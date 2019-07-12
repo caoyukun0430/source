@@ -44,3 +44,13 @@
 </div>
 <input hidden type="file" #uploader
        (change)="uploadFile($event)"/>
+<button id="openMenuButton" hidden mat-icon-button [matMenuTriggerFor]="appMenu">
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu id="matMenuButton" #appMenu="matMenu">
+  <button mat-menu-item (click)="applyTracesContaining()">Filter cases containing</button>
+  <button mat-menu-item (click)="applyTracesNotContaining()">Filter cases not containing</button>
+  <button mat-menu-item (click)="applyTracesStartingWith()" [hidden]="!isStartActivity">Filer cases starting with</button>
+  <button mat-menu-item (click)="applyTracesEndingWith()" [hidden]="!isEndActivity">Filer cases ending with</button>
+
+</mat-menu>
