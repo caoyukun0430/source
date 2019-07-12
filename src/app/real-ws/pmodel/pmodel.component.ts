@@ -116,7 +116,15 @@ export class PmodelComponent implements OnInit {
 
             localStorage.setItem("activityKey", this.activityKey);
 
-            this.dotString = atob(this.pm4pyJson['gviz_base64']);
+            this.dotString = this.pm4pyJson['gviz_base64'];
+
+            if (this.dotString == null || typeof(this.dotString) == "undefined") {
+                this.dotString = "";
+            }
+
+            if (this.dotString.length > 0) {
+                this.dotString = atob(this.dotString);
+            }
 
 
 
@@ -243,17 +251,21 @@ export class PmodelComponent implements OnInit {
 
         let oldStringSplit = oldString.split(" ");
 
-        let i = 0;
-        while (i < oldStringSplit.length - 1) {
-            newString = newString + oldStringSplit[i];
+        if (oldStringSplit.length > 0 && oldStringSplit[oldStringSplit.length - 1].length > 0 && oldStringSplit[oldStringSplit.length - 1][0] == '(') {
+            let i = 0;
+            while (i < oldStringSplit.length - 1) {
+                newString = newString + oldStringSplit[i];
 
-            if (i < (oldStringSplit.length - 2)) {
-                newString = newString + " ";
+                if (i < (oldStringSplit.length - 2)) {
+                    newString = newString + " ";
+                }
+                i++;
             }
-            i++;
+
+            return newString;
         }
 
-        return newString;
+        return oldString;
     }
 
     ngOnInit() {
