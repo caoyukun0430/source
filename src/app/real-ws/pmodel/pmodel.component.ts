@@ -394,4 +394,10 @@ export class PmodelComponent implements OnInit {
 
         this.dialog.open(ActivityDashboardComponent);
     }
+
+    filterLoop() {
+        console.log("filterLoop "+this.targetClass);
+
+        this.filterService.addFilter("paths_pos_trace", [this.activityKey, [this.targetClass+"@@"+this.targetClass]]);
+    }
 }
