@@ -1,2 +1,2 @@
 # source
-Main repo for the PMTK source code
+Main repository for the PMTK source code
