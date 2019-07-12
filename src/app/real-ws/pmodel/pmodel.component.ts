@@ -68,6 +68,16 @@ export class PmodelComponent implements OnInit {
         this.pm4pyService = pm4pyServ;
         this.authenticationService = authService;
 
+        this.decoration = localStorage.getItem("preferred_decoration");
+        if (this.decoration == null || typeof(this.decoration) == "undefined") {
+            this.decoration = "freq";
+        }
+
+        this.typeOfModel = localStorage.getItem("preferred_type_of_model");
+        if (this.typeOfModel == null || typeof(this.typeOfModel) == "undefined") {
+            this.typeOfModel = "dfg";
+        }
+
         this.isStartActivity = false;
         this.isEndActivity = false;
 
@@ -100,6 +110,9 @@ export class PmodelComponent implements OnInit {
         params = params.set('simplicity', this.selectedSimplicity.toString());
         params = params.set('decoration', this.decoration);
         params = params.set('typeOfModel', this.typeOfModel);
+
+        localStorage.setItem('preferred_decoration', this.decoration);
+        localStorage.setItem('preferred_type_of_model', this.typeOfModel);
 
         this.dialog.open(WaitingCircleComponentComponent);
 
