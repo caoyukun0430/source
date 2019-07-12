@@ -140,7 +140,6 @@ export class PmodelComponent implements OnInit {
                 let targetWidth: number = (window.innerWidth * 0.5);
 
                 graphviz('#dotProvidedDiv').renderDot(this.dotString);
-                this.setImageCorrectSizeRendered();
 
                 let dotProvidedDiv = document.getElementById("dotProvidedDiv");
                 let svgDoc = dotProvidedDiv.childNodes;
@@ -196,50 +195,47 @@ export class PmodelComponent implements OnInit {
         (<HTMLImageElement>document.getElementById('imageProcessModelImage')).width = targetWidth;
     }
 
-    setImageCorrectSizeRendered() {
-        let targetWidth: number = (window.innerWidth * 0.65);
+    manageClickOnSvg(event) {
+        console.log("event.target.nodeName");
+        console.log(event.target.nodeName);
 
-        let currentWidth = document.getElementById('dotProvidedDiv').style.width;
-        let currentHeight = document.getElementById('dotProvidedDiv').style.height;
+        if (event.target.nodeName == "text") {
+            this.targetClass = this.removeAfterLastSpace(event.target.innerHTML);
 
-        console.log("targetWidth=");
-        console.log(targetWidth);
-        console.log("currentWidth=");
-        console.log(currentWidth);
-        console.log("currentHeight=");
-        console.log(currentHeight);
+            console.log(event.target);
 
-        //document.getElementById('dotProvidedDiv').style.width = '500px';
-        //document.getElementById('dotProvidedDiv').style.height = '500px';
+            localStorage.setItem("targetClass", this.targetClass);
 
+            this.isStartActivity = this.startActivities.includes(this.targetClass);
+            this.isEndActivity = this.endActivities.includes(this.targetClass);
+
+            console.log("CLICK HAPPENED");
+            console.log("targetClass=");
+            console.log(localStorage.getItem("targetClass"));
+            console.log("activityKey=");
+            console.log(localStorage.getItem("activityKey"));
+
+            console.log(event.pageX);
+            console.log(event.pageY);
+
+            var menu = document.getElementById('openMenuButton');
+            menu.style.display = '';
+            menu.style.position = 'fixed';
+            menu.style.left = event.pageX + 'px';
+            menu.style.top = event.pageY + 'px';
+
+            this.appMenu.openMenu();
+        }
+        else if (event.target.nodeName == "path") {
+            console.log(event.target);
+        }
     }
 
-    manageClickOnSvg(event) {
-        this.targetClass = this.removeAfterLastSpace(event.target.innerHTML);
-
-        console.log(event.target);
-
-        localStorage.setItem("targetClass", this.targetClass);
-
-        this.isStartActivity = this.startActivities.includes(this.targetClass);
-        this.isEndActivity = this.endActivities.includes(this.targetClass);
-
-        console.log("CLICK HAPPENED");
-        console.log("targetClass=");
-        console.log(localStorage.getItem("targetClass"));
-        console.log("activityKey=");
-        console.log(localStorage.getItem("activityKey"));
-
-        console.log(event.pageX);
-        console.log(event.pageY);
-
+    onMenuClosed():void {
         var menu = document.getElementById('openMenuButton');
-        menu.style.display = '';
-        menu.style.position = 'fixed';
-        menu.style.left = event.pageX + 5 + 'px';
-        menu.style.top = event.pageY + 5 + 'px';
-
-        this.appMenu.openMenu();
+        if (menu) {
+            menu.style.display = 'none';
+        }
     }
 
     removeAfterLastSpace(oldString : string) {
