@@ -9,6 +9,8 @@ import {MatDialog} from '@angular/material';
 import {environment} from '../../../environments/environment';
 import {PmtkBpmnVisualizerComponent} from '../pmtk-bpmn-visualizer/pmtk-bpmn-visualizer.component';
 
+import { graphviz } from 'd3-graphviz';
+
 @Component({
     selector: 'app-pmodel',
     templateUrl: './pmodel.component.html',
@@ -45,6 +47,8 @@ export class PmodelComponent implements OnInit {
     public enableDownloadModel: boolean = false;
     public enableConformanceChecking: boolean = false;
     public enableBpmnDownload : boolean = false;
+    public dotProvided : boolean = false;
+    public dotString : string;
 
     constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, private router: Router, private authService: AuthenticationServiceService, public dialog: MatDialog) {
         /**
@@ -93,6 +97,10 @@ export class PmodelComponent implements OnInit {
             this.thisProcessModel = this.pm4pyJson['model'];
             this.thisSecondProcessModel = this.pm4pyJson['second_model'];
 
+            this.dotString = atob(this.pm4pyJson['gviz_base64']);
+
+
+
             this.thisHandler = this.pm4pyJson['handler'];
             //this.enableConformanceChecking = this.thisHandler === 'xes' && (this.typeOfModel === 'inductive' || this.typeOfModel === 'dfg');
             //this.enableConformanceChecking = this.typeOfModel === 'inductive' || this.typeOfModel === 'dfg';
@@ -106,8 +114,19 @@ export class PmodelComponent implements OnInit {
             if (this.enableBpmnDownload) {
                 localStorage.setItem('bpmn_model', this.thisSecondProcessModel);
             }
-            this.processModelBase64Sanitized = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.processModelBase64Original);
-            this.setImageCorrectSize();
+
+            if (this.dotString.length > 0) {
+                this.dotProvided = true;
+
+                graphviz('#dotProvidedDiv').renderDot(this.dotString);
+                this.setImageCorrectSizeRendered();
+            }
+            else {
+                this.dotProvided = false;
+                this.processModelBase64Sanitized = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.processModelBase64Original);
+                this.setImageCorrectSize();
+            }
+
             this.isLoading = false;
 
             this.dialog.closeAll();
@@ -147,6 +166,12 @@ export class PmodelComponent implements OnInit {
         let targetWidth: number = (window.innerWidth * 0.65);
 
         (<HTMLImageElement>document.getElementById('imageProcessModelImage')).width = targetWidth;
+    }
+
+    setImageCorrectSizeRendered() {
+        let targetWidth: number = (window.innerWidth * 0.65);
+
+        document.getElementById('dotProvidedDiv').style.width = targetWidth + 'px';
     }
 
     ngOnInit() {
