@@ -29,8 +29,8 @@ export class PmodelComponent implements OnInit {
     thisProcessModel: string;
     thisSecondProcessModel : string;
     thisHandler: string;
-    simplicity = 0.45;
-    selectedSimplicity = 0.45;
+    simplicity = 0.0;
+    selectedSimplicity = 0.0;
     logSummaryJson: JSON;
     public thisVariantsNumber = 0;
     public thisCasesNumber = 0;
