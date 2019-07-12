@@ -168,7 +168,12 @@ export class PmodelComponent implements OnInit {
 
                 svgDoc[0].addEventListener("click", (e: Event) => this.manageClickOnSvg(e));
                 console.log((<SVGSVGElement>svgDoc[0]).width.baseVal.valueInSpecifiedUnits);
-                (<SVGSVGElement>svgDoc[0]).currentScale = targetWidth / (<SVGSVGElement>svgDoc[0]).width.baseVal.valueInSpecifiedUnits;
+
+                let finalRatioNumber = targetWidth / (<SVGSVGElement>svgDoc[0]).width.baseVal.valueInSpecifiedUnits;
+
+                if (finalRatioNumber < 1.0) {
+                    (<SVGSVGElement>svgDoc[0]).currentScale = finalRatioNumber;
+                }
 
                 document.getElementById("dotProvidedDiv").style.width = '3000px';
                 document.getElementById("dotProvidedDiv").style.height = '3000px';
