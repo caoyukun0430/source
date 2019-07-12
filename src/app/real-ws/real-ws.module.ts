@@ -21,6 +21,7 @@ import { SnaComponent } from './sna/sna.component';
 import { TransientComponent } from './transient/transient.component';
 import { AlignmentsComponent } from './alignments/alignments.component';
 import { PathsFilterComponent } from './paths-filter/paths-filter.component';
+import { ActivityDashboardComponent } from './activity-dashboard/activity-dashboard.component';
 
 @NgModule({
   declarations: [PmodelComponent, CasesComponent, StatisticsComponent, LoginComponentComponent, PlistComponent, SnaComponent, TransientComponent, AlignmentsComponent],

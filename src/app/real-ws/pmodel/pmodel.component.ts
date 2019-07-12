@@ -9,6 +9,7 @@ import {MatDialog, MatMenuTrigger} from '@angular/material';
 import {environment} from '../../../environments/environment';
 import {PmtkBpmnVisualizerComponent} from '../pmtk-bpmn-visualizer/pmtk-bpmn-visualizer.component';
 import {FilterServiceService} from '../../filter-service.service';
+import {ActivityDashboardComponent} from '../activity-dashboard/activity-dashboard.component';
 
 import { graphviz } from 'd3-graphviz';
 
@@ -386,5 +387,11 @@ export class PmodelComponent implements OnInit {
         console.log("applyTracesEndingWith "+this.targetClass);
 
         this.filterService.addFilter("end_activities", [this.targetClass]);
+    }
+
+    openActivityDashboard() {
+        console.log("openActivityDashboard "+this.targetClass);
+
+        this.dialog.open(ActivityDashboardComponent);
     }
 }

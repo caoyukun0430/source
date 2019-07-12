@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Activity: {{targetClass}}</h2>
+<mat-dialog-content class="mat-typography">
+  <p>Total number of occurrences: <b>{{attributeValuesDict[targetClass]}}</b></p>
+  <p>Number of occurrences as first activity in the case: <b>{{startActivitiesDict[targetClass]}}</b></p>
+  <p>Number of occurrences as last activity in the case: <b>{{endActivitiesDict[targetClass]}}</b></p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

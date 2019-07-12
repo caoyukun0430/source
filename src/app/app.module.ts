@@ -59,6 +59,7 @@ import {AlignmentsComponent} from './real-ws/alignments/alignments.component';
 import {PmtkBpmnVisualizerComponent} from './real-ws/pmtk-bpmn-visualizer/pmtk-bpmn-visualizer.component';
 import {LogSharingComponent} from './real-ws/log-sharing/log-sharing.component';
 import {PathsFilterComponent} from './real-ws/paths-filter/paths-filter.component';
+import {ActivityDashboardComponent} from './real-ws/activity-dashboard/activity-dashboard.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true,
@@ -70,7 +71,7 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 @NgModule({
-    declarations: [AppComponent, FullLayoutComponent, ContentLayoutComponent, StartActivitiesFilterComponent, EndActivitiesFilterComponent, VariantsFilterComponent, AttributesFilterComponent, PerformanceFilterComponent, TimeframeFilterComponent, NumericAttributeFilterComponent, WaitingCircleComponentComponent, PmtkBpmnVisualizerComponent, LogSharingComponent, PathsFilterComponent],
+    declarations: [AppComponent, FullLayoutComponent, ContentLayoutComponent, StartActivitiesFilterComponent, EndActivitiesFilterComponent, VariantsFilterComponent, AttributesFilterComponent, PerformanceFilterComponent, TimeframeFilterComponent, NumericAttributeFilterComponent, WaitingCircleComponentComponent, PmtkBpmnVisualizerComponent, LogSharingComponent, PathsFilterComponent, ActivityDashboardComponent],
     imports: [
         BrowserAnimationsModule,
         StoreModule.forRoot({}),
@@ -112,7 +113,7 @@ export function createTranslateLoader(http: HttpClient) {
         PerfectScrollbarModule
     ],
     entryComponents: [
-        StartActivitiesFilterComponent, EndActivitiesFilterComponent, VariantsFilterComponent, AttributesFilterComponent, PerformanceFilterComponent, TimeframeFilterComponent, NumericAttributeFilterComponent, WaitingCircleComponentComponent, PmtkBpmnVisualizerComponent, LogSharingComponent, PathsFilterComponent
+        StartActivitiesFilterComponent, EndActivitiesFilterComponent, VariantsFilterComponent, AttributesFilterComponent, PerformanceFilterComponent, TimeframeFilterComponent, NumericAttributeFilterComponent, WaitingCircleComponentComponent, PmtkBpmnVisualizerComponent, LogSharingComponent, PathsFilterComponent, ActivityDashboardComponent
     ],
     providers: [
         AuthService,
