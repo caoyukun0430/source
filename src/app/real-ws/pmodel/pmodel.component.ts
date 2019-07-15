@@ -31,8 +31,8 @@ export class PmodelComponent implements OnInit {
     thisProcessModel: string;
     thisSecondProcessModel : string;
     thisHandler: string;
-    simplicity = 0.0;
-    selectedSimplicity = 0.0;
+    simplicity = -1.45;
+    selectedSimplicity = -1.45;
     logSummaryJson: JSON;
     public thisVariantsNumber = 0;
     public thisCasesNumber = 0;
@@ -109,7 +109,12 @@ export class PmodelComponent implements OnInit {
          */
         this.isLoading = true;
         let params: HttpParams = new HttpParams();
-        params = params.set('simplicity', this.selectedSimplicity.toString());
+        if (this.selectedSimplicity >= -2.39) {
+            params = params.set('simplicity', Math.exp(this.selectedSimplicity).toString());
+        }
+        else {
+            params = params.set('simplicity', "0.0");
+        }
         params = params.set('decoration', this.decoration);
         params = params.set('typeOfModel', this.typeOfModel);
 
