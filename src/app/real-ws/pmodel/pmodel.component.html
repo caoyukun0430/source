@@ -35,11 +35,14 @@
   </span>
 </div>
 <div id="imageContainer">
-  <div [hidden]="!dotProvided" id="dotProvidedDiv" src="width: 3000px; height: 3000px">
+  <div [hidden]="!dotProvided" id="dotProvidedDiv">
 
   </div>
-  <div [hidden]="dotProvided">
-  <img id="imageProcessModelImage" [src]="processModelBase64Sanitized">
+  <div [hidden]="dotProvided" id="svgWithInnerHtml">
+
+  </div>
+  <div *ngIf="false">
+    <img id="imageProcessModelImage" [src]="processModelBase64Sanitized">
   </div>
 </div>
 <input hidden type="file" #uploader

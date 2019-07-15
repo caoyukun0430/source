@@ -4,7 +4,7 @@
   <span>Cases: <b>{{thisCasesNumber}}</b></span>
   <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
   <span>Variants: <b>{{thisVariantsNumber}}</b></span>
-  <div class="table-container" id="tableVariants" style="overflow: scroll" [style.width.px]="width"  [style.height.px]="height">
+  <div class="table-container" id="tableVariants" style="overflow-x: hidden; overflow-y: scroll" [style.width.px]="width"  [style.height.px]="height">
     <table mat-table [dataSource]="dataSourceVariants" class="mat-elevation-z8" style="width: 100%">
       <ng-container matColumnDef="variant">
         <th mat-header-cell *matHeaderCellDef>Variant</th>
@@ -22,7 +22,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumnsVariants;"  (click)="variantClicked(row)" [ngClass]="{ 'selected': row['variant'] === variantSelected }"></tr>
     </table>
   </div>
-  <div class="table-container" id="tableCases" style="overflow: scroll" [style.width.px]="width"  [style.height.px]="height">
+  <div class="table-container" id="tableCases" style="overflow-x: hidden; overflow-y: scroll" [style.width.px]="width"  [style.height.px]="height">
     <table mat-table [dataSource]="dataSourceCases" matSort class="mat-elevation-z8" style="width: 100%">
       <ng-container matColumnDef="caseId">
         <th mat-header-cell *matHeaderCellDef>Case ID</th>
@@ -48,7 +48,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumnsCases;" (click)="caseClicked(row)"  [ngClass]="{ 'selected': row['caseId'] === caseSelected }"></tr>
     </table>
   </div>
-  <div class="table-container" id="tableEvents" style="overflow: scroll; display: none" [style.width.px]="width"  [style.height.px]="height">
+  <div class="table-container" id="tableEvents" style="overflow-x: auto; overflow-y: scroll; display: none" [style.width.px]="width"  [style.height.px]="height">
     <table mat-table matSort [dataSource]="dataSourceEvents" class="mat-elevation-z8"  style="width: 100%">
       <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
         <th mat-header-cell *matHeaderCellDef>{{ column.header }}</th>

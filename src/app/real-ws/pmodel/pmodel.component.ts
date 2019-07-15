@@ -25,6 +25,7 @@ export class PmodelComponent implements OnInit {
     @ViewChild(MatMenuTrigger) appMenu: MatMenuTrigger;
 
     processModelBase64Original: string;
+    processModelDecodedSVG: string;
     processModelBase64Sanitized: SafeResourceUrl;
     pm4pyJson: JSON;
     thisProcessModel: string;
@@ -125,8 +126,7 @@ export class PmodelComponent implements OnInit {
             this.activityKey = this.pm4pyJson['activity_key'];
             this.startActivities = this.pm4pyJson['start_activities'];
             this.endActivities = this.pm4pyJson['end_activities'];
-
-
+            this.processModelDecodedSVG = "";
 
             localStorage.setItem("activityKey", this.activityKey);
 
@@ -138,6 +138,10 @@ export class PmodelComponent implements OnInit {
 
             if (this.dotString.length > 0) {
                 this.dotString = atob(this.dotString);
+            }
+
+            if (this.processModelBase64Original.length > 0) {
+                this.processModelDecodedSVG = atob(this.processModelBase64Original);
             }
 
 
@@ -156,10 +160,8 @@ export class PmodelComponent implements OnInit {
                 localStorage.setItem('bpmn_model', this.thisSecondProcessModel);
             }
 
-            if (this.dotString.length > 0) {
+            if (this.dotString.length > 0 && false) {
                 this.dotProvided = true;
-
-                let targetWidth: number = (window.innerWidth * 0.5);
 
                 graphviz('#dotProvidedDiv').renderDot(this.dotString);
 
@@ -167,21 +169,22 @@ export class PmodelComponent implements OnInit {
                 let svgDoc = dotProvidedDiv.childNodes;
 
                 svgDoc[0].addEventListener("click", (e: Event) => this.manageClickOnSvg(e));
-                console.log((<SVGSVGElement>svgDoc[0]).width.baseVal.valueInSpecifiedUnits);
-
-                let finalRatioNumber = targetWidth / (<SVGSVGElement>svgDoc[0]).width.baseVal.valueInSpecifiedUnits;
-
-                if (finalRatioNumber < 1.0) {
-                    (<SVGSVGElement>svgDoc[0]).currentScale = finalRatioNumber;
-                }
-
-                document.getElementById("dotProvidedDiv").style.width = '3000px';
-                document.getElementById("dotProvidedDiv").style.height = '3000px';
             }
-            else {
+            else if (false) {
                 this.dotProvided = false;
                 this.processModelBase64Sanitized = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.processModelBase64Original);
                 this.setImageCorrectSize();
+            }
+            else {
+                this.dotProvided = false;
+
+                document.getElementById("svgWithInnerHtml").innerHTML = this.processModelDecodedSVG;
+
+                let svgWithInnerHtml = document.getElementById("svgWithInnerHtml");
+
+                svgWithInnerHtml.addEventListener("click", (e: Event) => this.manageClickOnSvg(e));
+
+                this.setDivCorrectSize();
             }
 
             this.isLoading = false;
@@ -223,6 +226,35 @@ export class PmodelComponent implements OnInit {
         let targetWidth: number = (window.innerWidth * 0.65);
 
         (<HTMLImageElement>document.getElementById('imageProcessModelImage')).width = targetWidth;
+    }
+
+    setDivCorrectSize() {
+        let targetWidth: number = (window.innerWidth * 0.5);
+        let targetHeight: number = (window.innerHeight * 0.37);
+
+        let svgDivChilds = document.getElementById("svgWithInnerHtml").childNodes;
+        console.log("SVG DIV CHILDS");
+        console.log(svgDivChilds);
+        let i = 0;
+        while (i < svgDivChilds.length) {
+
+            if (svgDivChilds[i].nodeName == "svg") {
+                let corrElement = <SVGSVGElement>(svgDivChilds[i]);
+
+                let currentWidth = corrElement.width.baseVal.valueInSpecifiedUnits;
+                let currentHeight = corrElement.height.baseVal.valueInSpecifiedUnits;
+
+                let finalRatioNumberWidth = targetWidth / currentWidth;
+                let finalRatioNumberHeight = targetHeight / currentHeight;
+
+                //let finalRatioNumber = Math.min(finalRatioNumberWidth, finalRatioNumberHeight);
+
+                if (finalRatioNumberWidth < 1.0) {
+                    corrElement.currentScale = finalRatioNumberWidth;
+                }
+            }
+            i++;
+        }
     }
 
     manageClickOnSvg(event) {
