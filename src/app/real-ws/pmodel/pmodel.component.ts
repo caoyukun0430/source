@@ -267,31 +267,35 @@ export class PmodelComponent implements OnInit {
         console.log(event.target.nodeName);
 
         if (event.target.nodeName == "text") {
-            this.targetClass = this.removeAfterLastSpace(event.target.innerHTML);
+            let thisText = event.target.innerHTML;
 
-            console.log(event.target);
+            if (thisText.length > 0 && !(thisText == "@@S") && !(thisText == "@@E")) {
+                this.targetClass = this.removeAfterLastSpace(event.target.innerHTML);
 
-            localStorage.setItem("targetClass", this.targetClass);
+                console.log(event.target);
 
-            this.isStartActivity = this.startActivities.includes(this.targetClass);
-            this.isEndActivity = this.endActivities.includes(this.targetClass);
+                localStorage.setItem("targetClass", this.targetClass);
 
-            console.log("CLICK HAPPENED");
-            console.log("targetClass=");
-            console.log(localStorage.getItem("targetClass"));
-            console.log("activityKey=");
-            console.log(localStorage.getItem("activityKey"));
+                this.isStartActivity = this.startActivities.includes(this.targetClass);
+                this.isEndActivity = this.endActivities.includes(this.targetClass);
 
-            console.log(event.pageX);
-            console.log(event.pageY);
+                console.log("CLICK HAPPENED");
+                console.log("targetClass=");
+                console.log(localStorage.getItem("targetClass"));
+                console.log("activityKey=");
+                console.log(localStorage.getItem("activityKey"));
 
-            var menu = document.getElementById('openMenuButton');
-            menu.style.display = '';
-            menu.style.position = 'fixed';
-            menu.style.left = event.pageX + 'px';
-            menu.style.top = event.pageY + 'px';
+                console.log(event.pageX);
+                console.log(event.pageY);
 
-            this.appMenu.openMenu();
+                var menu = document.getElementById('openMenuButton');
+                menu.style.display = '';
+                menu.style.position = 'fixed';
+                menu.style.left = event.pageX + 'px';
+                menu.style.top = event.pageY + 'px';
+
+                this.appMenu.openMenu();
+            }
         }
         else if (event.target.nodeName == "path") {
             console.log(event.target);
