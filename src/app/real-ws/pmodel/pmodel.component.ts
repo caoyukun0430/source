@@ -109,7 +109,7 @@ export class PmodelComponent implements OnInit {
          */
         this.isLoading = true;
         let params: HttpParams = new HttpParams();
-        if (this.selectedSimplicity >= -2.39) {
+        if (this.selectedSimplicity >= -4.99) {
             params = params.set('simplicity', Math.exp(this.selectedSimplicity).toString());
         }
         else {
