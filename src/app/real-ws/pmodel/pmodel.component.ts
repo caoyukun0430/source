@@ -285,14 +285,16 @@ export class PmodelComponent implements OnInit {
                 console.log("activityKey=");
                 console.log(localStorage.getItem("activityKey"));
 
-                console.log(event.pageX);
-                console.log(event.pageY);
+                console.log(event.x);
+                console.log(event.y);
+
+                console.log(event);
 
                 var menu = document.getElementById('openMenuButton');
                 menu.style.display = '';
                 menu.style.position = 'fixed';
-                menu.style.left = event.pageX + 'px';
-                menu.style.top = event.pageY + 'px';
+                menu.style.left = Math.floor(event.x) + 'px';
+                menu.style.top = Math.floor(event.y) + 'px';
 
                 this.appMenu.openMenu();
             }

@@ -55,7 +55,7 @@
   <button mat-menu-item (click)="applyTracesContaining()">Filter cases containing</button>
   <button mat-menu-item (click)="applyTracesNotContaining()">Filter cases not containing</button>
   <button mat-menu-item (click)="filterLoop()">Filter cases with loops</button>
-  <button mat-menu-item (click)="applyTracesStartingWith()" [hidden]="!isStartActivity">Filer cases starting with</button>
-  <button mat-menu-item (click)="applyTracesEndingWith()" [hidden]="!isEndActivity">Filer cases ending with</button>
+  <button mat-menu-item (click)="applyTracesStartingWith()" *ngIf="isStartActivity">Filer cases starting with</button>
+  <button mat-menu-item (click)="applyTracesEndingWith()" *ngIf="isEndActivity">Filer cases ending with</button>
 
 </mat-menu>
