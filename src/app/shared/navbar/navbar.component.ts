@@ -54,6 +54,8 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public dialog : MatDialog;
 
+  public filterCorrespondence : any = {};
+
   constructor(public translate: TranslateService, private layoutService: LayoutService, private configService:ConfigService, private authService: AuthenticationServiceService, private _route : Router, private pm4pyServ: Pm4pyService, public _dialog: MatDialog, private filterService: FilterServiceService) {
     const browserLang: string = translate.getBrowserLang();
     translate.use(browserLang.match(/en|es|pt|de/) ? browserLang : "en");
@@ -86,7 +88,25 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isProcessModelPage = false;
     this.isPlistPage = true;
 
-  this.authService.checkAuthentication().subscribe(data => {
+    this.filterCorrespondence["ltl"] = "LTL";
+    this.filterCorrespondence["start_activities"] = "Start act.";
+    this.filterCorrespondence["end_activities"] = "End act.";
+    this.filterCorrespondence["attributes_pos_trace"] = "Attributes";
+    this.filterCorrespondence["attributes_neg_trace"] = "Attributes";
+    this.filterCorrespondence["attributes_pos_events"] = "Attributes";
+    this.filterCorrespondence["attributes_neg_events"] = "Attributes";
+    this.filterCorrespondence["paths_pos_trace"] = "Paths";
+    this.filterCorrespondence["paths_neg_trace"] = "Paths";
+    this.filterCorrespondence["case_performance_filter"] = "Performance";
+    this.filterCorrespondence["timestamp_trace_intersecting"] = "Timeframe";
+    this.filterCorrespondence["timestamp_trace_containing"] = "Timeframe";
+    this.filterCorrespondence["timestamp_events"] = "Timeframe";
+    this.filterCorrespondence["variants"] = "Variants";
+    this.filterCorrespondence["numeric_attr_traces"] = "Num. attr.";
+    this.filterCorrespondence["numeric_attr_events"] = "Num. attr.";
+
+
+    this.authService.checkAuthentication().subscribe(data => {
 
       console.log("AAAAAA2");
       console.log(data);

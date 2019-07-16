@@ -23,8 +23,32 @@
                         <mat-chip-list #chipList>
                             <mat-chip *ngFor="let filter of filters" [selectable]="true"
                                       [removable]="true" (removed)="filterService.remove(filter)">
-                                {{filter[0]}}
-                                <mat-icon matChipRemove *ngIf="true">cancel</mat-icon>
+                                <span *ngIf="filterCorrespondence[filter[0]] == 'Attributes'">
+                                    <i class="ft-underline mr-2"></i>
+                                </span>
+                                <span *ngIf="filterCorrespondence[filter[0]] == 'Start act.'">
+                                    <i class="ft-corner-up-right mr-2"></i>
+                                </span>
+                                <span *ngIf="filterCorrespondence[filter[0]] == 'End act.'">
+                                    <i class="ft-corner-up-left mr-2"></i>
+                                </span>
+                                <span *ngIf="filterCorrespondence[filter[0]] == 'Paths'">
+                                    <i class="ft-navigation mr-2"></i>
+                                </span>
+                                <span *ngIf="filterCorrespondence[filter[0]] == 'Performance'">
+                                    <i class="ft-command mr-2"></i>
+                                </span>
+                                <span *ngIf="filterCorrespondence[filter[0]] == 'Timeframe'">
+                                    <i class="ft-clock mr-2"></i>
+                                </span>
+                                <span *ngIf="filterCorrespondence[filter[0]] == 'Variants'">
+                                    <i class="ft-target mr-2"></i>
+                                </span>
+                                <span *ngIf="filterCorrespondence[filter[0]] == 'Num. attr.'">
+                                    <i class="ft-percent mr-2"></i>
+                                </span>
+                                {{filterCorrespondence[filter[0]]}}&nbsp;&nbsp;
+                                <i class="ft-shuffle font-medium-3 blue-grey darken-4" (click)="filterService.remove(filter)"></i>
                             </mat-chip>
                         </mat-chip-list>
                     </li>
