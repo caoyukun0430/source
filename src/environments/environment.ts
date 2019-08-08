@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  webServicePath: "http://localhost:5000/",
+  webServicePath: 'http://' + window.location.hostname + ':5000/',
   enableUpload: true,
   enableDownload: true,
   enableLogin: false,
