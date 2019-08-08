@@ -1,0 +1,69 @@
+<div class="graph-traces-container">
+  <mat-toolbar>
+    <mat-chip-list>
+      <mat-chip *ngFor="let category of categoryForVisibility; let i=index"
+                [selectable]="chipsSelectable"
+                selected="{{ categoryForVisibility[i].isSelected }}" color="primary">
+        {{ category.title }}
+      </mat-chip>
+    </mat-chip-list>
+    <div class="vertical-divider"></div>
+    <mat-chip #chipRef="matChip" (click)="showLegend(chipRef)" color="primary" selected>Legend</mat-chip>
+  </mat-toolbar>
+  <div class="div-custom-padding"></div>
+  <mat-divider></mat-divider>
+  <div class="div-custom-padding"></div>
+  <div class="chart-container">
+    <!-- chart box -->
+    <div (cdkDragStarted)="dragStarted($event)"
+         cdkDrag cdkDragBoundary=".chart-container" class="movable-box"
+         id="chartBox">
+      <div class="movable-box--content">
+        <div #chart id="chart"></div>
+      </div>
+      <div class="movable-box--handler" (dblclick)="resetPosition()" cdkDragHandle></div>
+    </div>
+    <!-- legend box -->
+    <div class="movable-box" cdkDragBoundary=".chart-container"
+         id="legendBox" cdkDrag
+         (cdkDragStarted)="dragStarted($event)">
+      <div class="movable-box--content">
+        <div *ngFor="let event of events">
+          <mat-icon [style.color]="eventsForColorMapToShow.get(event)" style="font-size: 18px; display: inline; vertical-align: center;">label</mat-icon>
+          <span style="line-height: 1; font-size: 12px">{{ event }}</span>
+        </div>
+      </div>
+      <div class="movable-box--handler" (dblclick)="resetPosition()" cdkDragHandle></div>
+    </div>
+    <!-- case box -->
+    <div class="movable-box" cdkDragBoundary=".chart-container"
+         id="caseBox" cdkDrag
+         (cdkDragStarted)="dragStarted($event)">
+      <div class="movable-box--content">
+        <app-graph-cases [cases]="cases" class="appGraphCases"></app-graph-cases>
+      </div>
+      <div class="movable-box--handler" (dblclick)="resetPosition()" cdkDragHandle></div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!--
+<div class="row">
+  <div class="col-sm-7">
+    <div #chart id="chart"></div>
+  </div>
+  <div class="col-sm-5">
+    <div id="case-explorer">
+      <app-graph-cases [cases]="cases" class="appGraphCase"></app-graph-cases>
+    </div>
+  </div>
+</div>
+-->

@@ -7,9 +7,9 @@ import { RealWsRoutingModule } from './real-ws-routing.module';
 import {
   MatButtonModule, MatCardModule, MatChipsModule, MatDialogModule,
   MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
-  MatOptionModule,
+  MatOptionModule, MatPaginator,
   MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatSelectModule,
-  MatSliderModule, MatSortModule, MatTableModule, MatTabsModule,
+  MatSliderModule, MatSortModule, MatTableModule, MatTabsModule, MatPaginatorModule,
   MatToolbarModule
 } from '@angular/material';
 import {FormsModule} from '@angular/forms';
@@ -22,9 +22,13 @@ import { TransientComponent } from './transient/transient.component';
 import { AlignmentsComponent } from './alignments/alignments.component';
 import { PathsFilterComponent } from './paths-filter/paths-filter.component';
 import { ActivityDashboardComponent } from './activity-dashboard/activity-dashboard.component';
+import { VariantsExplorerComponent } from './variants/variants-explorer/variants-explorer.component';
+import { GraphVariantTracesComponent } from './variants/graph-variant-traces/graph-variant-traces.component';
+import {DragDropModule} from "@angular/cdk/drag-drop";
+import { GraphCasesComponent } from './variants/graph-cases/graph-cases.component';
 
 @NgModule({
-  declarations: [PmodelComponent, CasesComponent, StatisticsComponent, LoginComponentComponent, PlistComponent, SnaComponent, TransientComponent, AlignmentsComponent],
+  declarations: [PmodelComponent, CasesComponent, StatisticsComponent, LoginComponentComponent, PlistComponent, SnaComponent, TransientComponent, AlignmentsComponent, VariantsExplorerComponent, GraphVariantTracesComponent, GraphCasesComponent],
   imports: [
     CommonModule,
       RealWsRoutingModule,
@@ -50,6 +54,8 @@ import { ActivityDashboardComponent } from './activity-dashboard/activity-dashbo
     MatInputModule,
     FormsModule,
     MatProgressSpinnerModule,
-  ]
+    DragDropModule,
+    MatPaginatorModule,
+  ],
 })
 export class RealWsModule { }

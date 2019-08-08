@@ -9,6 +9,7 @@ import { PlistComponent } from './plist/plist.component';
 import { SnaComponent } from './sna/sna.component';
 import { TransientComponent } from './transient/transient.component';
 import { AlignmentsComponent } from './alignments/alignments.component';
+import { VariantsExplorerComponent } from "./variants/variants-explorer/variants-explorer.component";
 
 const routes: Routes = [
     {
@@ -84,6 +85,13 @@ const routes: Routes = [
                     title: 'Alignments'
                 }
             },
+            {
+                path: 'variants',
+                component: VariantsExplorerComponent,
+                data: {
+                    title: 'Variants Explorer'
+                }
+            }
         ]
     }
 ];
