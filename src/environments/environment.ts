@@ -8,7 +8,7 @@ export const environment = {
     webServicePath: 'http://' + window.location.hostname + ':5000/',
     enableUpload: true,
     enableDownload: true,
-    enableLogin: true,
+    enableLogin: false,
     enableMD5cipheringPasswordsFrontend: true,
     maxNoVariantsForAlignments: 235,
     firstPage: '/real-ws/plist',
