@@ -24,14 +24,14 @@ import { PathsFilterComponent } from './paths-filter/paths-filter.component';
 import { ActivityDashboardComponent } from './activity-dashboard/activity-dashboard.component';
 import { VariantsExplorerComponent } from './variants/variants-explorer/variants-explorer.component';
 import { GraphVariantTracesComponent } from './variants/graph-variant-traces/graph-variant-traces.component';
-import {DragDropModule} from "@angular/cdk/drag-drop";
+import { DragDropModule } from "@angular/cdk/drag-drop";
 import { GraphCasesComponent } from './variants/graph-cases/graph-cases.component';
 
 @NgModule({
   declarations: [PmodelComponent, CasesComponent, StatisticsComponent, LoginComponentComponent, PlistComponent, SnaComponent, TransientComponent, AlignmentsComponent, VariantsExplorerComponent, GraphVariantTracesComponent, GraphCasesComponent],
   imports: [
     CommonModule,
-      RealWsRoutingModule,
+    RealWsRoutingModule,
     ChartistModule,
     NgbModule,
     MatSliderModule,
@@ -56,6 +56,7 @@ import { GraphCasesComponent } from './variants/graph-cases/graph-cases.componen
     MatProgressSpinnerModule,
     DragDropModule,
     MatPaginatorModule,
+
   ],
 })
 export class RealWsModule { }

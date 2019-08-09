@@ -1,9 +1,11 @@
 <div class="graph-traces-container">
   <mat-toolbar>
     <mat-chip-list>
-      <mat-chip *ngFor="let category of categoryForVisibility; let i=index"
+      <mat-chip *ngFor="let category of categoryForVisibility"
                 [selectable]="chipsSelectable"
-                selected="{{ categoryForVisibility[i].isSelected }}" color="primary">
+                selected="{{ category.isSelected }}" color="primary"
+                id="{{ category.title }}"
+                (click)="setVisibleNumberOfTraces($event)">
         {{ category.title }}
       </mat-chip>
     </mat-chip-list>
@@ -15,18 +17,18 @@
   <div class="div-custom-padding"></div>
   <div class="chart-container">
     <!-- chart box -->
-    <div (cdkDragStarted)="dragStarted($event)"
+    <div (cdkDragStarted)="dragStarted($event)" (cdkDragEnded)="dragEnded($event)"
          cdkDrag cdkDragBoundary=".chart-container" class="movable-box"
          id="chartBox">
       <div class="movable-box--content">
         <div #chart id="chart"></div>
       </div>
-      <div class="movable-box--handler" (dblclick)="resetPosition()" cdkDragHandle></div>
+      <div class="movable-box--handler" (dblclick)="resetPosition($event)" cdkDragHandle></div>
     </div>
     <!-- legend box -->
     <div class="movable-box" cdkDragBoundary=".chart-container"
          id="legendBox" cdkDrag
-         (cdkDragStarted)="dragStarted($event)">
+         (cdkDragStarted)="dragStarted($event)" (cdkDragEnded)="dragEnded($event)">
       <div class="movable-box--content">
         <div *ngFor="let event of events">
           <mat-icon [style.color]="eventsForColorMapToShow.get(event)" style="font-size: 18px; display: inline; vertical-align: center;">label</mat-icon>
@@ -38,7 +40,7 @@
     <!-- case box -->
     <div class="movable-box" cdkDragBoundary=".chart-container"
          id="caseBox" cdkDrag
-         (cdkDragStarted)="dragStarted($event)">
+         (cdkDragStarted)="dragStarted($event)" (cdkDragEnded)="dragEnded($event)">
       <div class="movable-box--content">
         <app-graph-cases [cases]="cases" class="appGraphCases"></app-graph-cases>
       </div>

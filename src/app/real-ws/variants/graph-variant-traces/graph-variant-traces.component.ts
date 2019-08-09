@@ -61,7 +61,10 @@ export class GraphVariantTracesComponent implements OnChanges {
   private allCases;
   private cases;
 
+  chartWidth: number;
   dragPosition = {x: 0, y: 0};
+  zIndex = { chartBox: 10, caseBox: 20, legendBox: 30};
+  maxZIndex: number = 100;
   chipsSelectable: boolean = true;
 
   constructor(
@@ -104,11 +107,19 @@ export class GraphVariantTracesComponent implements OnChanges {
   private createChart(): void {
     d3.select('svg').remove();
     const element = this.chartContainer.nativeElement;
+    console.log(element);
     const data = this.variants;
+
+    // set chart width
+    var maxLength = 0;
+    data.forEach( (variant) => {
+      if (variant.events.length > maxLength) maxLength = variant.events.length;
+    });
+    this.chartWidth = (55 + this.polygonDimensionTailWidth) * maxLength;
 
 
     const chartDiv = d3.select(element).append('div').append('svg')
-        .attr('width', element.offsetWidth)
+        .attr('width', this.chartWidth)
         .attr('height', data.length * 50);
     const g = chartDiv.selectAll('g')
         .data(data)
@@ -188,7 +199,7 @@ export class GraphVariantTracesComponent implements OnChanges {
   }
 
   private expandingTrace(d, i) {
-    this.setPolygonDimension(75, 30, 3, 10);
+    this.setPolygonDimension(55, 30, 3, 10);
     const g = d3.selectAll('g').filter((d, j) => j === i);
     g.selectAll('polygon').remove();
     g.selectAll('polygon')
@@ -233,8 +244,11 @@ export class GraphVariantTracesComponent implements OnChanges {
     this.cases = this.allCases;
   }
 
-  resetPosition() {
-    this.dragPosition = {x: this.dragPosition.x, y: this.dragPosition.y};
+  resetPosition(event) {
+    console.log("reset Position");
+    // var movableBox = event.source.parentElement;
+    // console.log(movableBox.id);
+    // movableBox.setAttribute("cdkDragFreeDragPosition", '{x: 0, y: 0}');
   }
 
   showLegend(chipRef: MatChip) {
@@ -248,7 +262,24 @@ export class GraphVariantTracesComponent implements OnChanges {
   }
 
   dragStarted(dragEvent) {
-    dragEvent.source.getRootElement().style.zIndex = dragEvent.source.getRootElement().style.zIndex + 10;
+    //console.log("drag started");
+    dragEvent.source.getRootElement().style.zIndex = this.maxZIndex;
+  }
+
+  dragEnded(dragEvent) {
+    var dragElement = dragEvent.source.getRootElement();
+    //console.log(dragElement.id + " ended");
+    if (dragElement.id === "legendBox") { dragElement.style.zIndex = this.zIndex.legendBox; }
+    else if (dragElement.id === "chartBox") { dragElement.style.zIndex = this.zIndex.chartBox; }
+    else if (dragElement.id === "caseBox") { dragElement.style.zIndex = this.zIndex.caseBox; }
+  }
+
+  /**
+   * Chip onClickEventListener
+   */
+  setVisibleNumberOfTraces(event) {
+    var clickedChip = event.source;
+    console.log(clickedChip + " clicked");
   }
 
   onResize($event: any) {
