@@ -1,6 +1,6 @@
 export const environment = {
     production: true,
-    webServicePath: 'http://' + window.location.hostname + ':80/',
+    webServicePath: window.location.protocol+'//' + window.location.hostname + ':'+window.location.port+'/',
     enableUpload: false,
     enableDownload: false,
     enableLogin: true,
