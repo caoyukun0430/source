@@ -87,6 +87,16 @@
                         </div>
                     </li>
                     <li class="nav-item" ngbDropdown [placement]="placement" *ngIf="isProcessModelPage">
+                        <a class="nav-link position-relative" id="options" ngbDropdownToggle>
+                            <i class="ft-octagon font-medium-3 blue-grey darken-4"></i>
+                            <p class="d-none">Options</p>
+                        </a>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic3" class="text-left">
+                            <mat-checkbox [(checked)]="enableSmartFiltering" (change)="changeSmartFiltering()">Enable Smart Filtering</mat-checkbox>
+
+                        </div>
+                    </li>
+                    <li class="nav-item" ngbDropdown [placement]="placement" *ngIf="isProcessModelPage">
                         <a class="nav-link position-relative" id="filtering" ngbDropdownToggle>
                             <i class="ft-filter font-medium-3 blue-grey darken-4"></i>
                             <p class="d-none">Filtering</p>

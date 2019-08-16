@@ -85,6 +85,15 @@ export class PmodelComponent implements OnInit {
             this.typeOfModel = "dfg";
         }
 
+        if (localStorage.getItem("smartFiltering") === null) {
+            localStorage.setItem("smartFiltering", "true");
+        }
+
+        if (localStorage.getItem("smartFiltering") === "false") {
+            this.simplicity = -5.0;
+            this.selectedSimplicity = -5.0;
+        }
+
         this.isStartActivity = false;
         this.isEndActivity = false;
 

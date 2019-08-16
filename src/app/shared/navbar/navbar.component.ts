@@ -41,6 +41,8 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public config: any = {};
 
+  public enableSmartFiltering : boolean;
+
   public sessionId : string;
   public userId : string;
   public isNotLogin : boolean;
@@ -76,6 +78,18 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     _route.events.subscribe((val) => {
       this.getFilters();
     });
+
+    if (localStorage.getItem("smartFiltering") === null) {
+      localStorage.setItem("smartFiltering", "true");
+    }
+
+    if (localStorage.getItem("smartFiltering") === "true") {
+      this.enableSmartFiltering = true;
+    }
+    else {
+      this.enableSmartFiltering = false;
+    }
+
 
     this.sessionId = null;
     this.userId = null;
@@ -318,5 +332,18 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   shareLog() {
       this.dialog.open(LogSharingComponent);
+  }
+
+  changeSmartFiltering() {
+    if (this.enableSmartFiltering) {
+      this.enableSmartFiltering = false;
+      localStorage.setItem("smartFiltering", "false");
+      alert("Smart filtering has been disabled for the next calculations.");
+    }
+    else {
+      this.enableSmartFiltering = true;
+      localStorage.setItem("smartFiltering", "true");
+      alert("Smart filtering has been enabled for the next calculations.");
+    }
   }
 }
