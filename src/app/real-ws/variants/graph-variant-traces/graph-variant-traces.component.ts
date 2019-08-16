@@ -6,6 +6,7 @@ import {MatChip, MatDialog} from '@angular/material';
 import {WaitingCircleComponentComponent} from "../../waiting-circle-component/waiting-circle-component.component";
 import {HttpParams} from "@angular/common/http";
 import { colorRange, eventsColorMap } from "../variants-explorer-model";
+import {AngularResizableDirective} from "angular2-draggable";
 
 interface VariantsModel {
   caseDuration: any;
@@ -19,9 +20,9 @@ interface VariantsModel {
   encapsulation: ViewEncapsulation.None,
   templateUrl: './graph-variant-traces.component.html',
   styleUrls: ['./graph-variant-traces.component.scss'],
-  host: {
-    '(window:resize)': 'onResize($event)'
-  }
+  // host: {
+  //   '(window:resize)': 'onResize($event)'
+  // }
 })
 
 export class GraphVariantTracesComponent implements OnChanges {
@@ -53,9 +54,9 @@ export class GraphVariantTracesComponent implements OnChanges {
   private events: Set<string> = new Set();
   private eventsForColorMapToShow;
 
-  private arrIsVariantsSelected: boolean[];
+  private selectedVariants: string[];
+  private selectedVariantsCount: number;
   private prevSelectedVariantIndex: number = null;
-  private variantSelected: string;
 
   private pm4pyJsonCases;
   private allCases;
@@ -67,9 +68,16 @@ export class GraphVariantTracesComponent implements OnChanges {
   maxZIndex: number = 100;
   chipsSelectable: boolean = true;
 
+  //initial position
+  boxInfo: any[] = [
+    { id: 'chartBox', x: 0, y: 0, width: 0, height: 0, zIndex: 10},
+    { id: 'legendBox', x: 0, y: 0, width: 0, height: 0, zIndex: 30},
+    { id: 'caseBox', x: 0, y: 0, width: 0, height: 0, zIndex: 20}
+  ];
+
   constructor(
       private pm4pyService: Pm4pyService,
-      private dialog: MatDialog ) {
+      private dialog: MatDialog) {
     this.isLoading = false;
     this.variantsLoading = false;
     this.casesLoading = false;
@@ -78,11 +86,22 @@ export class GraphVariantTracesComponent implements OnChanges {
   ngOnChanges(): void {
     console.log('graph-traces: onChanges');
     if (!this.variants) { return; }
-    this.arrIsVariantsSelected = new Array(this.variants.length).fill(false);
+    this.selectedVariants = [];
     this.setColorMap();
     this.setPolygonDimension(25, 30, 3, 10);
     this.createChart();
     this.getAllCases();
+    this.getInitialInfoOfBoxes();
+  }
+
+  private getInitialInfoOfBoxes() {
+    this.boxInfo.forEach((box) => {
+      var boxFromHtml = document.getElementById(box.id);
+      box.x = boxFromHtml.offsetLeft;
+      box.y = boxFromHtml.offsetTop;
+      box.width = boxFromHtml.offsetWidth;
+      box.height = boxFromHtml.offsetHeight;
+    });
   }
 
   private setColorMap(): void {
@@ -107,7 +126,6 @@ export class GraphVariantTracesComponent implements OnChanges {
   private createChart(): void {
     d3.select('svg').remove();
     const element = this.chartContainer.nativeElement;
-    console.log(element);
     const data = this.variants;
 
     // set chart width
@@ -115,7 +133,7 @@ export class GraphVariantTracesComponent implements OnChanges {
     data.forEach( (variant) => {
       if (variant.events.length > maxLength) maxLength = variant.events.length;
     });
-    this.chartWidth = (55 + this.polygonDimensionTailWidth) * maxLength;
+    this.chartWidth = 55 * maxLength + 100;
 
 
     const chartDiv = d3.select(element).append('div').append('svg')
@@ -129,29 +147,58 @@ export class GraphVariantTracesComponent implements OnChanges {
         .attr('height', 50)
         .attr('transform', (d, i) => 'translate(0, ' + i * 50 + ')')
         .on('click', (d, i) => {
-              if (i == this.prevSelectedVariantIndex) {
-                if (this.arrIsVariantsSelected[i] == true) {
-                  this.foldingTrace(d, i);
-                  //this.variantSelected = null;
-                  this.removeCases();
-                }
-                else {
-                  this.expandingTrace(d, i);
-                  this.prevSelectedVariantIndex = i;
-                  //console.log("d: " + d.variant + ", i: " + i);
-                  //this.variantSelected = d.variants;
-                  this.getAllCases(this.variants[i]['variant']);
-                }
-              } else {
-                this.foldingTrace(d, this.prevSelectedVariantIndex);
-                this.removeCases();
-                this.expandingTrace(d, i);
-                //console.log("d: " + d.variant + ", i: " + i);
-                //this.variantSelected = d.variants;
-                //console.log("selected Variants: "+d);
-                this.getAllCases(this.variants[i].variant);
-                this.prevSelectedVariantIndex = i;
+          if (this.selectedVariants.includes(d.variant)) { // click already selected variants
+            let removeIndex: number = this.selectedVariants.indexOf(d.variant);
+            this.selectedVariants.splice(removeIndex, 1);
+            this.foldingTrace(d, i);                // folding trace graph
+            this.removeCases();                     // reset case table
+            this.prevSelectedVariantIndex = i;      // set prev index
+          } else {
+            if (d3.event.ctrlKey || d3.event.metaKey) {   // ctrl or command + click
+
+            }
+             else {
+              for (let j=0; j<data.length; j++) {   // single select -> all other selected trace should be folded.
+                this.foldingTrace(d, j);
               }
+              this.selectedVariants = [];
+              this.removeCases();
+            }
+            this.selectedVariants.push(d.variant); // add variant to the array of selected variants
+            this.expandingTrace(d, i);
+            this.getAllCases(this.variants[i]['variant']);
+            this.prevSelectedVariantIndex = i;
+            console.log("selected variants: " + this.selectedVariants);
+          }
+              // if (i == this.prevSelectedVariantIndex) {
+              //   if (this.selectedVariants.includes(d.variants)) {
+              //     this.foldingTrace(d, i);
+              //     this.removeCases();
+              //     this.selectedVariants[i] = false;
+              //   }
+              //   else {
+              //     this.expandingTrace(d, i);
+              //     this.getAllCases(this.variants[i]['variant']);
+              //     this.prevSelectedVariantIndex = i;
+              //     this.selectedVariants[i] = true;
+              //   }
+              // } else { // click different trace
+              //   if (d3.event.ctrlKey || d3.event.metaKey) { // press ctrl or command key
+              //
+              //   } else {
+              //     for (let j = 0; j<this.selectedVariants.length; j++) {
+              //       if (this.selectedVariants[j]) {
+              //         this.foldingTrace(d, j);
+              //         this.removeCases();
+              //         this.selectedVariants[j] = false;
+              //       }
+              //     }
+              //   }
+              //   this.expandingTrace(d, i);
+              //   this.getAllCases(this.variants[i]['variant']);
+              //   this.prevSelectedVariantIndex = i;
+              //   this.selectedVariants[i] = true;
+              // }
             }
         );
 
@@ -195,7 +242,7 @@ export class GraphVariantTracesComponent implements OnChanges {
         .attr('points', (d, i) => this.getTracePoints(i))
         .style('fill', (d, i) => eventsColorMap.get(d.split('+')[0]))
         .attr('transform', (d, i) => 'translate(' + i * (this.polygonDimensionWidth + this.polygonDimensionSpacing) + ', 0)');
-    this.arrIsVariantsSelected[i] = false;
+    // this.selectedVariants[i] = false;
   }
 
   private expandingTrace(d, i) {
@@ -209,7 +256,7 @@ export class GraphVariantTracesComponent implements OnChanges {
         .attr('points', (d, i) => this.getTracePoints(i))
         .style('fill', (d, i) => eventsColorMap.get(d.split('+')[0]))
         .attr('transform', (d, i) => 'translate(' + i * (this.polygonDimensionWidth + this.polygonDimensionSpacing) + ', 0)');
-    this.arrIsVariantsSelected[i] = true;
+    // this.selectedVariants[i] = true;
   }
 
   getAllCases(variant?: string) {
@@ -239,13 +286,29 @@ export class GraphVariantTracesComponent implements OnChanges {
     })
   }
 
-
   private removeCases() {
     this.cases = this.allCases;
   }
 
-  resetPosition(event) {
-    console.log("reset Position");
+  resetBox(boxId) {
+    console.log("resetBox");
+    // this.boxInfo.forEach( (box) => {
+    //   if (box.id === boxId) {
+    //     console.log(boxId);
+    //     var element = document.getElementById(boxId);
+    //     element.setAttribute('style', 'position: absolute; ' +
+    //         'top: ' + box.top+'; ' +
+    //         'left: ' + box.left + '; ' +
+    //         'width: ' + box.width + '; ' +
+    //         'height: ' + box.height +';' );
+        // element.style.position = 'absolute';
+        // element.style.top = box.top;
+        // element.style.left = box.left;
+        // element.style.width = box.width;
+        // element.style.height = box.height;
+    //   }
+    // });
+
     // var movableBox = event.source.parentElement;
     // console.log(movableBox.id);
     // movableBox.setAttribute("cdkDragFreeDragPosition", '{x: 0, y: 0}');
@@ -278,12 +341,12 @@ export class GraphVariantTracesComponent implements OnChanges {
    * Chip onClickEventListener
    */
   setVisibleNumberOfTraces(event) {
-    var clickedChip = event.source;
-    console.log(clickedChip + " clicked");
   }
 
   onResize($event: any) {
     // resize event
   }
+
+
 }
 
