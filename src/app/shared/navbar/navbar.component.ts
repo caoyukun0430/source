@@ -22,6 +22,7 @@ import {NumericAttributeFilterComponent} from '../../real-ws/numeric-attribute-f
 import {WaitingCircleComponentComponent} from '../../real-ws/waiting-circle-component/waiting-circle-component.component';
 
 import {PathsFilterComponent} from '../../real-ws/paths-filter/paths-filter.component';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: "app-navbar",
@@ -50,9 +51,9 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   public enableUpload : boolean;
   public thisProcess : string;
   public isAdmin : boolean;
-
   public isProcessModelPage : boolean;
   public isPlistPage : boolean;
+  public enableSharing: boolean = true;
 
   public dialog : MatDialog;
 
@@ -89,6 +90,8 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     else {
       this.enableSmartFiltering = false;
     }
+
+    this.enableSharing = environment.overallEnableSharing;
 
 
     this.sessionId = null;

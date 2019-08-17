@@ -64,7 +64,7 @@
                             <p class="d-none">upload log</p>
                         </a>
                     </li>
-                    <li class="nav-item mr-2  d-none d-lg-block" *ngIf="isAdmin && isPlistPage">
+                    <li class="nav-item mr-2  d-none d-lg-block" *ngIf="isAdmin && isPlistPage && enableSharing">
                         <a href="javascript:;" class="nav-link" id="navbar-share-log" (click)="shareLog()">
                             <i class="ft-share-2 font-medium-3 blue-grey darken-4"></i>
                             <p class="d-none">Share log</p>
