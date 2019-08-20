@@ -484,4 +484,8 @@ export class Pm4pyService {
 
     return this.http.get(completeUrl, {params: parameters});
   }
+
+  getCurrentProcess() {
+    return localStorage.getItem('process');
+  }
 }

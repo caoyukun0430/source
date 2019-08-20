@@ -60,6 +60,8 @@ import {PmtkBpmnVisualizerComponent} from './real-ws/pmtk-bpmn-visualizer/pmtk-b
 import {LogSharingComponent} from './real-ws/log-sharing/log-sharing.component';
 import {PathsFilterComponent} from './real-ws/paths-filter/paths-filter.component';
 import {ActivityDashboardComponent} from './real-ws/activity-dashboard/activity-dashboard.component';
+import { DragDropModule } from "@angular/cdk/drag-drop";
+import {AngularDraggableModule} from "angular2-draggable";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true,
@@ -110,7 +112,9 @@ export function createTranslateLoader(http: HttpClient) {
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyCERobClkCv1U4mDijGm1FShKva_nxsGJY'
         }),
-        PerfectScrollbarModule
+        PerfectScrollbarModule,
+        DragDropModule,
+        AngularDraggableModule,
     ],
     entryComponents: [
         StartActivitiesFilterComponent, EndActivitiesFilterComponent, VariantsFilterComponent, AttributesFilterComponent, PerformanceFilterComponent, TimeframeFilterComponent, NumericAttributeFilterComponent, WaitingCircleComponentComponent, PmtkBpmnVisualizerComponent, LogSharingComponent, PathsFilterComponent, ActivityDashboardComponent
