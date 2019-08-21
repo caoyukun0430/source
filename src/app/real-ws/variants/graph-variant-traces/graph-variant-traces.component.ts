@@ -51,7 +51,7 @@ export class GraphVariantTracesComponent implements OnChanges {
   polygonDimensionSpacing;
   polygonDimensionTailWidth;
 
-  private events: Set<string> = new Set();
+  public events: Set<string> = new Set();
   private eventsForColorMapToShow;
 
   private selectedVariants: string[];
@@ -60,7 +60,7 @@ export class GraphVariantTracesComponent implements OnChanges {
 
   private pm4pyJsonCases;
   private allCases;
-  private cases;
+  public cases;
 
   chartWidth: number;
   dragPosition = {x: 0, y: 0};
