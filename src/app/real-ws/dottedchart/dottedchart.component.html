@@ -1,0 +1,28 @@
+<span>
+  Attribute X:
+    <mat-select placeholder="Attribute X" [(value)]="attribute_x" (selectionChange)="selectedAttributeXChanged($event)">
+    <mat-option
+            *ngFor="let option of attributesList"
+            value="{{ option }}">
+      {{ option }}
+    </mat-option>
+  </mat-select>
+    &nbsp; Attribute Y:
+    <mat-select placeholder="Attribute Y" [(value)]="attribute_y" (selectionChange)="selectedAttributeYChanged($event)">
+    <mat-option
+            *ngFor="let option of attributesList"
+            value="{{ option }}">
+      {{ option }}
+    </mat-option>
+  </mat-select>
+      &nbsp; Attribute Color:
+    <mat-select placeholder="Attribute Color" [(value)]="attribute_color" (selectionChange)="selectedAttributeColorChanged($event)">
+    <mat-option
+            *ngFor="let option of attributesList"
+            value="{{ option }}">
+      {{ option }}
+    </mat-option>
+  </mat-select>
+
+</span>
+<plotly-plot [data]="graph.data" [layout]="graph.layout"></plotly-plot>

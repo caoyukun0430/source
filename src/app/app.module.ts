@@ -63,6 +63,11 @@ import {ActivityDashboardComponent} from './real-ws/activity-dashboard/activity-
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import {AngularDraggableModule} from "angular2-draggable";
 
+import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+import { PlotlyModule } from 'angular-plotly.js';
+PlotlyModule.plotlyjs = PlotlyJS;
+
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true,
     wheelPropagation: false
@@ -115,6 +120,7 @@ export function createTranslateLoader(http: HttpClient) {
         PerfectScrollbarModule,
         DragDropModule,
         AngularDraggableModule,
+        PlotlyModule
     ],
     entryComponents: [
         StartActivitiesFilterComponent, EndActivitiesFilterComponent, VariantsFilterComponent, AttributesFilterComponent, PerformanceFilterComponent, TimeframeFilterComponent, NumericAttributeFilterComponent, WaitingCircleComponentComponent, PmtkBpmnVisualizerComponent, LogSharingComponent, PathsFilterComponent, ActivityDashboardComponent

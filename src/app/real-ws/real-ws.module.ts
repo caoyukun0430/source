@@ -27,9 +27,14 @@ import { GraphVariantTracesComponent } from './variants/graph-variant-traces/gra
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { GraphCasesComponent } from './variants/graph-cases/graph-cases.component';
 import {AngularDraggableModule} from "angular2-draggable";
+import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+import { PlotlyModule } from 'angular-plotly.js';
+PlotlyModule.plotlyjs = PlotlyJS;
+
+import { DottedchartComponent } from './dottedchart/dottedchart.component';
 
 @NgModule({
-  declarations: [PmodelComponent, CasesComponent, StatisticsComponent, LoginComponentComponent, PlistComponent, SnaComponent, TransientComponent, AlignmentsComponent, VariantsExplorerComponent, GraphVariantTracesComponent, GraphCasesComponent],
+  declarations: [PmodelComponent, CasesComponent, StatisticsComponent, LoginComponentComponent, PlistComponent, SnaComponent, TransientComponent, AlignmentsComponent, VariantsExplorerComponent, GraphVariantTracesComponent, GraphCasesComponent, DottedchartComponent],
     imports: [
         CommonModule,
         RealWsRoutingModule,
@@ -58,7 +63,7 @@ import {AngularDraggableModule} from "angular2-draggable";
         DragDropModule,
         MatPaginatorModule,
         AngularDraggableModule,
-
+        PlotlyModule
     ],
 })
 export class RealWsModule { }
