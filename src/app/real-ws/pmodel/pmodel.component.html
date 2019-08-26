@@ -41,9 +41,6 @@
   <div [hidden]="dotProvided" id="svgWithInnerHtml">
 
   </div>
-  <div *ngIf="false">
-    <img id="imageProcessModelImage" [src]="processModelBase64Sanitized">
-  </div>
 </div>
 <input hidden type="file" #uploader
        (change)="uploadFile($event)"/>
