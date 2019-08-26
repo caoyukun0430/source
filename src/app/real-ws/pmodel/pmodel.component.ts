@@ -12,6 +12,7 @@ import {FilterServiceService} from '../../filter-service.service';
 import {ActivityDashboardComponent} from '../activity-dashboard/activity-dashboard.component';
 
 import { graphviz } from 'd3-graphviz';
+import * as d3 from 'd3';
 
 @Component({
     selector: 'app-pmodel',
@@ -183,7 +184,13 @@ export class PmodelComponent implements OnInit {
             if (this.dotString.length > 0) {
                 this.dotProvided = true;
 
-                graphviz('#dotProvidedDiv').renderDot(this.dotString);
+                let targetWidth = window.innerWidth * 0.92;
+                let targetHeight = window.innerHeight * 0.68;
+
+                let thisEl = graphviz('#dotProvidedDiv').width(targetWidth+'px').height(targetHeight+'px').renderDot(this.dotString);
+                console.log("THISEL");
+                console.log(thisEl);
+
 
                 let dotProvidedDiv = document.getElementById("dotProvidedDiv");
                 let svgDoc = dotProvidedDiv.childNodes;
