@@ -71,7 +71,35 @@ export class DottedchartComponent implements OnInit {
       let attributes = eventsForDotted['attributes'];
       let third_unique_values = eventsForDotted['third_unique_values'];
 
+      let type_X = eventsForDotted['types'][attributes[1]];
+      let type_Y = eventsForDotted['types'][attributes[2]];
+
       let i = 0;
+      if (type_X.includes("date") || type_X.includes("timest")) {
+        while (i < eventsForDotted['traces'].length) {
+          let j = 0;
+          while (j < eventsForDotted['traces'][i][attributes[1]].length) {
+            eventsForDotted['traces'][i][attributes[1]][j] = new Date(eventsForDotted['traces'][i][attributes[1]][j] * 1000.0);
+            j++;
+          }
+          i++;
+        }
+      }
+
+      i = 0;
+      if (type_Y.includes("date") || type_Y.includes("timest")) {
+        while (i < eventsForDotted['traces'].length) {
+          let j = 0;
+          while (j < eventsForDotted['traces'][i][attributes[2]].length) {
+            eventsForDotted['traces'][i][attributes[2]][j] = new Date(eventsForDotted['traces'][i][attributes[2]][j] * 1000.0);
+            j++;
+          }
+          i++;
+        }
+      }
+
+
+      i = 0;
       while (i < eventsForDotted['traces'].length) {
         let color1 = Math.floor(Math.random() * 255);
         let color2 = Math.floor(Math.random() * 255);
@@ -95,10 +123,15 @@ export class DottedchartComponent implements OnInit {
 
       this.graph = {};
       this.graph.data = data2;
-      console.log("window.innerWidth"+window.innerWidth);
-      console.log("window.innerHeight"+window.innerHeight);
 
-      this.graph.layout = {title: 'Dotted Chart'};
+      let layout2 : any = {};
+      layout2.title = 'Dotted Chart';
+      layout2.xaxis = {title: {text: attributes[1]}};
+      layout2.yaxis = {title: {text: attributes[2]}};
+
+      //layout2.xaxis = {tickformat: '%d %B (%a)\n %Y'};
+
+      this.graph.layout = layout2;
 
       this.graph_defined = true;
 
