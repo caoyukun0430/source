@@ -35,5 +35,6 @@
   </div>
 </div>
 <div *ngIf="graph_defined">
-<plotly-plot [data]="graph.data" [layout]="graph.layout"></plotly-plot>
+  <plotly-plot [data]="graph.data" [layout]="graph.layout" id="plotlyPlot" (initialized)="plotInitialized()"></plotly-plot>
 </div>
+

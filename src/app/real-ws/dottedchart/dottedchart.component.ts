@@ -136,7 +136,9 @@ export class DottedchartComponent implements OnInit {
       this.graph_defined = true;
 
       dia.close();
-    })
+    }, err => {}, () => {
+
+    });
   }
 
   selectedAttributeXChanged(event: any) {
@@ -149,5 +151,9 @@ export class DottedchartComponent implements OnInit {
 
   selectedAttributeColorChanged(event: any) {
     this.attribute_color = event.value;
+  }
+
+  plotInitialized() {
+
   }
 }
