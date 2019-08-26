@@ -184,16 +184,28 @@ export class PmodelComponent implements OnInit {
             if (this.dotString.length > 0) {
                 this.dotProvided = true;
 
+                let targetInnerWidth = window.innerWidth * 0.9;
+                let targetInnerHeight = window.innerHeight * 0.66;
+
                 let targetWidth = window.innerWidth * 0.92;
                 let targetHeight = window.innerHeight * 0.68;
 
-                let thisEl = graphviz('#dotProvidedDiv').width(targetWidth+'px').height(targetHeight+'px').renderDot(this.dotString);
-                console.log("THISEL");
-                console.log(thisEl);
+                let currentWidth = parseInt(this.processModelDecodedSVG.split("width=\"")[1].split("pt\"")[0]);
+                let currentHeight = parseInt(this.processModelDecodedSVG.split("height=\"")[1].split("pt\"")[0]);
 
+                let ratioWidth : number = targetInnerWidth / currentWidth;
+                let ratioHeight : number = targetInnerHeight / currentHeight;
+
+                let ratio : number = Math.min(ratioWidth, ratioHeight);
+
+                let thisEl = graphviz('#dotProvidedDiv').width(targetWidth+'px').height(targetHeight+'px').renderDot(this.dotString);
 
                 let dotProvidedDiv = document.getElementById("dotProvidedDiv");
                 let svgDoc = dotProvidedDiv.childNodes;
+
+                console.log(svgDoc);
+
+                (<SVGSVGElement>svgDoc[0]).currentScale = ratio;
 
                 svgDoc[0].addEventListener("click", (e: Event) => this.manageClickOnSvg(e));
             }

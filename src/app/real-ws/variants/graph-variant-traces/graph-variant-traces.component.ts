@@ -91,6 +91,7 @@ export class GraphVariantTracesComponent implements OnChanges {
     this.setPolygonDimension(25, 30, 3, 10);
     this.createChart();
     this.getAllCases();
+    document.getElementById("legendBox").style.visibility = "hidden";
     this.getInitialInfoOfBoxes();
   }
 
