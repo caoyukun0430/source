@@ -23,14 +23,14 @@ export class DottedchartComponent implements OnInit {
     this.graph_defined = false;
     this.attribute_x = "time:timestamp";
     this.attribute_y = "@@case_index";
-    this.attribute_color = "";
+    this.attribute_color = "concept:name";
 
     this.authService.checkAuthentication().subscribe(data => {
       //console.log(data);
     });
 
     this.getAttributesList();
-    //this.getEventsForDotted();
+    this.getEventsForDotted();
 
 
   }
@@ -41,14 +41,14 @@ export class DottedchartComponent implements OnInit {
   getAttributesList() {
     let httpParams : HttpParams = new HttpParams();
 
-    let dia = this.dialog.open(WaitingCircleComponentComponent);
+    //let dia = this.dialog.open(WaitingCircleComponentComponent);
 
     this.pm4pyService.getAttributesList(httpParams).subscribe(data => {
       let attributesList = data as JSON;
       this.attributesList = attributesList["attributes_list"];
       console.log(this.attributesList);
 
-      dia.close();
+      //dia.close();
     });
   }
 
