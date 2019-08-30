@@ -6,6 +6,8 @@ import {HttpParams} from '@angular/common/http';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {MatDialog} from '@angular/material';
 import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiting-circle-component.component';
+declare var Plotly: any;
+declare var $: any;
 
 @Component({
   selector: 'app-timeframe-filter',
@@ -15,6 +17,9 @@ import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiti
 export class TimeframeFilterComponent implements OnInit {
   public filteringMethod : string;
   points: any;
+  points_x: any;
+  points_y: any;
+  points_x_date: any;
   min_timestamp : number;
   max_timestamp : number;
   loaded : boolean;
@@ -45,9 +50,18 @@ export class TimeframeFilterComponent implements OnInit {
   applyFilter() {
     this.selected_min_timestamp = (<HTMLInputElement>document.getElementById("minimumTimestamp")).value;
     this.selected_max_timestamp = (<HTMLInputElement>document.getElementById("maximumTimestamp")).value;
+    if (this.selected_min_timestamp.indexOf('.')>0){
+        this.selected_min_timestamp = this.selected_min_timestamp.substring(0, this.selected_min_timestamp.indexOf('.'));
+    }
+
+    if (this.selected_max_timestamp.indexOf('.')>0){
+        this.selected_max_timestamp = this.selected_max_timestamp.substring(0, this.selected_max_timestamp.indexOf('.'));
+    }
+
 
     this.min_timestamp = this.dateConverter(this.selected_min_timestamp);
     this.max_timestamp = this.dateConverter(this.selected_max_timestamp);
+    console.log("date",this.min_timestamp);
 
     let filterStri = String(this.min_timestamp)+"@@@"+String(this.max_timestamp);
 
@@ -62,9 +76,58 @@ export class TimeframeFilterComponent implements OnInit {
 
     let thisDialog = this.dialog.open(WaitingCircleComponentComponent);
 
+
     this.pm4pyServ.getEventsPerTime(params).subscribe(data => {
       let eventsPerTimeJson = data as JSON;
       this.points = eventsPerTimeJson["points"];
+      this.points_x = eventsPerTimeJson["points_x"];
+      this.points_y = eventsPerTimeJson["points_y"];
+      var points_x_date = new Array();
+
+      for (var i=0;i<this.points_x.length;i++){
+        points_x_date[i] = this.timeConverter(this.points_x[i]);
+      }
+      // console.log("xno",this.points_x[0]);
+      //console.log("x",this.timeConverter(this.points_x[0]));
+      //console.log("x",(points_x_date));
+
+
+      var TIMEFRAME_PLOT = $('#timeframe_plot')[0];
+
+      var plot_data = [{
+      x: points_x_date,
+      y: this.points_y}];
+
+      var layout = {
+      title: 'Events per Time Graph',
+      margin: { t: 0 },
+      xaxis: {
+      title: 'Date',
+      autorange: true,
+      //drange: [String(points_x_date[0]), String(points_x_date[this.points_x.length - 1])]
+      },
+      yaxis: {
+      title: 'Density',
+      exponentformat: 'e',
+      showexponent: 'all'
+      }
+      };
+
+      Plotly.plot( TIMEFRAME_PLOT, plot_data, layout );
+      TIMEFRAME_PLOT.on('plotly_relayout',function(plot_data){
+        var min_range = plot_data["xaxis.range[0]"];
+        //console.log('sub',min_range.indexOf('.'));
+        //console.log('left',(plot_data["xaxis.range[0]"]));
+        // var min_time = min_range.substring(0, min_range.indexOf('.'));
+        var max_range = plot_data["xaxis.range[1]"];
+        // var max_time = max_range.substring(0, max_range.indexOf('.'));
+        // console.log('left',(plot_data["xaxis.range[0]"]));
+        // console.log('left1',min_time);
+        (<HTMLInputElement>document.getElementById("minimumTimestamp")).value = String(min_range);
+        (<HTMLInputElement>document.getElementById("maximumTimestamp")).value = String(max_range);
+
+    });
+
 
       this.eventsPerTimeSvgOriginal = eventsPerTimeJson["base64"];
       this.eventsPerTimeSvgSanitized = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.eventsPerTimeSvgOriginal);
@@ -74,7 +137,6 @@ export class TimeframeFilterComponent implements OnInit {
         this.max_timestamp = Math.ceil(this.points[this.points.length - 1][0]);
         this.selected_min_timestamp = this.timeConverter(this.min_timestamp);
         this.selected_max_timestamp = this.timeConverter(this.max_timestamp);
-
         (<HTMLInputElement>document.getElementById("minimumTimestamp")).value = this.selected_min_timestamp;
         (<HTMLInputElement>document.getElementById("maximumTimestamp")).value = this.selected_max_timestamp;
       }
