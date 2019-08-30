@@ -68,11 +68,8 @@
     "ngx-ui-switch": "7.0.1",
     "node-sass": "4.9.4",
     "nouislider": "12.0.0",
-<<<<<<< Updated upstream
     "plotly.js": "^1.49.4",
-=======
     "plotly.js-dist": "^1.49.4",
->>>>>>> Stashed changes
     "prismjs": "1.15.0",
     "quill": "1.3.6",
     "resize-observer-polyfill": "1.5.0",

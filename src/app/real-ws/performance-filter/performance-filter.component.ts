@@ -6,8 +6,6 @@ import { FilterServiceService } from '../../filter-service.service';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {MatDialog} from '@angular/material';
 import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiting-circle-component.component';
-import Plotly from 'plotly.js-dist';
-import * as d3 from "d3";
 declare var Plotly: any;
 declare var $: any;
 
