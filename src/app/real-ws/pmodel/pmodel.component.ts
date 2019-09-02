@@ -12,6 +12,7 @@ import {FilterServiceService} from '../../filter-service.service';
 import {ActivityDashboardComponent} from '../activity-dashboard/activity-dashboard.component';
 
 import { graphviz } from 'd3-graphviz';
+import * as d3 from 'd3';
 
 @Component({
     selector: 'app-pmodel',
@@ -43,6 +44,7 @@ export class PmodelComponent implements OnInit {
     public ratioVariantsNumber = 100;
     public ratioCasesNumber = 100;
     public ratioEventsNumber = 100;
+    public enableProcessModelChoice : boolean = true;
     decoration = 'freq';
     typeOfModel = 'dfg';
     sanitizer: DomSanitizer;
@@ -60,6 +62,8 @@ export class PmodelComponent implements OnInit {
     public endActivities : any;
     public isStartActivity : boolean;
     public isEndActivity : boolean;
+    public overallEnableBPMN : boolean;
+    public overallEnableAlignments : boolean;
 
     constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, private router: Router, private authService: AuthenticationServiceService, public dialog: MatDialog, private filterService: FilterServiceService) {
         /**
@@ -70,6 +74,9 @@ export class PmodelComponent implements OnInit {
         this.pm4pyService = pm4pyServ;
         this.authenticationService = authService;
 
+        this.overallEnableBPMN = environment.overallEnableBPMN;
+        this.overallEnableAlignments = environment.overallEnableAlignments;
+
         this.decoration = localStorage.getItem("preferred_decoration");
         if (this.decoration == null || typeof(this.decoration) == "undefined") {
             this.decoration = "freq";
@@ -79,6 +86,17 @@ export class PmodelComponent implements OnInit {
         if (this.typeOfModel == null || typeof(this.typeOfModel) == "undefined") {
             this.typeOfModel = "dfg";
         }
+
+        if (localStorage.getItem("smartFiltering") === null) {
+            localStorage.setItem("smartFiltering", "true");
+        }
+
+        if (localStorage.getItem("smartFiltering") === "false") {
+            this.simplicity = -5.0;
+            this.selectedSimplicity = -5.0;
+        }
+
+        this.enableProcessModelChoice = environment.overallEnableDifferentProcessSchemas;
 
         this.isStartActivity = false;
         this.isEndActivity = false;
@@ -152,8 +170,6 @@ export class PmodelComponent implements OnInit {
 
 
             this.thisHandler = this.pm4pyJson['handler'];
-            //this.enableConformanceChecking = this.thisHandler === 'xes' && (this.typeOfModel === 'inductive' || this.typeOfModel === 'dfg');
-            //this.enableConformanceChecking = this.typeOfModel === 'inductive' || this.typeOfModel === 'dfg';
             this.enableDownloadModel = this.typeOfModel === 'inductive' || this.typeOfModel === 'indbpmn';
             this.enableBpmnDownload = this.typeOfModel === 'indbpmn';
             this.enableConformanceChecking = this.typeOfModel === 'inductive' && this.thisVariantsNumber <= environment.maxNoVariantsForAlignments;
@@ -165,20 +181,33 @@ export class PmodelComponent implements OnInit {
                 localStorage.setItem('bpmn_model', this.thisSecondProcessModel);
             }
 
-            if (this.dotString.length > 0 && false) {
+            if (this.dotString.length > 0) {
                 this.dotProvided = true;
 
-                graphviz('#dotProvidedDiv').renderDot(this.dotString);
+                let targetInnerWidth = window.innerWidth * 0.9;
+                let targetInnerHeight = window.innerHeight * 0.66;
+
+                let targetWidth = window.innerWidth * 0.92;
+                let targetHeight = window.innerHeight * 0.68;
+
+                let currentWidth = parseInt(this.processModelDecodedSVG.split("width=\"")[1].split("pt\"")[0]);
+                let currentHeight = parseInt(this.processModelDecodedSVG.split("height=\"")[1].split("pt\"")[0]);
+
+                let ratioWidth : number = targetInnerWidth / currentWidth;
+                let ratioHeight : number = targetInnerHeight / currentHeight;
+
+                let ratio : number = Math.min(ratioWidth, ratioHeight);
+
+                let thisEl = graphviz('#dotProvidedDiv').width(targetWidth+'px').height(targetHeight+'px').renderDot(this.dotString);
 
                 let dotProvidedDiv = document.getElementById("dotProvidedDiv");
                 let svgDoc = dotProvidedDiv.childNodes;
 
+                console.log(svgDoc);
+
+                (<SVGSVGElement>svgDoc[0]).currentScale = ratio;
+
                 svgDoc[0].addEventListener("click", (e: Event) => this.manageClickOnSvg(e));
-            }
-            else if (false) {
-                this.dotProvided = false;
-                this.processModelBase64Sanitized = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.processModelBase64Original);
-                this.setImageCorrectSize();
             }
             else {
                 this.dotProvided = false;
@@ -188,8 +217,6 @@ export class PmodelComponent implements OnInit {
                 let svgWithInnerHtml = document.getElementById("svgWithInnerHtml");
 
                 svgWithInnerHtml.addEventListener("click", (e: Event) => this.manageClickOnSvg(e));
-
-                this.setDivCorrectSize();
             }
 
             this.isLoading = false;
@@ -224,44 +251,6 @@ export class PmodelComponent implements OnInit {
         });
     }
 
-    setImageCorrectSize() {
-        /**
-         * Sets the correct size of the image decribing the process schema
-         */
-        let targetWidth: number = (window.innerWidth * 0.65);
-
-        (<HTMLImageElement>document.getElementById('imageProcessModelImage')).width = targetWidth;
-    }
-
-    setDivCorrectSize() {
-        let targetWidth: number = (window.innerWidth * 0.5);
-        let targetHeight: number = (window.innerHeight * 0.37);
-
-        let svgDivChilds = document.getElementById("svgWithInnerHtml").childNodes;
-        console.log("SVG DIV CHILDS");
-        console.log(svgDivChilds);
-        let i = 0;
-        while (i < svgDivChilds.length) {
-
-            if (svgDivChilds[i].nodeName == "svg") {
-                let corrElement = <SVGSVGElement>(svgDivChilds[i]);
-
-                let currentWidth = corrElement.width.baseVal.valueInSpecifiedUnits;
-                let currentHeight = corrElement.height.baseVal.valueInSpecifiedUnits;
-
-                let finalRatioNumberWidth = targetWidth / currentWidth;
-                let finalRatioNumberHeight = targetHeight / currentHeight;
-
-                //let finalRatioNumber = Math.min(finalRatioNumberWidth, finalRatioNumberHeight);
-
-                if (finalRatioNumberWidth < 1.0) {
-                    corrElement.currentScale = finalRatioNumberWidth;
-                }
-            }
-            i++;
-        }
-    }
-
     manageClickOnSvg(event) {
         console.log("event.target.nodeName");
         console.log(event.target.nodeName);
@@ -279,22 +268,11 @@ export class PmodelComponent implements OnInit {
                 this.isStartActivity = this.startActivities.includes(this.targetClass);
                 this.isEndActivity = this.endActivities.includes(this.targetClass);
 
-                console.log("CLICK HAPPENED");
-                console.log("targetClass=");
-                console.log(localStorage.getItem("targetClass"));
-                console.log("activityKey=");
-                console.log(localStorage.getItem("activityKey"));
-
-                console.log(event.x);
-                console.log(event.y);
-
-                console.log(event);
-
                 var menu = document.getElementById('openMenuButton');
                 menu.style.display = '';
                 menu.style.position = 'fixed';
-                menu.style.left = Math.floor(event.x) + 'px';
-                menu.style.top = Math.floor(event.y) + 'px';
+                menu.style.left = Math.floor(event.pageX) + 'px';
+                menu.style.top = Math.floor(event.pageY) + 'px';
 
                 this.appMenu.openMenu();
             }
@@ -343,8 +321,6 @@ export class PmodelComponent implements OnInit {
         /**
          * Manages the resizing of a page
          */
-        // sets the image size after the resizing
-        this.setImageCorrectSize();
     }
 
     sliderIsChanged(event: any) {
