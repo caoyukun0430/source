@@ -87,9 +87,6 @@ export class TimeframeFilterComponent implements OnInit {
       for (var i=0;i<this.points_x.length;i++){
         points_x_date[i] = this.timeConverter(this.points_x[i]);
       }
-      // console.log("xno",this.points_x[0]);
-      //console.log("x",this.timeConverter(this.points_x[0]));
-      //console.log("x",(points_x_date));
 
 
       var TIMEFRAME_PLOT = $('#timeframe_plot')[0];
@@ -104,7 +101,6 @@ export class TimeframeFilterComponent implements OnInit {
       xaxis: {
       title: 'Date',
       autorange: true,
-      //drange: [String(points_x_date[0]), String(points_x_date[this.points_x.length - 1])]
       },
       yaxis: {
       title: 'Density',
@@ -116,21 +112,15 @@ export class TimeframeFilterComponent implements OnInit {
       Plotly.plot( TIMEFRAME_PLOT, plot_data, layout );
       TIMEFRAME_PLOT.on('plotly_relayout',function(plot_data){
         var min_range = plot_data["xaxis.range[0]"];
-        //console.log('sub',min_range.indexOf('.'));
-        //console.log('left',(plot_data["xaxis.range[0]"]));
-        // var min_time = min_range.substring(0, min_range.indexOf('.'));
         var max_range = plot_data["xaxis.range[1]"];
-        // var max_time = max_range.substring(0, max_range.indexOf('.'));
-        // console.log('left',(plot_data["xaxis.range[0]"]));
-        // console.log('left1',min_time);
         (<HTMLInputElement>document.getElementById("minimumTimestamp")).value = String(min_range);
         (<HTMLInputElement>document.getElementById("maximumTimestamp")).value = String(max_range);
 
     });
 
 
-      this.eventsPerTimeSvgOriginal = eventsPerTimeJson["base64"];
-      this.eventsPerTimeSvgSanitized = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.eventsPerTimeSvgOriginal);
+      // this.eventsPerTimeSvgOriginal = eventsPerTimeJson["base64"];
+      // this.eventsPerTimeSvgSanitized = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.eventsPerTimeSvgOriginal);
 
       if (this.points.length > 0) {
         this.min_timestamp = Math.floor(this.points[0][0]);

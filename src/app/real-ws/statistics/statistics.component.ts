@@ -90,8 +90,8 @@ export class StatisticsComponent implements OnInit {
       Plotly.plot( TIMEFRAME_PLOT, plot_data, layout );
 
 
-      this.eventsPerTimeSvgOriginal = this.eventsPerTimeJson["base64"];
-      //this.eventsPerTimeSvgSanitized = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.eventsPerTimeSvgOriginal);
+      // this.eventsPerTimeSvgOriginal = this.eventsPerTimeJson["base64"];
+      // this.eventsPerTimeSvgSanitized = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.eventsPerTimeSvgOriginal);
       this.eventsPerTimeLoading = false;
       this.isLoading = this.eventsPerTimeLoading || this.caseDurationLoading;
 

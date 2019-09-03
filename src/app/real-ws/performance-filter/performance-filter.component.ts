@@ -53,9 +53,6 @@ export class PerformanceFilterComponent implements OnInit {
       this.points_x = caseDurationJson["points_x"];
       this.points_y = caseDurationJson["points_y"];
 
-      //console.log('x',this.points);
-
-    //var DURA_PLOT = document.getElementById('dura_plot');
     var DURATION_PLOT = $('#duration_plot')[0];
     var plot_data = [{
       x: this.points_x,
@@ -86,16 +83,13 @@ export class PerformanceFilterComponent implements OnInit {
     });
 
 
-      //this.caseDurationSvgOriginal = caseDurationJson["base64"];
-      //this.caseDurationSvgSanitized = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.caseDurationSvgOriginal);
+
 
       if (this.points.length > 0) {
         this.min_performance = Math.floor(this.points[0][0]);
         this.max_performance = Math.ceil(this.points[this.points.length - 1][0]);
         this.selected_min_performance = String(this.min_performance);
         this.selected_max_performance = String(this.max_performance);
-        //console.log('selectmax',this.selected_max_performance);
-        //console.log('selectmin',this.selected_min_performance);
 
 
         (<HTMLInputElement>document.getElementById("minimumPerformance")).value = this.selected_min_performance;
@@ -120,8 +114,6 @@ export class PerformanceFilterComponent implements OnInit {
     this.selected_min_performance = (<HTMLInputElement>document.getElementById("minimumPerformance")).value;
     this.selected_max_performance = (<HTMLInputElement>document.getElementById("maximumPerformance")).value;
 
-    //console.log('filmax',this.selected_max_performance);
-    //console.log('filmin',this.selected_min_performance);
 
     this.min_performance = parseInt(this.selected_min_performance);
     this.max_performance = parseInt(this.selected_max_performance);
