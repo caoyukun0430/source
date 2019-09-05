@@ -6,7 +6,7 @@ import {HttpParams} from '@angular/common/http';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {MatDialog} from '@angular/material';
 import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiting-circle-component.component';
-declare var Plotly: any;
+import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 declare var $: any;
 
 @Component({
@@ -113,7 +113,7 @@ export class TimeframeFilterComponent implements OnInit {
       }
       };
 
-      Plotly.plot( TIMEFRAME_PLOT, plot_data, layout );
+      PlotlyJS.plot( TIMEFRAME_PLOT, plot_data, layout );
       TIMEFRAME_PLOT.on('plotly_relayout',function(plot_data){
         var min_range = plot_data["xaxis.range[0]"];
         //console.log('sub',min_range.indexOf('.'));

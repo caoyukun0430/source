@@ -5,7 +5,7 @@ import {HttpParams} from "@angular/common/http";
 import {AuthenticationServiceService} from '../../authentication-service.service';
 import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiting-circle-component.component';
 import {MatDialog} from '@angular/material';
-declare var Plotly: any;
+import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 declare var $: any;
 
 @Component({
@@ -87,7 +87,7 @@ export class StatisticsComponent implements OnInit {
       }
       };
 
-      Plotly.plot( TIMEFRAME_PLOT, plot_data, layout );
+      PlotlyJS.plot( TIMEFRAME_PLOT, plot_data, layout );
 
 
       this.eventsPerTimeSvgOriginal = this.eventsPerTimeJson["base64"];
@@ -166,7 +166,7 @@ export class StatisticsComponent implements OnInit {
         }
       };
 
-      Plotly.plot( DURATION_PLOT, plot_data, layout );
+      PlotlyJS.plot( DURATION_PLOT, plot_data, layout );
 
 
       this.caseDurationSvgOriginal = this.caseDurationJson["base64"];
