@@ -7,10 +7,10 @@ import { RealWsRoutingModule } from './real-ws-routing.module';
 import {
   MatButtonModule, MatCardModule, MatChipsModule, MatDialogModule,
   MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
-  MatOptionModule, MatPaginator,
+  MatOptionModule, MatPaginator, MatDividerModule,
   MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatSelectModule,
   MatSliderModule, MatSortModule, MatTableModule, MatTabsModule, MatPaginatorModule,
-  MatToolbarModule
+  MatToolbarModule, MatSidenavModule
 } from '@angular/material';
 import {FormsModule} from '@angular/forms';
 import { CasesComponent } from './cases/cases.component';
@@ -30,6 +30,7 @@ import {AngularDraggableModule} from "angular2-draggable";
 import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { PlotlyModule } from 'angular-plotly.js';
 PlotlyModule.plotlyjs = PlotlyJS;
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 import { DottedchartComponent } from './dottedchart/dottedchart.component';
 
@@ -49,6 +50,7 @@ import { DottedchartComponent } from './dottedchart/dottedchart.component';
         MatSelectModule,
         MatRadioModule,
         MatDialogModule,
+        MatDividerModule,
         MatListModule,
         MatMenuModule,
         MatTableModule,
@@ -58,12 +60,14 @@ import { DottedchartComponent } from './dottedchart/dottedchart.component';
         MatCardModule,
         MatChipsModule,
         MatInputModule,
+        MatSidenavModule,
         FormsModule,
         MatProgressSpinnerModule,
         DragDropModule,
         MatPaginatorModule,
         AngularDraggableModule,
-        PlotlyModule
+        PlotlyModule,
+        ScrollingModule
     ],
 })
 export class RealWsModule { }

@@ -1,3 +1,47 @@
+<mat-toolbar>
+    <mat-toolbar-row>
+        <div class="model-info-box">
+            <span class="model-info-box__label">Process</span>
+            <span class="model-info-box__value">{{thisProcessName}}</span>
+        </div>
+        <div class="model-info-box">
+            <span class="model-info-box__label">Variants</span>
+            <span class="model-info-box__value">{{thisVariantsNumber}}</span>
+        </div>
+        <div class="model-info-box">
+            <span class="model-info-box__label">Cases</span>
+            <span class="model-info-box__value">{{thisCasesNumber}}</span>
+        </div>
+        <div class="model-info-box">
+            <span class="model-info-box__label">Events</span>
+            <span class="model-info-box__value">{{thisEventsNumber}}</span>
+        </div>
+        <div class="model-info-box">
+            <span class="model-info-box__label">Type of model</span>
+            <div class="model-info-box__value">
+                <mat-form-field>
+                    <mat-select [(value)]="typeOfModel" (selectionChange)="typeOfModelIsChanged($event)" *ngIf="enableProcessModelChoice">
+                        <mat-option value="dfg">DFG</mat-option>
+                        <mat-option value="tree">Process Tree (Inductive)</mat-option>
+                        <mat-option value="inductive">Petri (Inductive)</mat-option>
+                        <mat-option value="indbpmn" *ngIf="overallEnableBPMN">BPMN (Inductive)</mat-option>
+                        <mat-option value="heuristics">Heuristics Net</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <span class="layout--space"></span>
+        <mat-icon (click)="sidenav.toggle()">settings_applications</mat-icon>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container class="model-container" [hidden]="!dotProvided">
+    <mat-sidenav #sidenav mode="side" position="end">
+        Sidenav content
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div id="dotProvidedDiv" class="p-8"></div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
 <div>
   Variants: <b>{{thisVariantsNumber}}</b>
   Cases: <b>{{thisCasesNumber}}</b>
@@ -36,7 +80,7 @@ Decoration:&nbsp;
 
   </div>
 </div>-->
-<div [hidden]="!dotProvided" id="dotProvidedDiv" class="p-8">
+<div [hidden]="!dotProvided" id="dotProvidedDiv-origin" class="p-8">
 
 </div>
 <input hidden type="file" #uploader

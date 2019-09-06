@@ -35,6 +35,7 @@ export class PmodelComponent implements OnInit {
     simplicity = -1.45;
     selectedSimplicity = -1.45;
     logSummaryJson: JSON;
+    public thisProcessName: string;
     public thisVariantsNumber = 0;
     public thisCasesNumber = 0;
     public thisEventsNumber = 0;
@@ -126,6 +127,7 @@ export class PmodelComponent implements OnInit {
          * Retrieves and shows the process schema
          */
         this.isLoading = true;
+        this.thisProcessName = this.pm4pyService.getCurrentProcess();
         let params: HttpParams = new HttpParams();
         if (this.selectedSimplicity >= -4.99) {
             params = params.set('simplicity', Math.exp(this.selectedSimplicity).toString());
