@@ -43,6 +43,9 @@ export class EndActivitiesFilterComponent implements OnInit {
     });
   }
 
+  //sa is a string, and selectedEndActivities is string[], so that if sa is not checked, we put it into the sting array --> corrspond to add action
+  //so that we can selected in the applyFilter() algo.
+  //if it's already in it. we splice it to remove in the string[], correspond to remove action
   addRemoveSa(sa) {
     if (!this.selectedEndActivities.includes(sa)) {
       this.selectedEndActivities.push(sa);

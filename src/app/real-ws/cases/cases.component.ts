@@ -193,7 +193,7 @@ export class CasesComponent implements OnInit, AfterViewInit {
 
         this.pm4pyService.getAllCases(params).subscribe(data => {
             this.pm4pyJsonCases = data as JSON;
-            this.cases = this.pm4pyJsonCases['cases'];
+            this.cases = this.pm4pyJsonCases['cases'];/**give name to the JSON */
             this.casesLoading = false;
             this.isLoading = this.variantsLoading || this.casesLoading;
             this.dataSourceCases.data = this.cases;
