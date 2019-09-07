@@ -73,6 +73,7 @@ export class PerformanceFilterComponent implements OnInit {
       }
     };
 
+
     Plotly.plot( DURATION_PLOT, plot_data, layout );
 
 

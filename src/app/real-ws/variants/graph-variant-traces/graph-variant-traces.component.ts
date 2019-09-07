@@ -8,6 +8,7 @@ import {HttpParams} from "@angular/common/http";
 import { colorRange, eventsColorMap } from "../variants-explorer-model";
 import {AngularResizableDirective} from "angular2-draggable";
 
+//this.variant is a json
 interface VariantsModel {
   caseDuration: any;
   count: number;
@@ -64,7 +65,7 @@ export class GraphVariantTracesComponent implements OnChanges {
 
   chartWidth: number;
   dragPosition = {x: 0, y: 0};
-  zIndex = { chartBox: 10, caseBox: 20, legendBox: 30};
+  zIndex = { chartBox: 10, caseBox: 10, legendBox: 10};
   maxZIndex: number = 100;
   chipsSelectable: boolean = true;
 

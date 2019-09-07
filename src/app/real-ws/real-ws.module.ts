@@ -32,9 +32,11 @@ import { PlotlyModule } from 'angular-plotly.js';
 PlotlyModule.plotlyjs = PlotlyJS;
 
 import { DottedchartComponent } from './dottedchart/dottedchart.component';
+import { TraceClusterComponent } from './tracecluster/trace-cluster/trace-cluster.component';
+import { DendrogramGraphComponent } from './tracecluster/dendrogram-graph/dendrogram-graph.component';
 
 @NgModule({
-  declarations: [PmodelComponent, CasesComponent, StatisticsComponent, LoginComponentComponent, PlistComponent, SnaComponent, TransientComponent, AlignmentsComponent, VariantsExplorerComponent, GraphVariantTracesComponent, GraphCasesComponent, DottedchartComponent],
+  declarations: [PmodelComponent, CasesComponent, StatisticsComponent, LoginComponentComponent, PlistComponent, SnaComponent, TransientComponent, AlignmentsComponent, VariantsExplorerComponent, GraphVariantTracesComponent, GraphCasesComponent, DottedchartComponent, TraceClusterComponent, DendrogramGraphComponent],
     imports: [
         CommonModule,
         RealWsRoutingModule,

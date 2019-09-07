@@ -89,6 +89,28 @@ export class Pm4pyService {
     return this.http.get(completeUrl, {params: parameters});
   }
 
+  getDendrogram(parameters: HttpParams) {
+    /**
+     * Gets the dendrogram graph
+     *
+     * Parameters:
+     * parameters: HttpParams -> Parameters to pass in GET to the service
+     *
+     * Returns:
+     * observer object
+     */
+    let process = localStorage.getItem("process");
+    let sessionId = localStorage.getItem("sessionId");
+
+    parameters = parameters.set("process", process);
+    parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
+
+    var completeUrl : string = this.webservicePath + "getDendrogram";
+
+    return this.http.get(completeUrl, {params: parameters});
+  }
+
   getLogsList(parameters : HttpParams) {
     /**
      * Gets the list of logs loaded in the service

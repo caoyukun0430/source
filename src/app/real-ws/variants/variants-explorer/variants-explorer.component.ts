@@ -50,6 +50,7 @@ export class VariantsExplorerComponent implements OnInit {
 
   getCurrentProcess() {
     this.process = this.pm4pyService.getCurrentProcess();
+    console.log("process",this.process);
   }
 
   getAllVariants() {
@@ -60,7 +61,7 @@ export class VariantsExplorerComponent implements OnInit {
       this.pm4pyJsonVariants = data as JSON;
       this.variants = this.pm4pyJsonVariants['variants'];
       this.events = new Map();
-      // console.log(this.variants);
+      console.log(this.variants);
       let i = 0;
       while (i < this.variants.length) {
         let jsonEvents = this.variants[i]['variant'];

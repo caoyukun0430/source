@@ -11,6 +11,7 @@ import { TransientComponent } from './transient/transient.component';
 import { AlignmentsComponent } from './alignments/alignments.component';
 import { VariantsExplorerComponent } from "./variants/variants-explorer/variants-explorer.component";
 import { DottedchartComponent } from './dottedchart/dottedchart.component';
+import { TraceClusterComponent } from './tracecluster/trace-cluster/trace-cluster.component';
 
 const routes: Routes = [
     {
@@ -99,7 +100,15 @@ const routes: Routes = [
                 data: {
                     title: 'Variants Explorer'
                 }
+            },
+            {
+                path: 'trace-cluster',
+                component: TraceClusterComponent,
+                data: {
+                    title: 'Trace Clustering'
+                }
             }
+
         ]
     }
 ];
