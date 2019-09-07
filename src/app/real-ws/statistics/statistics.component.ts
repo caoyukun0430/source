@@ -5,8 +5,6 @@ import {HttpParams} from "@angular/common/http";
 import {AuthenticationServiceService} from '../../authentication-service.service';
 import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiting-circle-component.component';
 import {MatDialog} from '@angular/material';
-import {Plotly} from "angular-plotly.js/src/app/shared/plotly.interface";
-import Layout = Plotly.Layout;
 declare var Plotly: any;
 declare var $: any;
 
@@ -77,8 +75,8 @@ export class StatisticsComponent implements OnInit {
       title: {
          text:'Events per Time Graph'
       },
-      plot_bgcolor:'rgba(0,0,0,0)',
-      paper_bgcolor:'rgba(0,0,0,0)',
+      plot_bgcolor:'rgba(0,0,0,0.1)',
+      paper_bgcolor:'rgba(0,0,0,0.1)',
       xaxis: {
       title: 'Date',
       autorange: true,
@@ -94,8 +92,8 @@ export class StatisticsComponent implements OnInit {
       Plotly.plot( TIMEFRAME_PLOT, plot_data, layout );
 
 
-      this.eventsPerTimeSvgOriginal = this.eventsPerTimeJson["base64"];
-      this.eventsPerTimeSvgSanitized = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.eventsPerTimeSvgOriginal);
+      // this.eventsPerTimeSvgOriginal = this.eventsPerTimeJson["base64"];
+      // this.eventsPerTimeSvgSanitized = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.eventsPerTimeSvgOriginal);
       this.eventsPerTimeLoading = false;
       this.isLoading = this.eventsPerTimeLoading || this.caseDurationLoading;
 
@@ -159,8 +157,8 @@ export class StatisticsComponent implements OnInit {
 
       var layout = {
       title: 'Case Duration Graph',
-      plot_bgcolor:'rgba(0,0,0,0)',
-      paper_bgcolor:'rgba(0,0,0,0)',
+      plot_bgcolor:'rgba(0,0,0,0.1)',
+      paper_bgcolor:'rgba(0,0,0,0.1)',
       xaxis: {
         title: 'Case Duration',
         exponentformat: 'e',
@@ -176,8 +174,8 @@ export class StatisticsComponent implements OnInit {
       Plotly.plot( DURATION_PLOT, plot_data, layout );
 
 
-      this.caseDurationSvgOriginal = this.caseDurationJson["base64"];
-      this.caseDurationSvgSanitized = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.caseDurationSvgOriginal);
+      // this.caseDurationSvgOriginal = this.caseDurationJson["base64"];
+      // this.caseDurationSvgSanitized = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;base64,' + this.caseDurationSvgOriginal);
       this.caseDurationLoading = false;
       this.isLoading = this.eventsPerTimeLoading || this.caseDurationLoading;
 
