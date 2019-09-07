@@ -75,8 +75,8 @@ export class StatisticsComponent implements OnInit {
       title: {
          text:'Events per Time Graph'
       },
-      plot_bgcolor:'rgba(0,0,0,0.1)',
-      paper_bgcolor:'rgba(0,0,0,0.1)',
+      plot_bgcolor:'rgba(0,0,0,0)',
+      paper_bgcolor:'rgba(0,0,0,0)',
       xaxis: {
       title: 'Date',
       autorange: true,
@@ -157,8 +157,8 @@ export class StatisticsComponent implements OnInit {
 
       var layout = {
       title: 'Case Duration Graph',
-      plot_bgcolor:'rgba(0,0,0,0.1)',
-      paper_bgcolor:'rgba(0,0,0,0.1)',
+      plot_bgcolor:'rgba(0,0,0,0)',
+      paper_bgcolor:'rgba(0,0,0,0)',
       xaxis: {
         title: 'Case Duration',
         exponentformat: 'e',
