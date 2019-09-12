@@ -7,7 +7,7 @@ import { RealWsRoutingModule } from './real-ws-routing.module';
 import {
   MatButtonModule, MatCardModule, MatChipsModule, MatDialogModule,
   MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
-  MatOptionModule, MatPaginator, MatDividerModule,
+  MatOptionModule, MatPaginator, MatDividerModule, MatGridListModule,
   MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatSelectModule,
   MatSliderModule, MatSortModule, MatTableModule, MatTabsModule, MatPaginatorModule,
   MatToolbarModule, MatSidenavModule
@@ -61,6 +61,7 @@ import { DottedchartComponent } from './dottedchart/dottedchart.component';
         MatChipsModule,
         MatInputModule,
         MatSidenavModule,
+        MatGridListModule,
         FormsModule,
         MatProgressSpinnerModule,
         DragDropModule,

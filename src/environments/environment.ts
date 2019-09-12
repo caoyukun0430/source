@@ -18,6 +18,6 @@ export const environment = {
     overallEnableTransient: false,
     overallEnableStatistics: true,
     overallEnableSNA: true,
-    overallEnableDifferentProcessSchemas: false,
+    overallEnableDifferentProcessSchemas: true,
     overallEnableSharing: true
 };

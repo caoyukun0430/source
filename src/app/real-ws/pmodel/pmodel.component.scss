@@ -7,6 +7,7 @@
   margin-bottom: 15px;
 }
 .mat-toolbar-row {
+  width: 100%;
   height: 35px;
   padding: 0;
 }
@@ -36,7 +37,7 @@
 }
 .model-info-box__value {
   box-sizing: inherit;
-  text-align: left;
+  text-align: center;
   font-size: 13px;
   font-weight: normal;
   color: #263238;
@@ -46,6 +47,7 @@
   border-left: 0;
   background-color: #fff;
   min-height: 34px;
+  min-width: 34px;
 }
 .model-container {
   box-sizing: border-box;
@@ -76,4 +78,53 @@
   /deep/ .mat-form-field-underline {
     display: none;
   }
+}
+.icon-button--cursor {
+  cursor: pointer;
+}
+.model__button-box {
+  position: absolute;
+  z-index: 5;
+  right: 0;
+}
+.model__button-box button{
+  display: inline-block;
+  width: auto;
+  height: 24px;
+  font-size: .7rem;
+  font-weight: normal;
+  line-height: 24px;
+  vertical-align: middle;
+  background-color: rgba(255, 255, 255, .7);
+  border-radius: 5px;
+  margin-bottom: 2px;
+}
+.settings-container {
+  box-sizing: border-box;
+  padding: 1em;
+  display: inline-flex;
+  flex-direction: column;
+}
+.settings-container > div {
+  box-sizing: border-box;
+  flex: 1;
+  min-width: 200px;
+}
+/deep/ .mat-grid-tile .mat-figure {
+  justify-content: space-between !important;
+}
+.layout--flex {
+  display: flex !important;
+}
+/deep/.radio-button--small .mat-radio-container {
+  height: 15px;
+  width: 15px;
+}
+/deep/ .radio-button--small .mat-radio-outer-circle {
+  height: 15px;
+  width: 15px;
+}
+/deep/.radio-button--small .mat-radio-inner-circle {
+  height: 15px;
+  width: 15px;
 }
