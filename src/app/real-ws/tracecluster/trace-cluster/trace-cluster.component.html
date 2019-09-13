@@ -2,9 +2,23 @@
     <p>
         {{title}}
     </p>
+    <form>
+      <mat-form-field>
+        <mat-label>Cluster Method</mat-label>
+        <mat-select [(value)]="clusterMethod" (selectionChange)="methodIsChanged($event)">
+        <mat-option value="variant_DMM_leven">Variant based DMM (leven)</mat-option>
+        <mat-option value="variant_avg_leven">Variant based average (leven)</mat-option>
+        <mat-option value="variant_DMM_vec">Variant based DMM (vector)</mat-option>
+        <mat-option value="variant_avg_vec">Variant based average (vector)</mat-option>
+        <mat-option value="DEG-based">DEG based</mat-option>
+        </mat-select>
+        </mat-form-field>
+    </form>
     <div ngResizable ngDraggable class="drag-box">
-      <div id="my_dataviz" class="drag-box--content"></div>
+<!--      <div id="my_dataviz" class="drag-box&#45;&#45;content"></div>-->
+        <div echarts [options]="options" style="height: 400px;"></div>
     </div>
+<!--    <app-dendrogram-graph></app-dendrogram-graph>-->
 </div>
 <!--<app-dendrogram-graph [item]="dendrogramJson"></app-dendrogram-graph>-->
 <!--<img [src]="dendrogramSvgSanitized" style='height: 360px'><br />-->
