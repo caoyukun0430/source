@@ -170,7 +170,7 @@ export class GraphVariantTracesComponent implements OnChanges {
             this.expandingTrace(d, i);
             this.getAllCases(this.variants[i]['variant']);
             this.prevSelectedVariantIndex = i;
-            console.log("selected variants: " + this.selectedVariants);
+            //console.log("selected variants: " + this.selectedVariants);
           }
               // if (i == this.prevSelectedVariantIndex) {
               //   if (this.selectedVariants.includes(d.variants)) {
@@ -244,7 +244,7 @@ export class GraphVariantTracesComponent implements OnChanges {
         .attr('points', (d, i) => this.getTracePoints(i))
         .style('fill', (d, i) => eventsColorMap.get(d.split('+')[0]))
         .attr('transform', (d, i) => 'translate(' + i * (this.polygonDimensionWidth + this.polygonDimensionSpacing) + ', 0)');
-    // this.selectedVariants[i] = false;
+    prev_g.selectAll('text').remove();
   }
 
   private expandingTrace(d, i) {
@@ -258,7 +258,30 @@ export class GraphVariantTracesComponent implements OnChanges {
         .attr('points', (d, i) => this.getTracePoints(i))
         .style('fill', (d, i) => eventsColorMap.get(d.split('+')[0]))
         .attr('transform', (d, i) => 'translate(' + i * (this.polygonDimensionWidth + this.polygonDimensionSpacing) + ', 0)');
-    // this.selectedVariants[i] = true;
+    const text = g.selectAll('div')
+        .data(d => d.events)
+        .enter()
+        .append('text')
+        .attr('x', 15)
+        .attr('y', 15)
+        .attr('dy', '0.35em')
+        .attr('text-anchor', 'start')
+        .text((d) => d)
+        .each(this.wrappingText)
+        .attr('transform', (d, i) => 'translate(' + i * (this.polygonDimensionWidth + this.polygonDimensionSpacing) + ', 0)');
+  }
+
+  private wrappingText() {
+    var self = d3.select(this),
+        textLength = self.node().getComputedTextLength(),
+        text = self.text();
+    console.log('self: '+self+", text"+text, ", textlength: " + textLength);
+    while (textLength > 35 && text.length > 0) {
+      text = text.slice(0, -1);
+      self.text(text);
+      textLength = self.node().getComputedTextLength();
+    }
+    self.text(text + '...');
   }
 
   getAllCases(variant?: string) {

@@ -7,10 +7,10 @@ import { RealWsRoutingModule } from './real-ws-routing.module';
 import {
   MatButtonModule, MatCardModule, MatChipsModule, MatDialogModule,
   MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
-  MatOptionModule, MatPaginator,
+  MatOptionModule, MatPaginator, MatDividerModule, MatGridListModule,
   MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatSelectModule,
   MatSliderModule, MatSortModule, MatTableModule, MatTabsModule, MatPaginatorModule,
-  MatToolbarModule
+  MatToolbarModule, MatSidenavModule
 } from '@angular/material';
 import {FormsModule} from '@angular/forms';
 import { CasesComponent } from './cases/cases.component';
@@ -31,6 +31,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { PlotlyModule } from 'angular-plotly.js';
 PlotlyModule.plotlyjs = PlotlyJS;
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 import { DottedchartComponent } from './dottedchart/dottedchart.component';
 import { TraceClusterComponent } from './tracecluster/trace-cluster/trace-cluster.component';
@@ -52,6 +53,7 @@ import { DendrogramGraphComponent } from './tracecluster/dendrogram-graph/dendro
         MatSelectModule,
         MatRadioModule,
         MatDialogModule,
+        MatDividerModule,
         MatListModule,
         MatMenuModule,
         MatTableModule,
@@ -62,12 +64,15 @@ import { DendrogramGraphComponent } from './tracecluster/dendrogram-graph/dendro
         MatChipsModule,
         MatInputModule,
         NgxEchartsModule,
+        MatSidenavModule,
+        MatGridListModule,
         FormsModule,
         MatProgressSpinnerModule,
         DragDropModule,
         MatPaginatorModule,
         AngularDraggableModule,
-        PlotlyModule
+        PlotlyModule,
+        ScrollingModule
     ],
 })
 export class RealWsModule { }

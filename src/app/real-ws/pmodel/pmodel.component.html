@@ -1,33 +1,94 @@
-<div>
-  Variants: <b>{{thisVariantsNumber}}</b>
-  Cases: <b>{{thisCasesNumber}}</b>
-  Events: <b>{{thisEventsNumber}}</b>
-    &nbsp;&nbsp;&nbsp;Simplicity:&nbsp;
-    <mat-slider min="-5.0" max="0" step="0.001" [(value)]="simplicity" (change)="sliderIsChanged($event)"></mat-slider>
-Decoration:&nbsp;
-<mat-radio-group (change)="decorationIsChanged($event)" [value]="decoration">
-  <mat-radio-button value="freq">Frequency</mat-radio-button>
-  <mat-radio-button value="perf">Performance</mat-radio-button>
-</mat-radio-group>
-    <mat-select placeholder="Type of model" [(value)]="typeOfModel" (selectionChange)="typeOfModelIsChanged($event)" *ngIf="enableProcessModelChoice" style="display: inline-block">
-      <mat-option value="dfg">DFG</mat-option>
-      <mat-option value="tree">Process Tree (Inductive)</mat-option>
-      <mat-option value="inductive">Petri (Inductive)</mat-option>
-      <mat-option value="indbpmn" *ngIf="overallEnableBPMN">BPMN (Inductive)</mat-option>
-      <mat-option value="heuristics">Heuristics Net</mat-option>
-    </mat-select>
-</div>
-<div *ngIf="enableDownloadModel">
-  <button mat-button (click)="downloadModel($event)"><span style="font-size: 10px">Download Petri Net Model</span></button>
-  <span *ngIf="enableBpmnDownload">
-      <button mat-button (click)="downloadBpmnModel($event)"><span style="font-size: 10px">Download BPMN Model</span></button>
-      <button mat-button (click)="visualizeBpmnModel($event)"><span style="font-size: 10px">Visualize BPMN Model</span></button>
-    </span>
-  <span *ngIf="enableConformanceChecking && overallEnableAlignments">
-      <button mat-button routerLink="/real-ws/alignments"><span style="font-size: 10px">Conformance against Visualized Model</span></button>
-      <button mat-button (click)="uploader.click()"><span style="font-size: 10px">Upload model for Conformance</span></button>
-    </span>
-</div>
+<mat-toolbar>
+    <mat-toolbar-row>
+        <div class="model-info-box">
+            <span class="model-info-box__label">Process</span>
+            <span class="model-info-box__value">{{thisProcessName}}</span>
+        </div>
+        <div class="model-info-box">
+            <span class="model-info-box__label">Variants</span>
+            <span class="model-info-box__value">{{thisVariantsNumber}}</span>
+        </div>
+        <div class="model-info-box">
+            <span class="model-info-box__label">Cases</span>
+            <span class="model-info-box__value">{{thisCasesNumber}}</span>
+        </div>
+        <div class="model-info-box">
+            <span class="model-info-box__label">Events</span>
+            <span class="model-info-box__value">{{thisEventsNumber}}</span>
+        </div>
+        <div class="model-info-box">
+            <span class="model-info-box__label">Type of model</span>
+            <div class="model-info-box__value">
+                <mat-form-field>
+                    <mat-select [(value)]="typeOfModel" (selectionChange)="typeOfModelIsChanged($event)" *ngIf="enableProcessModelChoice">
+                        <mat-option value="dfg">DFG</mat-option>
+                        <mat-option value="tree">Process Tree (Inductive)</mat-option>
+                        <mat-option value="inductive">Petri (Inductive)</mat-option>
+                        <mat-option value="indbpmn" *ngIf="overallEnableBPMN">BPMN (Inductive)</mat-option>
+                        <mat-option value="heuristics">Heuristics Net</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <span class="layout--space"></span>
+        <mat-icon class="icon-button--cursor"(click)="sidenav.toggle()" [hidden]="!dotProvided">tune</mat-icon>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container class="model-container" [hidden]="!dotProvided">
+    <mat-sidenav #sidenav mode="side" position="end">
+        <div class="settings-container">
+            <div class="flex-column">
+                <details open>
+                    <summary>Simplicity</summary>
+                    <mat-grid-list cols="1" rowHeight="50px">
+                        <mat-grid-tile>
+                            <mat-slider class="w-100" min="-5.0" max="0" step="0.001" [(value)]="simplicity" (change)="sliderIsChanged($event)"></mat-slider>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                </details>
+            </div>
+            <div class="flex-column">
+                <details open>
+                    <summary>Decoration</summary>
+                    <mat-grid-list cols="1" rowHeight="70px">
+                        <mat-grid-tile>
+                            <mat-radio-group class="layout--flex flex-column pt-2 pl-2 " (change)="decorationIsChanged($event)" [value]="decoration">
+                                <mat-radio-button class="radio-button--small mat-caption" disableRipple value="freq">Frequency</mat-radio-button>
+                                <mat-radio-button class="radio-button--small mat-caption" disableRipple value="perf">Performance</mat-radio-button>
+                            </mat-radio-group>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                </details>
+            </div>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div *ngIf="enableDownloadModel" class="mt-1 mr-1 layout--flex flex-column model__button-box">
+            <button mat-stroked-button (click)="downloadModel($event)">Download Petri Net Model</button>
+            <span *ngIf="enableBpmnDownload" class="layout--flex flex-column">
+              <button mat-stroked-button (click)="downloadBpmnModel($event)">Download BPMN Model</button>
+              <button mat-stroked-button (click)="visualizeBpmnModel($event)">Visualize BPMN Model</button>
+            </span>
+            <span *ngIf="enableConformanceChecking && overallEnableAlignments">
+              <button mat-stroked-button routerLink="/real-ws/alignments">Conformance against Visualized Model</button>
+              <button mat-stroked-button (click)="uploader.click()" style="display: none">Upload model for Conformance</button>
+            </span>
+        </div>
+        <div id="dotProvidedDiv" class="p-8"></div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
+<!--<div *ngIf="enableDownloadModel">-->
+<!--  <button mat-button (click)="downloadModel($event)"><span style="font-size: 10px">Download Petri Net Model</span></button>-->
+<!--  <span *ngIf="enableBpmnDownload">-->
+<!--      <button mat-button (click)="downloadBpmnModel($event)"><span style="font-size: 10px">Download BPMN Model</span></button>-->
+<!--      <button mat-button (click)="visualizeBpmnModel($event)"><span style="font-size: 10px">Visualize BPMN Model</span></button>-->
+<!--    </span>-->
+<!--  <span *ngIf="enableConformanceChecking && overallEnableAlignments">-->
+<!--      <button mat-button routerLink="/real-ws/alignments"><span style="font-size: 10px">Conformance against Visualized Model</span></button>-->
+<!--      <button mat-button (click)="uploader.click()" style="visibility: hidden"><span style="font-size: 10px">Upload model for Conformance</span></button>-->
+<!--    </span>-->
+<!--</div>-->
 <!--<div id="imageContainer">
   <div [hidden]="!dotProvided" id="dotProvidedDiv">
 
@@ -36,7 +97,7 @@ Decoration:&nbsp;
 
   </div>
 </div>-->
-<div [hidden]="!dotProvided" id="dotProvidedDiv" class="p-8">
+<div [hidden]="!dotProvided" id="dotProvidedDiv-origin" class="p-8">
 
 </div>
 <input hidden type="file" #uploader
