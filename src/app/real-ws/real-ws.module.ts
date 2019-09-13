@@ -27,6 +27,7 @@ import { GraphVariantTracesComponent } from './variants/graph-variant-traces/gra
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { GraphCasesComponent } from './variants/graph-cases/graph-cases.component';
 import {AngularDraggableModule} from "angular2-draggable";
+import { NgxEchartsModule } from 'ngx-echarts';
 import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { PlotlyModule } from 'angular-plotly.js';
 PlotlyModule.plotlyjs = PlotlyJS;
@@ -60,6 +61,7 @@ import { DendrogramGraphComponent } from './tracecluster/dendrogram-graph/dendro
         MatCardModule,
         MatChipsModule,
         MatInputModule,
+        NgxEchartsModule,
         FormsModule,
         MatProgressSpinnerModule,
         DragDropModule,

@@ -62,6 +62,8 @@ import {PathsFilterComponent} from './real-ws/paths-filter/paths-filter.componen
 import {ActivityDashboardComponent} from './real-ws/activity-dashboard/activity-dashboard.component';
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import {AngularDraggableModule} from "angular2-draggable";
+import { NgxEchartsModule } from 'ngx-echarts';
+
 
 import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { PlotlyModule } from 'angular-plotly.js';
@@ -103,6 +105,7 @@ export function createTranslateLoader(http: HttpClient) {
         MatCardModule,
         MatChipsModule,
         MatInputModule,
+        NgxEchartsModule,
         FormsModule,
         MatProgressSpinnerModule,
         ToastrModule.forRoot(),
