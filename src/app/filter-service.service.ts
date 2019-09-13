@@ -55,7 +55,7 @@ export class FilterServiceService {
       this.filtersPerProcess[this.thisProcess] = [];
     }
     this.filtersPerProcess[this.thisProcess].push([filter_type, filter_value]);
-    localStorage.setItem("filtersPerProcess", JSON.stringify(this.filtersPerProcess));
+    localStorage.setItem ("filtersPerProcess", JSON.stringify(this.filtersPerProcess));
 
     this.dialog.open(WaitingCircleComponentComponent);
 

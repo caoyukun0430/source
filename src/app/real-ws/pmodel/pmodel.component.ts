@@ -96,7 +96,9 @@ export class PmodelComponent implements OnInit {
             this.selectedSimplicity = -5.0;
         }
 
-        this.enableProcessModelChoice = environment.overallEnableDifferentProcessSchemas;
+        // where the process schema is turned off
+        //this.enableProcessModelChoice = environment.overallEnableDifferentProcessSchemas;
+        this.enableProcessModelChoice = true;
 
         this.isStartActivity = false;
         this.isEndActivity = false;
@@ -135,14 +137,17 @@ export class PmodelComponent implements OnInit {
         }
         params = params.set('decoration', this.decoration);
         params = params.set('typeOfModel', this.typeOfModel);
+        console.log("para",params);
 
         localStorage.setItem('preferred_decoration', this.decoration);
         localStorage.setItem('preferred_type_of_model', this.typeOfModel);
+        console.log("localstorage",localStorage);
 
         this.dialog.open(WaitingCircleComponentComponent);
 
         this.pm4pyService.getProcessSchema(params).subscribe(data => {
             this.pm4pyJson = data as JSON;
+            console.log("data",this.pm4pyJson);
             this.processModelBase64Original = this.pm4pyJson['base64'];
             this.thisProcessModel = this.pm4pyJson['model'];
             this.thisSecondProcessModel = this.pm4pyJson['second_model'];
@@ -203,7 +208,7 @@ export class PmodelComponent implements OnInit {
                 let dotProvidedDiv = document.getElementById("dotProvidedDiv");
                 let svgDoc = dotProvidedDiv.childNodes;
 
-                console.log(svgDoc);
+                console.log("svgDoc",svgDoc);
 
                 (<SVGSVGElement>svgDoc[0]).currentScale = ratio;
 
@@ -328,6 +333,7 @@ export class PmodelComponent implements OnInit {
          * Manages the change to the value selected in the slider
          */
         this.selectedSimplicity = event.value;
+        console.log("selecsim",event.value);
         // calls the retrieval of the process schema from the service
         this.populateProcessSchema();
     }
@@ -346,6 +352,9 @@ export class PmodelComponent implements OnInit {
          * Manages the change on the type of the model (discovery algorithm)
          */
         this.typeOfModel = event.value;
+        console.log("event",event);
+        console.log("eventval",event.value);
+        console.log("model",this.typeOfModel);
         // calls the retrieval of the process schema from the service
         this.populateProcessSchema();
     }

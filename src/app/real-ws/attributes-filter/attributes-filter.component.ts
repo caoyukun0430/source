@@ -81,4 +81,22 @@ export class AttributesFilterComponent implements OnInit {
     this.filterService.addFilter(this.filteringMethod, [this.selectedAttribute, this.selectedAttributeValues]);
   }
 
-}
+
+
+
+//   applyFilter() {
+//     var str = this.selectedAttribute;
+//     if(str.indexOf("case:")!=-1){
+//       console.log("noadd",this.selectedAttribute);
+//       this.filterService.addFilter(this.filteringMethod, [this.selectedAttribute, this.selectedAttributeValues]);
+//     }
+//     else{
+//       var strcase = "case:";
+//       this.selectedAttribute = strcase+this.selectedAttribute;
+//       console.log("add",this.selectedAttribute);
+//       this.filterService.addFilter(this.filteringMethod, [this.selectedAttribute, this.selectedAttributeValues]);
+//     }
+//
+//   }
+//
+ }
