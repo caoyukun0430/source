@@ -6,7 +6,6 @@ import {AuthenticationServiceService} from '../../authentication-service.service
 import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiting-circle-component.component';
 import {MatDialog} from '@angular/material';
 import * as PlotlyJS from 'plotly.js/dist/plotly.js';
-declare var $: any;
 
 @Component({
   selector: 'app-statistics',
@@ -65,7 +64,7 @@ export class StatisticsComponent implements OnInit {
         points_x_date[i] = this.timeConverter(this.points_x[i]);
       }
 
-      var TIMEFRAME_PLOT = $('#timeframe_plot')[0];
+      var TIMEFRAME_PLOT = document.getElementById('timeframe_plot');
 
       var plot_data = [{
       x: points_x_date,
@@ -149,7 +148,8 @@ export class StatisticsComponent implements OnInit {
       this.points_x = this.caseDurationJson["points_x"];
       this.points_y = this.caseDurationJson["points_y"];
 
-      var DURATION_PLOT = $('#duration_plot')[0];
+      var DURATION_PLOT = document.getElementById('duration_plot');
+
       var plot_data = [{
       x: this.points_x,
       y: this.points_y}];
