@@ -74,9 +74,11 @@
               <button mat-stroked-button (click)="uploader.click()" style="display: none">Upload model for Conformance</button>
             </span>
         </div>
-        <div id="dotProvidedDiv" class="p-8"></div>
+<!--        <div id="dotProvidedDiv" class="p-8"></div>-->
+        <div echarts id="dfg" style="height: 600px;width:auto"></div>
     </mat-sidenav-content>
 </mat-sidenav-container>
+
 
 <!--<div *ngIf="enableDownloadModel">-->
 <!--  <button mat-button (click)="downloadModel($event)"><span style="font-size: 10px">Download Petri Net Model</span></button>-->
@@ -97,9 +99,9 @@
 
   </div>
 </div>-->
-<div [hidden]="!dotProvided" id="dotProvidedDiv-origin" class="p-8">
+<!--<div [hidden]="!dotProvided" id="dotProvidedDiv-origin" class="p-8">-->
 
-</div>
+<!--</div>-->
 <input hidden type="file" #uploader
        (change)="uploadFile($event)"/>
 <button id="openMenuButton" mat-icon-button [matMenuTriggerFor]="appMenu" style="display:none;">

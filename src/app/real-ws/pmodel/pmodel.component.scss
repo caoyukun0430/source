@@ -58,24 +58,24 @@
   border: 1px solid #f0f1f3;
   border-radius: 3px;
 }
-/deep/ .cdk-overlay-pane {
+.cdk-overlay-pane {
   transform: translateX(0) translateY(20px) !important;
 }
-/deep/ .mat-select-panel {
+.mat-select-panel {
   min-width: 112px !important;
   max-width: 250px !important;
   background: #FFFFFFE3 !important;
   font-size: 12px !important;
 }
-/deep/ .mat-form-field {
+.mat-form-field {
   line-height: .8em;
-  /deep/ .mat-form-field-wrapper {
+.mat-form-field-wrapper {
     padding-bottom: 0;
-    /deep/ .mat-form-field-infix {
+    .mat-form-field-infix {
       padding: 0;
     }
   }
-  /deep/ .mat-form-field-underline {
+.mat-form-field-underline {
     display: none;
   }
 }
@@ -110,21 +110,52 @@
   flex: 1;
   min-width: 200px;
 }
-/deep/ .mat-grid-tile .mat-figure {
+.mat-grid-tile .mat-figure {
   justify-content: space-between !important;
 }
 .layout--flex {
   display: flex !important;
 }
-/deep/.radio-button--small .mat-radio-container {
+.radio-button--small .mat-radio-container {
   height: 15px;
   width: 15px;
 }
-/deep/ .radio-button--small .mat-radio-outer-circle {
+.radio-button--small .mat-radio-outer-circle {
   height: 15px;
   width: 15px;
 }
-/deep/.radio-button--small .mat-radio-inner-circle {
+.radio-button--small .mat-radio-inner-circle {
   height: 15px;
   width: 15px;
+}
+
+
+.links line {
+  stroke: #9b9b9b;
+}
+
+.nodes circle {
+  fill: #FFF;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.nodes rect {
+  fill: #FFF;
+  stroke: rgb(0, 0, 0);
+  stroke-width: 1.5px;
+}
+.links text {
+  font: 12px sans-serif;
+  margin-left: 12px;
+}
+
+.nodes {
+  font: 12px sans-serif;
+  margin-left: 12px;
+}
+
+.rectnodes {
+  font: 12px sans-serif;
+  margin-left: 12px;
 }
