@@ -1,24 +1,126 @@
 <div class="trace-cluster-container">
-    <p>
-        {{title}}
-    </p>
-    <form>
-      <mat-form-field>
-        <mat-label>Cluster Method</mat-label>
-        <mat-select [(value)]="clusterMethod" (selectionChange)="methodIsChanged($event)">
-        <mat-option value="variant_DMM_leven">Variant based DMM (leven)</mat-option>
-        <mat-option value="variant_avg_leven">Variant based average (leven)</mat-option>
-        <mat-option value="variant_DMM_vec">Variant based DMM (vector)</mat-option>
-        <mat-option value="variant_avg_vec">Variant based average (vector)</mat-option>
-        <mat-option value="DEG-based">DEG based</mat-option>
-        </mat-select>
-        </mat-form-field>
-    </form>
-    <div ngResizable ngDraggable class="drag-box">
-<!--      <div id="my_dataviz" class="drag-box&#45;&#45;content"></div>-->
-        <div echarts [options]="options" style="height: 400px;"></div>
-    </div>
-<!--    <app-dendrogram-graph></app-dendrogram-graph>-->
-</div>
-<!--<app-dendrogram-graph [item]="dendrogramJson"></app-dendrogram-graph>-->
-<!--<img [src]="dendrogramSvgSanitized" style='height: 360px'><br />-->
+    <mat-toolbar>
+        <mat-toolbar-row>
+            <div class="model-info-box">
+                <span class="model-info-box__label">Process</span>
+                <span class="model-info-box__value">{{thisProcessName}}</span>
+            </div>
+            <div class="model-info-box">
+                <span class="model-info-box__label">Variants</span>
+                <span class="model-info-box__value">{{thisVariantsNumber}}</span>
+            </div>
+            <div class="model-info-box">
+                <span class="model-info-box__label">Cases</span>
+                <span class="model-info-box__value">{{thisCasesNumber}}</span>
+            </div>
+            <div class="model-info-box">
+                <span class="model-info-box__label">Events</span>
+                <span class="model-info-box__value">{{thisEventsNumber}}</span>
+            </div>
+            <span class="flex-spacer"></span>
+            <mat-icon class="icon-button--cursor" (click)="sidenav.toggle()">tune</mat-icon>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <mat-sidenav-container class="model-container">
+        <mat-sidenav #sidenav mode="side" position="end">
+            <div class="settings-container">
+                <div class="flex-column">
+                    <details open>
+                        <summary>Cluster Methods</summary>
+                        <mat-grid-list cols="1" rowHeight="70px">
+                            <mat-grid-tile>
+                                <form class="form-container">
+                                    <mat-form-field>
+                                        <mat-select [(value)]="clusterMethod"
+                                                    (selectionChange)="methodIsChanged($event)">
+                                            <mat-option value="variant_DMM_leven">Variant based DMM (leven)</mat-option>
+                                            <mat-option value="variant_avg_leven">Variant based average (leven)
+                                            </mat-option>
+                                            <mat-option value="variant_DMM_vec">Variant based DMM (vector)</mat-option>
+                                            <mat-option value="variant_avg_vec">Variant based average (vector)
+                                            </mat-option>
+                                            <mat-option value="DEG-based">DEG based</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </form>
+                            </mat-grid-tile>
+                        </mat-grid-list>
+                    </details>
+                </div>
+                <div class="flex-column">
+                    <details open>
+                        <summary>Filter</summary>
+                        <mat-grid-list cols="1" rowHeight="70px">
+                            <mat-grid-tile>
+                                <div class="filter-container">
+                                    <mat-radio-button class="radio-button--small " (click)="attributesFilter()"
+                                                      value="filter">Attribute Filter
+                                    </mat-radio-button>
+                                </div>
+                            </mat-grid-tile>
+                        </mat-grid-list>
+                    </details>
+                </div>
+            </div>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <div ngResizable ngDraggable class="drag-box">
+                <!--      <div id="my_dataviz" class="drag-box&#45;&#45;content"></div>-->
+                <div echarts id="container" style="height: 500px"></div>
+            </div>
+            <div ngResizable ngDraggable class="img-box">
+                <mat-grid-list cols="3" rowHeight="100px">
+                    <mat-grid-tile *ngFor="let modelname of namelist">
+                        <p class="img-box--content">Model {{modelname}}</p>
+<!--                        <p class="img-box&#45;&#45;content">Model</p>-->
+                    </mat-grid-tile>
+                </mat-grid-list>
+
+                <mat-grid-list cols="3" rowHeight="90%">
+                    <mat-grid-tile *ngFor="let SvgSanitized of dendrogramSvgSanitizedlist">
+                        <img [src]="SvgSanitized" style='height: 100%; width:auto' class="img-box--content">
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+
+
+    <!--    <div class="flex-column">-->
+    <!--    <form class="form-container">-->
+    <!--      <mat-form-field>-->
+    <!--        <mat-label>Cluster Method</mat-label>-->
+    <!--        <mat-select [(value)]="clusterMethod" (selectionChange)="methodIsChanged($event)">-->
+    <!--        <mat-option value="variant_DMM_leven">Variant based DMM (leven)</mat-option>-->
+    <!--        <mat-option value="variant_avg_leven">Variant based average (leven)</mat-option>-->
+    <!--        <mat-option value="variant_DMM_vec">Variant based DMM (vector)</mat-option>-->
+    <!--        <mat-option value="variant_avg_vec">Variant based average (vector)</mat-option>-->
+    <!--        <mat-option value="DEG-based">DEG based</mat-option>-->
+    <!--        </mat-select>-->
+    <!--        </mat-form-field>-->
+    <!--    </form>-->
+    <!--        <div class="filter-container">-->
+    <!--          <mat-radio-button class="radio-button&#45;&#45;small " (click)="attributesFilter()" value="filter">Attribute Filter</mat-radio-button>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <!--&lt;!&ndash;    <div ngbDropdown class="d-inline-block">&ndash;&gt;-->
+    <!--&lt;!&ndash;      <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Filter</button>&ndash;&gt;-->
+    <!--&lt;!&ndash;      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="text-left">&ndash;&gt;-->
+    <!--&lt;!&ndash;                            <a class="dropdown-item" href="javascript:;" (click)="attributesFilter()">&ndash;&gt;-->
+    <!--&lt;!&ndash;                                <i class="ft-clock mr-2"></i>&ndash;&gt;-->
+    <!--&lt;!&ndash;                                <span>Timeframe Filter</span>&ndash;&gt;-->
+    <!--&lt;!&ndash;                            </a>&ndash;&gt;-->
+    <!--&lt;!&ndash;      </div>&ndash;&gt;-->
+    <!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+    <!--    <div ngResizable ngDraggable class="drag-box">-->
+    <!--&lt;!&ndash;      <div id="my_dataviz" class="drag-box&#45;&#45;content"></div>&ndash;&gt;-->
+    <!--        <div echarts [options]="options" style="height: 400px;"></div>-->
+    <!--&lt;!&ndash;        <app-dendrogram-graph></app-dendrogram-graph>&ndash;&gt;-->
+    <!--    </div>-->
+    <!--&lt;!&ndash;    <app-dendrogram-graph></app-dendrogram-graph>&ndash;&gt;-->
+    <!--</div>-->
+<!--    <app-dendrogram-graph [name]="name"></app-dendrogram-graph>-->
+    <!--&lt;!&ndash;<img [src]="dendrogramSvgSanitized" style='height: 360px'><br />&ndash;&gt;-->
