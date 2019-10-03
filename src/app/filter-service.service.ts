@@ -65,11 +65,20 @@ export class FilterServiceService {
 
       this.dialog.closeAll();
 
+      // hack it so that trace-cluster not back to pmodel
       if (this.router.url === "/real-ws/pmodel") {
         this.router.navigateByUrl("/real-ws/pmodel2");
+        console.log("pmodel",this.router.url);
+      }
+      else if (this.router.url === "/real-ws/trace-cluster"){
+        this.router.navigateByUrl("/real-ws/trace-cluster2");
+      }
+      else if (this.router.url === "/real-ws/trace-cluster2"){
+        this.router.navigateByUrl("/real-ws/trace-cluster");
       }
       else {
         this.router.navigateByUrl("/real-ws/pmodel");
+        console.log("pmodel",this.router.url);
       }
     })
   }
@@ -88,11 +97,20 @@ export class FilterServiceService {
 
       this.dialog.closeAll();
 
+      // hack it so that trace-cluster not back to pmodel
       if (this.router.url === "/real-ws/pmodel") {
         this.router.navigateByUrl("/real-ws/pmodel2");
+        console.log("pmodel",this.router.url);
+      }
+      else if (this.router.url === "/real-ws/trace-cluster2"){
+        this.router.navigateByUrl("/real-ws/trace-cluster");
+      }
+      else if (this.router.url === "/real-ws/trace-cluster"){
+        this.router.navigateByUrl("/real-ws/trace-cluster2");
       }
       else {
         this.router.navigateByUrl("/real-ws/pmodel");
+        console.log("pmodel",this.router.url);
       }
     })
   }

@@ -107,6 +107,13 @@ const routes: Routes = [
                 data: {
                     title: 'Trace Clustering'
                 }
+            },
+            {
+                path: 'trace-cluster2',
+                component: TraceClusterComponent,
+                data: {
+                    title: 'Trace Clustering'
+                }
             }
 
         ]
