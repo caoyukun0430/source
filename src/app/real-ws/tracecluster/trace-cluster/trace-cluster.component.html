@@ -17,6 +17,17 @@
                 <span class="model-info-box__label">Events</span>
                 <span class="model-info-box__value">{{thisEventsNumber}}</span>
             </div>
+            <div class="model-info-box">
+            <span class="model-info-box__label">Case Attribute for Clustering</span>
+            <div class="model-info-box__value">
+                <mat-form-field>
+                    <mat-select>
+                        <mat-option value="caseindex">Case:index</mat-option>
+<!--                        <mat-option *ngFor="let attr of attributesList"><p>{{attr}}</p></mat-option>-->
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
             <span class="flex-spacer"></span>
             <mat-icon class="icon-button--cursor" (click)="sidenav.toggle()">tune</mat-icon>
         </mat-toolbar-row>
@@ -66,8 +77,8 @@
         </mat-sidenav>
         <mat-sidenav-content>
             <div ngResizable ngDraggable class="drag-box">
-                <!--      <div id="my_dataviz" class="drag-box&#45;&#45;content"></div>-->
-                <div echarts id="container" style="height: 500px"></div>
+<!--                &lt;!&ndash;      <div id="my_dataviz" class="drag-box&#45;&#45;content"></div>&ndash;&gt;-->
+                <div echarts id="container" [options]="options" style='height:500px'></div>
             </div>
             <div ngResizable ngDraggable class="img-box">
                 <mat-grid-list cols="3" rowHeight="100px">

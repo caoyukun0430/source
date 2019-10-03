@@ -3,19 +3,23 @@
   stroke: steelblue;
   stroke-width: 1.5px;
 }
+
 .node {
   font: 12px sans-serif;
   margin-left: 12px;
 }
+
 .link {
   fill: none;
   stroke: #ccc;
   stroke-width: 1.5px;
 }
+
 .trace-cluster-container {
   padding: 0 20px 20px 20px;
   height: 650px;
 }
+
 .drag-box {
   width: 50%;
   height: 650px;
@@ -31,7 +35,6 @@
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
   0 2px 2px 0 rgba(0, 0, 0, 0.14),
   0 1px 5px 0 rgba(0, 0, 0, 0.12);
-  display: flex;
   flex-direction: column;
 }
 
@@ -53,16 +56,17 @@
   0 1px 5px 0 rgba(0, 0, 0, 0.12);
   flex-direction: column;
 }
-.img-rotate{
+
+.img-rotate {
   rotation: 90deg;
-  transform:rotate(90deg);
--ms-transform:rotate(90deg); /* Internet Explorer */
--moz-transform:rotate(90deg); /* Firefox */
--webkit-transform:rotate(90deg); /* Safari 和 Chrome */
--o-transform:rotate(90deg); /* Opera */
+  transform: rotate(90deg);
+  -ms-transform: rotate(90deg); /* Internet Explorer */
+  -moz-transform: rotate(90deg); /* Firefox */
+  -webkit-transform: rotate(90deg); /* Safari 和 Chrome */
+  -o-transform: rotate(90deg); /* Opera */
 }
 
-.img-box--content{
+.img-box--content {
   margin: 0 auto;
 }
 
@@ -70,26 +74,28 @@
   position: relative;
   left: 0;
   top: 10px;
-  overflow: auto;
 }
 
-.form-container{
+.form-container {
   display: flex;
   //height: 60px;
   font: 15px sans-serif;
 }
 
-.filter-container{
+.filter-container {
   font: 15px sans-serif;
 }
+
 .radio-button--small .mat-radio-container {
   height: 15px;
   width: 15px;
 }
+
 .radio-button--small .mat-radio-outer-circle {
   height: 15px;
   width: 15px;
 }
+
 .radio-button--small .mat-radio-inner-circle {
   height: 15px;
   width: 15px;
@@ -109,6 +115,7 @@
   position: relative;
   margin-right: 15px;
 }
+
 .model-info-box__label {
   box-sizing: inherit;
   padding: 0 8px 0 8px;
@@ -121,6 +128,7 @@
   border-right: none;
   border-radius: 3px 0 0 3px;
 }
+
 .model-info-box__value {
   box-sizing: inherit;
   text-align: center;
@@ -137,12 +145,13 @@
 }
 
 .title {
-  left:0;
+  left: 0;
 }
 
 .icon-button--cursor {
   cursor: pointer;
 }
+
 .model-container {
   box-sizing: border-box;
   height: 650px;
@@ -154,6 +163,7 @@
   display: inline-flex;
   flex-direction: column;
 }
+
 .settings-container > div {
   box-sizing: border-box;
   flex: 1;

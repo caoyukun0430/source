@@ -30,6 +30,7 @@ export class TraceClusterComponent implements OnInit {
     name: String;
     dendrogramSvgOriginallist: string[];
     dendrogramSvgSanitizedlist: string[];
+    public attributesList : string[];
 
 
     public selectednode: string;
@@ -67,6 +68,16 @@ export class TraceClusterComponent implements OnInit {
 
     attributesFilter() {
         this.dialog.open(AttributesFilterComponent);
+    }
+
+    public getAttributesList() {
+        let httpParams: HttpParams = new HttpParams();
+
+        this.pm4pyService.getAttributesList(httpParams).subscribe(data => {
+            let attributesList = data as JSON;
+            this.attributesList = attributesList["attributes_list"];
+            console.log("attributesList",this.attributesList);
+        })
     }
 
 
@@ -139,7 +150,7 @@ export class TraceClusterComponent implements OnInit {
                                     }
                                 }
                             },
-
+                            // roam:true,
                             expandAndCollapse: true,
                             //initialTreeDepth:-1,// determine the depth to show, -1 is all
                             animationDuration: 550,
@@ -442,8 +453,9 @@ export class TraceClusterComponent implements OnInit {
 
     ngOnInit() {
         this.getDendrogram();
-        this.clickondendrogram();
         this.getLogSummary();
+        this.getAttributesList();
+        this.clickondendrogram();
     }
 
 }
