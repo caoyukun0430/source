@@ -43,6 +43,8 @@
               "node_modules/echarts/dist/echarts.min.js",
               "node_modules/echarts/map/js/china.js",
               "node_modules/echarts/dist/extension/bmap.js",
+              "node_modules/@antv/g6/build/g6.js",
+              "node_modules/@antv/g6/build/plugins.js",
               "node_modules/dagre/dist/dagre.js",
               "node_modules/graphlib/dist/graphlib.js"
 
