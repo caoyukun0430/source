@@ -1,0 +1,29 @@
+.links line {
+  stroke: #aaa;
+}
+
+.nodes circle {
+  fill: #FFF;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.nodes rect {
+  fill: #FFF;
+  stroke: rgb(180, 70, 85);
+  stroke-width: 1.5px;
+}
+.links text {
+  font: 12px sans-serif;
+  margin-left: 12px;
+}
+
+.nodes {
+  font: 12px sans-serif;
+  margin-left: 12px;
+}
+
+.rectnodes {
+  font: 12px sans-serif;
+  margin-left: 12px;
+}
