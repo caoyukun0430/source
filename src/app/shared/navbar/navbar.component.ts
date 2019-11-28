@@ -227,7 +227,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   goToHome() {
-    this._route.navigateByUrl("/real-ws/plist");
+    this._route.navigateByUrl("/real-ws/plist ");
   }
 
   downloadCSV() {
