@@ -522,7 +522,7 @@ export class PmodelComponent implements OnInit {
                                 id: node['id'],
                                 name: node['name'],
                                 // symbol:'rect',
-                                symbolSize: 40,
+                                symbolSize: [50,40],
                                 itemStyle: {
                                     normal: {
                                         borderColor: 'steelblue',
