@@ -31,6 +31,7 @@ export class TraceClusterComponent implements OnInit {
     dendrogramSvgOriginallist: string[];
     dendrogramSvgSanitizedlist: string[];
     public attributesList : string[];
+    selectedcaseattr='Case:index';
 
 
     public selectednode: string;
@@ -77,6 +78,8 @@ export class TraceClusterComponent implements OnInit {
             let attributesList = data as JSON;
             this.attributesList = attributesList["attributes_list"];
             console.log("attributesList",this.attributesList);
+            console.log("attributesList1",this.attributesList[1]);
+            console.log("attributesList1",typeof this.attributesList[1]);
         })
     }
 
@@ -150,15 +153,22 @@ export class TraceClusterComponent implements OnInit {
                                     }
                                 }
                             },
-                            // roam:true,
+                            roam:true,
                             expandAndCollapse: true,
-                            //initialTreeDepth:-1,// determine the depth to show, -1 is all
+                            initialTreeDepth:1,// determine the depth to show, -1 is all
                             animationDuration: 550,
                             animationDurationUpdate: 750
 
                         }]
                 };
                 this.myChart.setOption(this.options);
+                setTimeout(()=> {
+                window.onresize = () =>{
+                    this.myChart.resize();
+                }
+
+            }, 10);
+
 
                 // draw dendrogram with d3
                 // console.log("mychart1",this.myChart);

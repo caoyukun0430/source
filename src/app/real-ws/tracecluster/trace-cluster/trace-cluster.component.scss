@@ -17,12 +17,12 @@
 
 .trace-cluster-container {
   padding: 0 20px 20px 20px;
-  height: 650px;
+  height: 800px;
 }
 
 .drag-box {
-  width: 50%;
-  height: 650px;
+  width: 40%;
+  height: 750px;
   padding: 10px 0px 10px 0px;
   box-sizing: border-box;
   border: solid 1px #ccc;
@@ -39,9 +39,9 @@
 }
 
 .img-box {
-  width: 50%;
-  height: 650px;
-  margin-left: 50%;
+  width: 60%;
+  height: 750px;
+  margin-left: 40%;
   padding: 10px 0px 10px 0px;
   box-sizing: border-box;
   border: solid 1px #ccc;
@@ -132,7 +132,7 @@
 .model-info-box__value {
   box-sizing: inherit;
   text-align: center;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: normal;
   color: #263238;
   padding: 0 8px 0 8px;
@@ -154,7 +154,7 @@
 
 .model-container {
   box-sizing: border-box;
-  height: 650px;
+  height: 750px;
 }
 
 .settings-container {
